@@ -3,15 +3,24 @@
 ## Task 3: What is the level of measurement of the following variables
 
 - The number of downloads of different bands' songs in iTunes
+  - This is a nominal variable
 - The names of bands that were downloaded
+  - This is a categorical variable
 - The position in the iTunes download chart
 - The money eared by the bands from the downloads
+  - This is a nominal variable
 - The weight of drugs bought by the bands with their royalties
+  - This is a nominal variable
 - The type of drugs bought by the bands with their royalties
+  - This is a categorical variable
 - The number of phone number that the bands obtained because of their fame
+  - This is a nominal variable
 - The gender of the people giving the bands their phone numbers
+  - This is a binary variable
 - The instruments played by the band members
+  - This is a categorical variable
 - The time they had spent learning to play their instruments
+  - This is a nominal variable
 
 ## Task 4: Say I own 857 CDs
 
@@ -26,10 +35,11 @@ measurement error in my friend's CD-counting device?
 - Since we only have 857 CDs but our friends program claims 863, the measurement
   error is 863 - 857 which is 6
 
-
 ## Task 5: Sketch the shape
 
 - Of a normal distribution
+
 - Of a positively skewed distribution
+
 - Of a negatively skewed distribution
 
