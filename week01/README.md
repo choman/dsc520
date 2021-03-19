@@ -56,9 +56,13 @@ measurement error in my friend's CD-counting device?
 
 ## Task 5: Sketch the shape
 
-- Of a normal distribution
+** I will now show of my computer sketching skills **
 
-- Of a positively skewed distribution
+- A normal distribution
 
-- Of a negatively skewed distribution
+A normal distribution looks like a bell curve. 
+
+- A positively skewed distribution
+
+- A negatively skewed distribution
 
