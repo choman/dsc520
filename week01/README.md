@@ -62,7 +62,7 @@ measurement error in my friend's CD-counting device?
 ![](normal-dist.png)
 
 - A positively skewed distribution looks like a left heavy bell curve
-![](https://github.com/choman/dsc520/week01/positive-dist.png)
+![](positive-dist.png)
 
 - A negatively skewed distribution looks like a right heavy bell curve
-![](https://github.com/choman/dsc520/week01/negative-dist.png)
+![](negative-dist.png)
