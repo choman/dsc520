@@ -2,25 +2,44 @@
 
 ## Task 3: What is the level of measurement of the following variables
 
+The level of measurement is the relationship between what is being
+measured and the numbers that represent what is being measured.
+
 - The number of downloads of different bands' songs in iTunes
-  - This is a nominal variable
+  - This is a discrete variable because downloads are counted by
+    the number of downloads (which should be a whole number)
+
 - The names of bands that were downloaded
-  - This is a categorical variable
+  - This is a categorical variable because there are many band names
+
 - The position in the iTunes download chart
+  - This is a ordinal variable because this category is ordered
+    by the ranking/position on the chart
+
 - The money eared by the bands from the downloads
-  - This is a nominal variable
+  - This is a continuous variable because the amount can be measured
+    in many ways
+
 - The weight of drugs bought by the bands with their royalties
-  - This is a nominal variable
+  - This is a continuous variable because the weight can be measured
+    in many ways
+
 - The type of drugs bought by the bands with their royalties
-  - This is a categorical variable
-- The number of phone number that the bands obtained because of their fame
-  - This is a nominal variable
+  - This is a categorical variable because drugs have many types
+
+- The number of phone numbers that the bands obtained because of their fame
+  - This is a discrete variable because the quantity of numbers is a whole number
+
 - The gender of the people giving the bands their phone numbers
-  - This is a binary variable
+  - This is a binary variable because it is either male or female
+
 - The instruments played by the band members
-  - This is a categorical variable
+  - This is a categorical variable there are meny different kinds of
+    instruments and there are many sub-categories
+
 - The time they had spent learning to play their instruments
-  - This is a nominal variable
+  - This is a continuous variable at a minimum because time can be
+    measured in many ways
 
 ## Task 4: Say I own 857 CDs
 
