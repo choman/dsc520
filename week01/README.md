@@ -59,10 +59,10 @@ measurement error in my friend's CD-counting device?
 ** I will now show of my computer sketching skills **
 
 - A normal distribution looks like a centered bell curve. 
-![image](week01/normal-dist.png)
+![image](https://github.com/choman/dsc520/week01/normal-dist.png)
 
 - A positively skewed distribution looks like a left heavy bell curve
-![image](week01/positive-dist.png)
+![image](https://github.com/choman/dsc520/week01/positive-dist.png)
 
 - A negatively skewed distribution looks like a right heavy bell curve
-![image](week01/negative-dist.png)
+![image](https://github.com/choman/dsc520/week01/negative-dist.png)
