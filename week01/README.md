@@ -34,7 +34,7 @@ measured and the numbers that represent what is being measured.
   - This is a binary variable because it is either male or female
 
 - The instruments played by the band members
-  - This is a categorical variable there are meny different kinds of
+  - This is a categorical variable there are many different kinds of
     instruments and there are many sub-categories
 
 - The time they had spent learning to play their instruments
@@ -56,7 +56,7 @@ measurement error in my friend's CD-counting device?
 
 ## Task 5: Sketch the shape
 
-** I will now show of my computer sketching skills **
+** I will now show off my computer sketching skills **
 
 - A normal distribution looks like a centered bell curve. 
 ![](normal-dist.png)
