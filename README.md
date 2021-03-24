@@ -9,8 +9,9 @@ DSC520 Assignments and Term Project for Spring 2021 at BU
 
 - All other assignments are stored under the "week##" directory or term directory
 
-- Soft links to the coding assignment are also available under teh "week##" directory
-
+- Soft links to the coding assignment are also available under teh "week##" directory,
+  This may simply testing/running my code. Unfortunately not verifying against the 
+  expected out file. (At least not yet)
 
 Thanks to github markdown, these links are technically broken. 
 
