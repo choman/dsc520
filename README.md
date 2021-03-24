@@ -14,5 +14,5 @@ DSC520 Assignments and Term Project for Spring 2021 at BU
 
 Thanks to github markdown, these links are technically broken. 
 
-- [Week 01]*(week01)
+- [Week 01](week01)
 - [Week 02](week02)
