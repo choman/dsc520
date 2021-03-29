@@ -17,3 +17,4 @@ Thanks to github markdown, these links are technically broken.
 
 - [Week 01](week01)
 - [Week 02](week02)
+- [Week 03](week03)
