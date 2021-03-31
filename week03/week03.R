@@ -1,0 +1,145 @@
+# Assignment: ASSIGNMENT 3B
+# Name: Homan, Chad
+# Date: 2021-03-30
+
+# For this exercise, you will use the following dataset, 2014 American
+# Community Survey. This data is maintained by the US Census Bureau and are
+# designed to show how communities are changing. Through asking questions
+# of a sample of the population, it produces national data on more than
+# 35 categories of information, such as education, income, housing, and
+# employment. For this assignment, you will need to load and activate the
+# ggplot2 package. For this deliverable, you should provide the following:
+#
+# -  What are the elements in your data (including the categories and
+#    data types)?
+# -  Please provide the output from the following functions: str();
+#    nrow(); ncol()
+# -  Create a Histogram of the HSDegree variable using the ggplot2
+#    package.
+#     -  Set a bin size for the Histogram.
+#     -  Include a Title and appropriate X/Y axis labels on your
+#        Histogram Plot.
+# -  Answer the following questions based on the Histogram produced:
+#     -  Based on what you see in this histogram, is the data distribution
+#        unimodal?
+#     -  Is it approximately symmetrical?
+#     -  Is it approximately bell-shaped?
+#     -  Is it approximately normal?
+#     -  If not normal, is the distribution skewed? If so, in which
+#        direction?
+#     -  Include a normal curve to the Histogram that you plotted.
+#     -  Explain whether a normal distribution can accurately be used
+#        as a model for this data.
+# -  Create a Probability Plot of the HSDegree variable.
+# -  Answer the following questions based on the Probability Plot:
+#     -  Based on what you see in this probability plot, is the
+#        distribution approximately normal? Explain how you know.
+#     -  If not normal, is the distribution skewed? If so, in which
+#        direction? Explain how you know.
+# -  Now that you have looked at this data visually for normality,
+#    you will now quantify normality with numbers using the stat.desc()
+#    function. Include a screen capture of the results produced.
+# -  In several sentences provide an explanation of the result produced
+#    for skew, kurtosis, and z-scores. In addition, explain how a change in
+#    the sample size may change your explanation?
+
+## Load the ggplot2 package
+install.packages("ggplot2")
+install.packages("pastecs")
+library(ggplot2)
+library(pastecs)
+## library(qqplotr)
+theme_set(theme_minimal())
+bins_width <- 10
+
+## Set the working directory to the root of your DSC 520 directory
+## to include the week of the assignment
+workdir <- system("git rev-parse --show-toplevel", intern=TRUE) 
+workdir <- file.path(workdir, "week03")
+
+## Set the working directory
+setwd(workdir)
+
+## Load the `data/r4ds/heights.csv` to
+data_df <- read.csv("acs-14-1yr-s0201.csv", stringsAsFactors=TRUE)
+data_df
+
+# -  What are the elements in your data (including the categories and
+#    data types)?
+summary(data_df)
+
+# -  Please provide the output from the following functions: str();
+#    nrow(); ncol()
+str(data_df)
+nrow(data_df)
+ncol(data_df)
+
+# -  Create a Histogram of the HSDegree variable using the ggplot2
+#    package.
+g <- ggplot(data_df, aes(x=HSDegree))
+g + geom_histogram()
+
+#     -  Set a bin size for the Histogram.
+g + geom_histogram(bins=bins_width)
+
+#     -  Include a Title and appropriate X/Y axis labels on your
+#        Histogram Plot.
+g + geom_histogram(bins=bins_width) + ggtitle("High School Degrees: Percentage vs Count") + xlab("HS Degrees (percentage)") + ylab("HS Degrees (count)")
+
+# -  Answer the following questions based on the Histogram produced:
+#     -  Based on what you see in this histogram, is the data distribution
+#        unimodal?
+#     *  Answer: Based on my results, this histogram is definitely unimodal.
+#
+#     -  Is it approximately symmetrical? 
+#     *  Answer: No, technically this is a left-skewed or negatively-skewed
+#        histogram 
+#
+#     -  Is it approximately bell-shaped? 
+#     *  Answer: No
+#
+#     -  Is it approximately normal?
+#     *  Answer: No
+#
+#     -  If not normal, is the distribution skewed? If so, in which
+#        direction?
+#     *  Answer: This is a left-skewed or negatively-skewed distribution 
+#
+#     -  Include a normal curve to the Histogram that you plotted.
+#     *  Answer:
+#
+#     -  Explain whether a normal distribution can accurately be used
+#        as a model for this data.
+#     *  Answer:
+
+# -  Create a Probability Plot of the HSDegree variable.
+#    http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization
+ggplot(data_df, aes(sample=HSDegree)) + stat_qq()
+ggplot(data_df, aes(sample=HSDegree)) + geom_qq()
+
+
+# -  Answer the following questions based on the Probability Plot:
+#     -  Based on what you see in this probability plot, is the
+#        distribution approximately normal? Explain how you know.
+#     *  Answer: Assuming that I understand what I have read, this is
+#        not a normal probability plot as it has a curve
+#
+#     -  If not normal, is the distribution skewed? If so, in which
+#        direction? Explain how you know.
+#     *  Answer: Yes it is skewed, according to what I have read, since 
+#        I have a C shape, as opposed to a inverse-C shape. My plot is 
+#        a left-skewed or negative-skewed probability curve. 
+
+# -  Now that you have looked at this data visually for normality,
+#    you will now quantify normality with numbers using the stat.desc()
+#    function. Include a screen capture of the results produced.
+attach(data_df)
+summary(data_df)
+info <- cbind(Id, Id2, Geography, RacesReported, HSDegree, BachDegree)
+#options(scipen=100)
+#options(digits=2)
+stat.desc(info)
+
+# -  In several sentences provide an explanation of the result produced
+#    for skew, kurtosis, and z-scores. In addition, explain how a change in
+#    the sample size may change your explanation?
