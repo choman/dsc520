@@ -143,10 +143,30 @@ ggplot(data_df, aes(sample=HSDegree)) + geom_qq() + geom_abline(intercept=80, sl
 attach(data_df)
 summary(data_df)
 info <- cbind(Id, Id2, Geography, RacesReported, HSDegree, BachDegree)
-#options(scipen=100)
-#options(digits=2)
+options(scipen=100)
+options(digits=2)
 stat.desc(info)
 
 # -  In several sentences provide an explanation of the result produced
 #    for skew, kurtosis, and z-scores. In addition, explain how a change in
 #    the sample size may change your explanation?
+
+## Answers:
+## - Skewness measures the symetry of the distibution, since this disturbution
+##   is left skewed (or negatively skewed) and the mean is less than the median.
+##   According to stat.desc, the mean is 87.632 and the median is 88.700. Which 
+##   fits based on the mean < median
+mean(data_df$HSDegree)
+median(data_df$HSDegree)
+mean(data_df$HSDegree) < median(data_df$HSDegree)
+
+## - Kurtosis measures the heaviness of the tails or better if the tails have 
+##   extreme values. 
+install.packages("moments")
+library(moments)
+skewness(data_df$HSDegree)
+kurtosis(data_df$HSDegree) # <- (62.2 + 95.5) / 2
+kurtosis
+## - Z-scores measure 
+zscore <- (62.2 - 87.636)/5.188
+zscore
