@@ -145,8 +145,8 @@ summary(data_df)
 info <- cbind(Id, Id2, Geography, RacesReported, HSDegree, BachDegree)
 options(scipen=100)
 options(digits=2)
-stat.desc(info)
-stat.desc(info, basic=FALSE, norm=TRUE)
+stat.desc(data_df$HSDegree)
+stat.desc(data_df$HSDegree, basic=FALSE, norm=TRUE)
 
 # -  In several sentences provide an explanation of the result produced
 #    for skew, kurtosis, and z-scores. In addition, explain how a change in
@@ -193,6 +193,18 @@ library(moments)
 skewness(data_df$HSDegree)
 kurtosis(data_df$HSDegree)
 
-## - Z-scores measure 
-zscore <- (62.2 - 87.636)/5.188
-zscore
+## - Z-scores for data_df$HSdegree according to https://www.statology.org/z-score-r/
+##   is calculated by a formula similar to:
+##
+##      (data_df$HSDegree-mean(data_df$HSDegree) / sd(data_df$HSDegree))
+##
+##   However, the result do not line up correctly. But executing just the initial 
+##   part of this equation appears to give me what I am looking for. Since the first
+##   value of HSdegree is 89 and the mean is 87.632 is approximately 1.4, which the 
+##   output of the following output zscores maps to
+data_df
+data_df$HSDegree-mean(data_df$HSDegree) 
+
+##sd(data_df$HSDegree)
+##zscores <- (data_df$HSDegree-mean(data_df$HSDegree) / sd(data_df$HSDegree))
+##zscores
