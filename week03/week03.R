@@ -76,20 +76,20 @@ ncol(data_df)
 
 # -  Create a Histogram of the HSDegree variable using the ggplot2
 #    package.
-g <- ggplot(data_df, aes(x=HSDegree))
-g + geom_histogram()
+hsdegree <- ggplot(data_df, aes(x=HSDegree))
+hsdegree + geom_histogram()
 
 #     -  Set a bin size for the Histogram.
-g + geom_histogram(binwidth=binwidth)
+hsdegree + geom_histogram(binwidth=binwidth)
 
 
 #     -  Include a Title and appropriate X/Y axis labels on your
 #        Histogram Plot.
-tags <- labs(title="High School Degrees: Percentage vs Count",
+labels <- labs(title="High School Degrees: Percentage vs Count",
              x="HS Degrees (percentage)",
              y="HS Degrees (count)")
-#g + geom_histogram(binwidth=binwidth) + ggtitle("High School Degrees: Percentage vs Count") + xlab("HS Degrees (percentage)") + ylab("HS Degrees (count)")
-g + geom_histogram(binwidth=binwidth) + tags
+histogram <- hsdegree + geom_histogram(binwidth=binwidth) + labels
+histogram
 
 # -  Answer the following questions based on the Histogram produced:
 #     -  Based on what you see in this histogram, is the data distribution
@@ -111,7 +111,9 @@ g + geom_histogram(binwidth=binwidth) + tags
 #     *  Answer: This is a left-skewed or negatively-skewed distribution 
 #
 #     -  Include a normal curve to the Histogram that you plotted.
-#     *  Answer:
+
+
+
 #
 #     -  Explain whether a normal distribution can accurately be used
 #        as a model for this data.
@@ -120,7 +122,7 @@ g + geom_histogram(binwidth=binwidth) + tags
 # -  Create a Probability Plot of the HSDegree variable.
 #    http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization
 ggplot(data_df, aes(sample=HSDegree)) + stat_qq()
-ggplot(data_df, aes(sample=HSDegree)) + geom_qq()
+ggplot(data_df, aes(sample=HSDegree)) + geom_qq() + geom_abline(intercept=80, slope=7)
 
 
 # -  Answer the following questions based on the Probability Plot:
