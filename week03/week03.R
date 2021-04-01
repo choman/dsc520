@@ -146,27 +146,50 @@ info <- cbind(Id, Id2, Geography, RacesReported, HSDegree, BachDegree)
 options(scipen=100)
 options(digits=2)
 stat.desc(info)
+stat.desc(info, basic=FALSE, norm=TRUE)
 
 # -  In several sentences provide an explanation of the result produced
 #    for skew, kurtosis, and z-scores. In addition, explain how a change in
 #    the sample size may change your explanation?
 
 ## Answers:
-## - Skewness measures the symetry of the distibution, since this disturbution
-##   is left skewed (or negatively skewed) and the mean is less than the median.
-##   According to stat.desc, the mean is 87.632 and the median is 88.700. Which 
-##   fits based on the mean < median
+## - Skewness measures the symmetry of the distribution. According to 
+##   https://www.statology.org/skewness-kurtosis-in-r/ this value can be 
+##   negative, positive, or zero (no skewness). 
+##   One definition say that this disturbution is left skewed (or negatively 
+##   skewed) if the mean is less than the median. According to stat.desc, the 
+#m   an is 87.632 and the median is 88.700. Which fits based on the mean <
+##   median. Also note that the second stat.desc shows a skewness of -1.6747666915
+##   which fits the mentioned web site that:
+##       - A negative skew indicates the tail is on the left, extending towards
+##         negative values
+##       - A positive skew indicates the tail is on the right, extending towards
+##         positive values
+##       - a zoer inidcates that there is no skewness meaning perfectly symmetrical
+##   So a -1.67 also fits are my results being left skewed 
+##   This is also confirmed in the below moments package 
 mean(data_df$HSDegree)
 median(data_df$HSDegree)
 mean(data_df$HSDegree) < median(data_df$HSDegree)
 
-## - Kurtosis measures the heaviness of the tails or better if the tails have 
-##   extreme values. 
+
+## - According to https://www.statology.org/skewness-kurtosis-in-r/, kurtosis is
+##   the measure of whether or not a distribution is heavy-tailed or light-tailed 
+##   relative to a normal distribution. This is defined as:
+##       - The kurtosis of a nomral distribution is 3
+##       - If a distribution has a kurtosis less than 3, it is said to be playkurtic
+##         which means it tends to produce fewer and less extreme outliers than a 
+##         normal distribution
+##       - If a distribution has a kurtosis greater than 3, it is said to be leptokurtic
+##         which means it tends to produce more outliers than a normal distribution
+##   Since the stat.desc shows a kurtossis of 4.352856, this data is leptokurtic.
+##   This is also confirmed in the below moments package, which shows a higher kurtosis
+##   than stat.desc.
 install.packages("moments")
 library(moments)
 skewness(data_df$HSDegree)
-kurtosis(data_df$HSDegree) # <- (62.2 + 95.5) / 2
-kurtosis
+kurtosis(data_df$HSDegree)
+
 ## - Z-scores measure 
 zscore <- (62.2 - 87.636)/5.188
 zscore
