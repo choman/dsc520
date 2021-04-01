@@ -158,7 +158,7 @@ stat.desc(info, basic=FALSE, norm=TRUE)
 ##   negative, positive, or zero (no skewness). 
 ##   One definition say that this disturbution is left skewed (or negatively 
 ##   skewed) if the mean is less than the median. According to stat.desc, the 
-#m   an is 87.632 and the median is 88.700. Which fits based on the mean <
+#m   mean is 87.632 and the median is 88.700. Which fits based on the mean <
 ##   median. Also note that the second stat.desc shows a skewness of -1.6747666915
 ##   which fits the mentioned web site that:
 ##       - A negative skew indicates the tail is on the left, extending towards
@@ -171,6 +171,8 @@ stat.desc(info, basic=FALSE, norm=TRUE)
 mean(data_df$HSDegree)
 median(data_df$HSDegree)
 mean(data_df$HSDegree) < median(data_df$HSDegree)
+## also skewness is (mean - median)/std.dev
+3 * (87.632 - 88.70) / 5.118 # for ome reason this does not map correctly to stat.desc
 
 
 ## - According to https://www.statology.org/skewness-kurtosis-in-r/, kurtosis is
@@ -183,6 +185,7 @@ mean(data_df$HSDegree) < median(data_df$HSDegree)
 ##       - If a distribution has a kurtosis greater than 3, it is said to be leptokurtic
 ##         which means it tends to produce more outliers than a normal distribution
 ##   Since the stat.desc shows a kurtossis of 4.352856, this data is leptokurtic.
+##   Excess Kurtosis is therefore 4.352856 - 3 == 1.352856
 ##   This is also confirmed in the below moments package, which shows a higher kurtosis
 ##   than stat.desc.
 install.packages("moments")
