@@ -50,7 +50,7 @@ library(ggplot2)
 library(pastecs)
 ## library(qqplotr)
 theme_set(theme_minimal())
-bins_width <- 10
+binwidth <- .5
 
 ## Set the working directory to the root of your DSC 520 directory
 ## to include the week of the assignment
@@ -80,11 +80,16 @@ g <- ggplot(data_df, aes(x=HSDegree))
 g + geom_histogram()
 
 #     -  Set a bin size for the Histogram.
-g + geom_histogram(bins=bins_width)
+g + geom_histogram(binwidth=binwidth)
+
 
 #     -  Include a Title and appropriate X/Y axis labels on your
 #        Histogram Plot.
-g + geom_histogram(bins=bins_width) + ggtitle("High School Degrees: Percentage vs Count") + xlab("HS Degrees (percentage)") + ylab("HS Degrees (count)")
+tags <- labs(title="High School Degrees: Percentage vs Count",
+             x="HS Degrees (percentage)",
+             y="HS Degrees (count)")
+#g + geom_histogram(binwidth=binwidth) + ggtitle("High School Degrees: Percentage vs Count") + xlab("HS Degrees (percentage)") + ylab("HS Degrees (count)")
+g + geom_histogram(binwidth=binwidth) + tags
 
 # -  Answer the following questions based on the Histogram produced:
 #     -  Based on what you see in this histogram, is the data distribution
