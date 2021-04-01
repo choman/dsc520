@@ -117,7 +117,8 @@ histogram
 #
 #     -  Explain whether a normal distribution can accurately be used
 #        as a model for this data.
-#     *  Answer:
+#     *  Answer: I belive a normal distribution can be used as a model
+#        for this data as it help to show how skewed the data is
 
 # -  Create a Probability Plot of the HSDegree variable.
 #    http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization
