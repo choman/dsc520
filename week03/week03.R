@@ -113,9 +113,8 @@ myhistogram
 #
 #     -  Include a normal curve to the Histogram that you plotted.
     
-hsdegree + histogram +
-  stat_function(fun = dnorm, args = list(mean = mean(data_df$HSDegree), sd = sd(data_df$HSDegree)), color = "red") + 
-  labels
+myhistogram +
+    stat_function(fun=dnorm, args=list(mean=mean(data_df$HSDegree), sd=sd(data_df$HSDegree)), color="red")
 
 #
 #     -  Explain whether a normal distribution can accurately be used
@@ -135,7 +134,7 @@ ggplot(data_df, aes(sample=HSDegree)) + geom_qq() + geom_abline(intercept=80, sl
 #     *  Answer: Assuming that I understand what I have read, this is
 #        not a normal probability plot as it has a curve
 #
-git #     -  If not normal, is the distribution skewed? If so, in which
+#     -  If not normal, is the distribution skewed? If so, in which
 #        direction? Explain how you know.
 #     *  Answer: Yes it is skewed, according to what I have read, since 
 #        I have a C shape, as opposed to a inverse-C shape. My plot is 
