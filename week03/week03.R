@@ -117,7 +117,7 @@ histogram
 #
 #     -  Explain whether a normal distribution can accurately be used
 #        as a model for this data.
-#     *  Answer: I belive a normal distribution can be used as a model
+#     *  Answer: I believe a normal distribution can be used as a model
 #        for this data as it help to show how skewed the data is
 
 # -  Create a Probability Plot of the HSDegree variable.
@@ -157,7 +157,7 @@ stat.desc(data_df$HSDegree, basic=FALSE, norm=TRUE)
 ## - Skewness measures the symmetry of the distribution. According to 
 ##   https://www.statology.org/skewness-kurtosis-in-r/ this value can be 
 ##   negative, positive, or zero (no skewness). 
-##   One definition say that this disturbution is left skewed (or negatively 
+##   One definition say that this distribution is left skewed (or negatively 
 ##   skewed) if the mean is less than the median. According to stat.desc, the 
 #m   mean is 87.632 and the median is 88.700. Which fits based on the mean <
 ##   median. Also note that the second stat.desc shows a skewness of -1.6747666915
@@ -173,19 +173,19 @@ mean(data_df$HSDegree)
 median(data_df$HSDegree)
 mean(data_df$HSDegree) < median(data_df$HSDegree)
 ## also skewness is (mean - median)/std.dev
-3 * (87.632 - 88.70) / 5.118 # for ome reason this does not map correctly to stat.desc
+3 * (87.632 - 88.70) / 5.118 # for some reason this does not map correctly to stat.desc
 
 
 ## - According to https://www.statology.org/skewness-kurtosis-in-r/, kurtosis is
 ##   the measure of whether or not a distribution is heavy-tailed or light-tailed 
 ##   relative to a normal distribution. This is defined as:
-##       - The kurtosis of a nomral distribution is 3
+##       - The kurtosis of a normal distribution is 3
 ##       - If a distribution has a kurtosis less than 3, it is said to be playkurtic
 ##         which means it tends to produce fewer and less extreme outliers than a 
 ##         normal distribution
 ##       - If a distribution has a kurtosis greater than 3, it is said to be leptokurtic
 ##         which means it tends to produce more outliers than a normal distribution
-##   Since the stat.desc shows a kurtossis of 4.352856, this data is leptokurtic.
+##   Since the stat.desc shows a kurtosis of 4.352856, this data is leptokurtic.
 ##   Excess Kurtosis is therefore 4.352856 - 3 == 1.352856
 ##   This is also confirmed in the below moments package, which shows a higher kurtosis
 ##   than stat.desc.
@@ -202,10 +202,11 @@ kurtosis(data_df$HSDegree)
 ##   However, the result do not line up correctly. But executing just the initial 
 ##   part of this equation appears to give me what I am looking for. Since the first
 ##   value of HSdegree is 89 and the mean is 87.632 is approximately 1.4, which the 
-##   output of the following output zscores maps to
+##   output of the following zscores maps to:
 data_df
 data_df$HSDegree-mean(data_df$HSDegree) 
 
+##89 - 87.632
 ##sd(data_df$HSDegree)
 ##zscores <- (data_df$HSDegree-mean(data_df$HSDegree) / sd(data_df$HSDegree))
 ##zscores
