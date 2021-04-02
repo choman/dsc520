@@ -80,16 +80,17 @@ hsdegree <- ggplot(data_df, aes(x=HSDegree))
 hsdegree + geom_histogram()
 
 #     -  Set a bin size for the Histogram.
-hsdegree + geom_histogram(binwidth=binwidth)
+histogram <- geom_histogram(aes(y = ..density..), binwidth=binwidth, color="black", alpha=.7)
+hsdegree + histogram
 
 
 #     -  Include a Title and appropriate X/Y axis labels on your
 #        Histogram Plot.
 labels <- labs(title="High School Degrees: Percentage vs Count",
-             x="HS Degrees (percentage)",
+             x="Population Percentage With HS Degrees", 
              y="HS Degrees (count)")
-histogram <- hsdegree + geom_histogram(binwidth=binwidth) + labels
-histogram
+myhistogram <- hsdegree + histogram + labels
+myhistogram
 
 # -  Answer the following questions based on the Histogram produced:
 #     -  Based on what you see in this histogram, is the data distribution
@@ -111,8 +112,10 @@ histogram
 #     *  Answer: This is a left-skewed or negatively-skewed distribution 
 #
 #     -  Include a normal curve to the Histogram that you plotted.
-
-
+    
+hsdegree + histogram +
+  stat_function(fun = dnorm, args = list(mean = mean(data_df$HSDegree), sd = sd(data_df$HSDegree)), color = "red") + 
+  labels
 
 #
 #     -  Explain whether a normal distribution can accurately be used
@@ -132,7 +135,7 @@ ggplot(data_df, aes(sample=HSDegree)) + geom_qq() + geom_abline(intercept=80, sl
 #     *  Answer: Assuming that I understand what I have read, this is
 #        not a normal probability plot as it has a curve
 #
-#     -  If not normal, is the distribution skewed? If so, in which
+git #     -  If not normal, is the distribution skewed? If so, in which
 #        direction? Explain how you know.
 #     *  Answer: Yes it is skewed, according to what I have read, since 
 #        I have a C shape, as opposed to a inverse-C shape. My plot is 
