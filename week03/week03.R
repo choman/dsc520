@@ -77,10 +77,10 @@ ncol(data_df)
 # -  Create a Histogram of the HSDegree variable using the ggplot2
 #    package.
 hsdegree <- ggplot(data_df, aes(x=HSDegree))
-hsdegree + geom_histogram()
+hsdegree + geom_histogram(aes(y = ..density..), fill="Navy", color="black", alpha=.7)
 
 #     -  Set a bin size for the Histogram.
-histogram <- geom_histogram(aes(y = ..density..), binwidth=binwidth, color="black", alpha=.7)
+histogram <- geom_histogram(aes(y = ..density..), binwidth=binwidth, fill="Navy", color="black", alpha=.7)
 hsdegree + histogram
 
 
@@ -136,7 +136,7 @@ ggplot(data_df, aes(sample=HSDegree)) + geom_qq() + geom_abline(intercept=80, sl
 #
 #     -  If not normal, is the distribution skewed? If so, in which
 #        direction? Explain how you know.
-#     *  Answer: Yes it is skewed, according to what I have read, since 
+#     *  Answer: Yes it is skewed, according to what I have read. Since 
 #        I have a C shape, as opposed to a inverse-C shape. My plot is 
 #        a left-skewed or negative-skewed probability curve. 
 
@@ -168,14 +168,14 @@ stat.desc(data_df$HSDegree, basic=FALSE, norm=TRUE)
 ##         negative values
 ##       - A positive skew indicates the tail is on the right, extending towards
 ##         positive values
-##       - a zoer inidcates that there is no skewness meaning perfectly symmetrical
+##       - a zero indicates that there is no skewness meaning perfectly symmetrical
 ##   So a -1.67 also fits are my results being left skewed 
 ##   This is also confirmed in the below moments package 
 mean(data_df$HSDegree)
 median(data_df$HSDegree)
 mean(data_df$HSDegree) < median(data_df$HSDegree)
 ## also skewness is (mean - median)/std.dev
-3 * (87.632 - 88.70) / 5.118 # for some reason this does not map correctly to stat.desc
+##3 * (87.632 - 88.70) / 5.118 # for some reason this does not map correctly to stat.desc
 
 
 ## - According to https://www.statology.org/skewness-kurtosis-in-r/, kurtosis is
@@ -212,3 +212,12 @@ data_df$HSDegree-mean(data_df$HSDegree)
 ##sd(data_df$HSDegree)
 ##zscores <- (data_df$HSDegree-mean(data_df$HSDegree) / sd(data_df$HSDegree))
 ##zscores
+
+# -  explain how a change in the sample size may change your explanation?
+## Since the sample size is approximately 136 counties in the U.S. Getting a 
+## sample size that covers many more counties may change the mean and the median 
+## enough to skew the results to a more normal distribution. I believe additional 
+## questions  need to be answered with this data such as:
+##     - Ruralness of the counties
+##     - History or events of the population that had circumstances that prevented
+##       one from obtaining a HS Degree or Bachelor Degree
