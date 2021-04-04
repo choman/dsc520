@@ -2,46 +2,27 @@
 # Name: Homan, Chad
 # Date: 2021-03-30
 
-# For this exercise, you will use the following dataset, 2014 American
-# Community Survey. This data is maintained by the US Census Bureau and are
-# designed to show how communities are changing. Through asking questions
-# of a sample of the population, it produces national data on more than
-# 35 categories of information, such as education, income, housing, and
-# employment. For this assignment, you will need to load and activate the
-# ggplot2 package. For this deliverable, you should provide the following:
-#
-# -  What are the elements in your data (including the categories and
-#    data types)?
-# -  Please provide the output from the following functions: str();
-#    nrow(); ncol()
-# -  Create a Histogram of the HSDegree variable using the ggplot2
-#    package.
-#     -  Set a bin size for the Histogram.
-#     -  Include a Title and appropriate X/Y axis labels on your
-#        Histogram Plot.
-# -  Answer the following questions based on the Histogram produced:
-#     -  Based on what you see in this histogram, is the data distribution
-#        unimodal?
-#     -  Is it approximately symmetrical?
-#     -  Is it approximately bell-shaped?
-#     -  Is it approximately normal?
-#     -  If not normal, is the distribution skewed? If so, in which
-#        direction?
-#     -  Include a normal curve to the Histogram that you plotted.
-#     -  Explain whether a normal distribution can accurately be used
-#        as a model for this data.
-# -  Create a Probability Plot of the HSDegree variable.
-# -  Answer the following questions based on the Probability Plot:
-#     -  Based on what you see in this probability plot, is the
-#        distribution approximately normal? Explain how you know.
-#     -  If not normal, is the distribution skewed? If so, in which
-#        direction? Explain how you know.
-# -  Now that you have looked at this data visually for normality,
-#    you will now quantify normality with numbers using the stat.desc()
-#    function. Include a screen capture of the results produced.
-# -  In several sentences provide an explanation of the result produced
-#    for skew, kurtosis, and z-scores. In addition, explain how a change in
-#    the sample size may change your explanation?
+# We interact with a few datasets in this course, one you are
+# already familiar with, the 2014 American Community Survey
+# and the second is a Housing dataset, that provides real
+# estate transactions recorded from 1964 to 2016.  For this
+# exercise, you need to start practicing some data transformation
+# steps – which will carry into next week, as you learn some
+# additional methods.  For this week, using either dataset (or
+# one of your own – although I will let you know ahead of time
+# that the Housing dataset is used for a later assignment, so
+# not a bad idea for you to get more comfortable with now!),
+# perform the following data transformations:
+
+#  - Use the apply function on a variable in your dataset
+#  - Use the aggregate function on a variable in your dataset
+#  - Use the plyr function on a variable in your dataset – more
+#    specifically, I want to see you split some data, perform a
+#    modification to the data, and then bring it back together
+#  - Check distributions of the data
+#  - Identify if there are any outliers
+#  - Create at least 2 new variables
+
 
 ## Load the ggplot2 package
 install.packages("ggplot2")
