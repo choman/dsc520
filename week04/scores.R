@@ -1,47 +1,37 @@
 # Assignment: ASSIGNMENT 3B
 # Name: Homan, Chad
-# Date: 2021-03-30
+# Date: 2021-04-04
 
-# For this exercise, you will use the following dataset, 2014 American
-# Community Survey. This data is maintained by the US Census Bureau and are
-# designed to show how communities are changing. Through asking questions
-# of a sample of the population, it produces national data on more than
-# 35 categories of information, such as education, income, housing, and
-# employment. For this assignment, you will need to load and activate the
-# ggplot2 package. For this deliverable, you should provide the following:
-#
-# -  What are the elements in your data (including the categories and
-#    data types)?
-# -  Please provide the output from the following functions: str();
-#    nrow(); ncol()
-# -  Create a Histogram of the HSDegree variable using the ggplot2
-#    package.
-#     -  Set a bin size for the Histogram.
-#     -  Include a Title and appropriate X/Y axis labels on your
-#        Histogram Plot.
-# -  Answer the following questions based on the Histogram produced:
-#     -  Based on what you see in this histogram, is the data distribution
-#        unimodal?
-#     -  Is it approximately symmetrical?
-#     -  Is it approximately bell-shaped?
-#     -  Is it approximately normal?
-#     -  If not normal, is the distribution skewed? If so, in which
-#        direction?
-#     -  Include a normal curve to the Histogram that you plotted.
-#     -  Explain whether a normal distribution can accurately be used
-#        as a model for this data.
-# -  Create a Probability Plot of the HSDegree variable.
-# -  Answer the following questions based on the Probability Plot:
-#     -  Based on what you see in this probability plot, is the
-#        distribution approximately normal? Explain how you know.
-#     -  If not normal, is the distribution skewed? If so, in which
-#        direction? Explain how you know.
-# -  Now that you have looked at this data visually for normality,
-#    you will now quantify normality with numbers using the stat.desc()
-#    function. Include a screen capture of the results produced.
-# -  In several sentences provide an explanation of the result produced
-#    for skew, kurtosis, and z-scores. In addition, explain how a change in
-#    the sample size may change your explanation?
+# A professor has recently taught two sections of the same course with
+# only one difference between the sections. In one section, he used only 
+# examples taken from sports applications, and in the other section, he
+# used examples taken from a variety of application areas. The sports
+# themed section was advertised as such; so students knew which type of
+# section they were enrolling in. The professor has asked you to compare
+# student performance in the two sections using course grades and total
+# points earned in the course. You will need to import the Scores.csv
+# dataset that has been provided for you.
+
+# Use the appropriate R functions to answer the following questions:
+#  - What are the observational units in this study?
+#  - Identify the variables mentioned in the narrative paragraph and
+#    determine which are categorical and quantitative?
+#  - Create one variable to hold a subset of your data set that contains
+#    only the Regular Section and one variable for the Sports Section.
+#  - Use the Plot function to plot each Sections scores and the number of
+#    students achieving that score. Use additional Plot Arguments to label
+#    the graph and give each axis an appropriate label. Once you have
+#    produced your Plots answer the following questions:
+#      - Comparing and contrasting the point distributions between the two
+#        section, looking at both tendency and consistency: Can you say
+#        that one section tended to score more points than the other?
+#        Justify and explain your answer.
+#      - Did every student in one section score more points than every
+#        student in the other section? If not, explain what a statistical
+#        tendency means in this context.
+#      - What could be one additional variable that was not mentioned in
+#        the narrative that could be influencing the point distributions
+#        between the two sections?
 
 ## Load the ggplot2 package
 install.packages("ggplot2")
@@ -55,24 +45,24 @@ binwidth <- .5
 ## Set the working directory to the root of your DSC 520 directory
 ## to include the week of the assignment
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE) 
-workdir <- file.path(workdir, "week03")
+workdir <- file.path(workdir, "week04")
 
 ## Set the working directory
 setwd(workdir)
 
 ## Load the `data/r4ds/heights.csv` to
-data_df <- read.csv("acs-14-1yr-s0201.csv", stringsAsFactors=TRUE)
-data_df
+data_frame <- read.csv("scores.csv", stringsAsFactors=TRUE)
+data_frame
 
 # -  What are the elements in your data (including the categories and
 #    data types)?
-summary(data_df)
+summary(data_frame)
 
 # -  Please provide the output from the following functions: str();
 #    nrow(); ncol()
-str(data_df)
-nrow(data_df)
-ncol(data_df)
+str(data_frame)
+nrow(data_frame)
+ncol(data_frame)
 
 # -  Create a Histogram of the HSDegree variable using the ggplot2
 #    package.
