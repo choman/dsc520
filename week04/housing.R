@@ -27,9 +27,11 @@
 ## Load the ggplot2 package
 install.packages("ggplot2")
 install.packages("pastecs")
+install.packages("plyr")
 library(ggplot2)
 library(pastecs)
-## library(qqplotr)
+library(plyr)
+
 theme_set(theme_minimal())
 binwidth <- .5
 
