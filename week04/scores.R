@@ -40,6 +40,7 @@
 ## Load the ggplot2 package
 install.packages("ggplot2")
 install.packages("pastecs")
+install.packages("data.table")
 library(ggplot2)
 library(pastecs)
 library(data.table)
@@ -62,7 +63,7 @@ df
 # Create a data table
 dt = data.table(df)
 dt
-tables()
+
 
 #  - What are the observational units in this study?
 #    Answer: score and count based on either Sports or Regular
@@ -146,7 +147,7 @@ gg + labels
 #        that one section tended to score more points than the other?
 #        Justify and explain your answer.
 #        Answer: Based on what I see when I analyze the data, the regular
-#        section appears to do better then th sports section. Even though 
+#        section appears to do better then the sports section. Even though 
 #        10 of the students in the sports section were able to score the 
 #        highest between the sections. The mean and the median show higher
 #        scores for central tendency in the regular section.
@@ -155,7 +156,7 @@ gg + labels
 #        Sports vs Regular mean:   316.1 < 326.1 (trimmed)
 #        Sports vs Regular median: 315 < 325
 #        Sports vs Regular min:    200 < 265
-#        Sports vs Regular min:    395 > 380
+#        Sports vs Regular max:    395 > 380
 #        
 #        In regards of mode, mode function#1 shows every value as a mode
 #        for the sports section, whereas the regular section had repeated 
@@ -167,7 +168,8 @@ gg + labels
 #      - Did every student in one section score more points than every
 #        student in the other section? If not, explain what a statistical
 #        tendency means in this context.
-#        Answer:
+#        Answer: No, however the central tendency shows that the regular class
+#        scored more points
 #
 #      - What could be one additional variable that was not mentioned in
 #        the narrative that could be influencing the point distributions
