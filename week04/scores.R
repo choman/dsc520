@@ -88,6 +88,47 @@ regular <- dt[dt$Section == "Regular"]
 sports
 regular
 
+mean(sports$Score)
+mean(regular$Score)
+
+mean(sports$Score, trim=0.3)
+mean(regular$Score, trim=0.3)
+
+median(sports$Score)
+median(regular$Score)
+
+min(sports$Score)
+min(regular$Score)
+
+max(sports$Score)
+max(regular$Score)
+
+# https://www.geeksforgeeks.org/central-tendency-in-r-programming/
+# defines mode values repeated the most
+get.mode <- function(data)
+{
+  y <- table(data)
+  print(y)
+  m <- names(y)[which(y==max(y))]
+  print(m)
+}
+
+# https://analytics4all.org/2016/04/16/r-intro-to-statistics-central-tendency/
+# define value as most common in list
+get.mode2 <- function(data)
+{
+  y <- unique(data)
+  print(y)
+  y[which.max(tabulate(match(data,y)))]
+  
+}
+
+get.mode(sports$Score)
+get.mode(regular$Score)
+
+get.mode2(sports$Score)
+get.mode2(regular$Score)
+
 # Set labels
 labels <- labs(title="Score vs Count",
              x="Score", 
@@ -104,7 +145,24 @@ gg + labels
 #        section, looking at both tendency and consistency: Can you say
 #        that one section tended to score more points than the other?
 #        Justify and explain your answer.
-#        Answer:
+#        Answer: Based on what I see when I analyze the data, the regular
+#        section appears to do better then th sports section. Even though 
+#        10 of the students in the sports section were able to score the 
+#        highest between the sections. The mean and the median show higher
+#        scores for central tendency in the regular section.
+#
+#        Sports vs Regular mean:   307.4 < 327.6
+#        Sports vs Regular mean:   316.1 < 326.1 (trimmed)
+#        Sports vs Regular median: 315 < 325
+#        Sports vs Regular min:    200 < 265
+#        Sports vs Regular min:    395 > 380
+#        
+#        In regards of mode, mode function#1 shows every value as a mode
+#        for the sports section, whereas the regular section had repeated 
+#        values of 305 and 320
+#
+#        However mode function#2 show the sports section having a mode of 200
+#        and the regular section having a mode of 305
 #
 #      - Did every student in one section score more points than every
 #        student in the other section? If not, explain what a statistical
