@@ -130,49 +130,79 @@ get.mode(regular$Score)
 get.mode2(sports$Score)
 get.mode2(regular$Score)
 
+stat.desc(sports$Score)
+stat.desc(regular$Score)
+
 # Set labels
 labels <- labs(title="Score vs Count",
              x="Score", 
              y="Count of people receiving score")
 
+legend <- scale_color_manual(name="Sections",
+                             values=c(Sports="black", Regular="red"))
+
 # Create a point plot (scatterplot?) of the Sport and Regular 
 # scores and counts
 gg <- ggplot()
-gg <- gg + geom_point(data=sports, aes(x=Score, y=Count))
-gg <- gg + geom_point(data=regular, aes(x=Score, y=Count, color='red'))
-gg + labels
+gg <- gg + geom_point(data=sports, aes(x=Score, y=Count, col="Sports"))
+gg <- gg + geom_point(data=regular, aes(x=Score, y=Count, col="Regular"))
+gg + labels + legend
 
 #      - Comparing and contrasting the point distributions between the two
 #        section, looking at both tendency and consistency: Can you say
 #        that one section tended to score more points than the other?
 #        Justify and explain your answer.
+#
 #        Answer: Based on what I see when I analyze the data, the regular
 #        section appears to do better then the sports section. Even though 
 #        10 of the students in the sports section were able to score the 
 #        highest between the sections. The mean and the median show higher
 #        scores for central tendency in the regular section.
 #
-#        Sports vs Regular mean:   307.4 < 327.6
-#        Sports vs Regular mean:   316.1 < 326.1 (trimmed)
-#        Sports vs Regular median: 315 < 325
-#        Sports vs Regular min:    200 < 265
-#        Sports vs Regular max:    395 > 380
+#           Sports vs Regular mean:   307.4 < 327.6
+#           Sports vs Regular mean:   316.1 < 326.1 (trimmed)
+#           Sports vs Regular median: 315 < 325
+#           Sports vs Regular min:    200 < 265
+#           Sports vs Regular max:    395 > 380
 #        
 #        In regards of mode, mode function#1 shows every value as a mode
 #        for the sports section, whereas the regular section had repeated 
 #        values of 305 and 320
 #
-#        However mode function#2 show the sports section having a mode of 200
-#        and the regular section having a mode of 305
+#        However mode function#2 show the sports section having a mode of
+#        200 and the regular section having a mode of 305.
+#
 #
 #      - Did every student in one section score more points than every
 #        student in the other section? If not, explain what a statistical
 #        tendency means in this context.
-#        Answer: No, however the central tendency shows that the regular class
-#        scored more points
+#
+#        Answer: To begin let's define what a central tendency is. According
+#        to wikipedia[1] a central tendency is center of a probability
+#        distirbution. Based on this, I would say no to the question of every
+#        student in one section score more point then ecery student in the
+#        other section. Although in total points scored the regulat section
+#        did obtain more point
+#         
+#        [1] https://en.wikipedia.org/wiki/Central_tendency
+#
 #
 #      - What could be one additional variable that was not mentioned in
 #        the narrative that could be influencing the point distributions
 #        between the two sections?
-#        Answer:
+#
+#        Answer: First of all, the classes are not "balanced", there are 30 
+#        more student in the regular class that could have influenced the 
+#        higher performance. An additional variable however may be time. 
+#        When was the classes taught. Arguably there is no best time to learn,
+#        however according to some sites like babel[1], 10am-2pm and 4pm-10pm
+#        are the best times. Others like learnerfix[2] say 8am-2pm and 4pm-10pm.
+#        Others reference similar times. But in this context if the sports section
+#        was taught around noon that could point to poor performance.
+#
+#        Also, one might speculate on the 'variety' of the regular section. Perhaps
+#        this was more entertaining information than the sports section.
+#
+#        [1] https://www.babbel.com/en/magazine/best-time-of-day-to-learn
+#        [2] https://learnerfix.com/best-time-of-day-to-learn/
 #
