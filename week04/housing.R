@@ -23,14 +23,24 @@
 #  - Identify if there are any outliers
 #  - Create at least 2 new variables
 
+USE_XLSX <- FALSE
 
 ## Load the ggplot2 package
 install.packages("ggplot2")
 install.packages("pastecs")
 install.packages("plyr")
+# Load libraries
 library(ggplot2)
 library(pastecs)
 library(plyr)
+
+if USE_XLSX {
+  install.packages("xlsx")
+  library(xlsx)
+} else {
+  install.packages("readxl")
+  library(readxl)
+}
 
 theme_set(theme_minimal())
 binwidth <- .5
@@ -38,24 +48,58 @@ binwidth <- .5
 ## Set the working directory to the root of your DSC 520 directory
 ## to include the week of the assignment
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE) 
-workdir <- file.path(workdir, "week03")
+workdir <- file.path(workdir, "week04")
 
 ## Set the working directory
 setwd(workdir)
 
 ## Load the `data/r4ds/heights.csv` to
-data_df <- read.csv("acs-14-1yr-s0201.csv", stringsAsFactors=TRUE)
-data_df
+acs_df <- read.csv("acs-14-1yr-s0201.csv", stringsAsFactors=TRUE)
+acs_df
+
+if USE_XLSX {
+  house_df <- xlsx::read.xlsx("week-6-housing.xlsx")
+} else {
+  sheet_names <- excel_sheets("week-6-housing.xlsx")
+  sheet_names
+  house_df <- readxl::read_xlsx("week-6-housing.xlsx")
+}
+
+house_df
 
 # -  What are the elements in your data (including the categories and
 #    data types)?
-summary(data_df)
+summary(acs_df)
+summary(house_df)
 
 # -  Please provide the output from the following functions: str();
 #    nrow(); ncol()
-str(data_df)
-nrow(data_df)
-ncol(data_df)
+str(acs_df)
+nrow(acs_df)
+ncol(acs_df)
+
+str(house_df)
+nrow(house_df)
+ncol(house_df)
+
+#  - Use the apply function on a variable in your dataset
+apply(house_df, mean, sum)
+
+#  - Use the aggregate function on a variable in your dataset
+aggregate(`Sale Price` ~ bath_full_count, house_df, mean)
+aggregate(`Sale Price` ~ square_feet_total_living, house_df, mean)
+aggregate(`Sale Price` ~ square_feet_total_living + bath_full_count, house_df, mean)
+aggregate(`Sale Price` ~ zip5, house_df, mean)
+
+#  - Use the plyr function on a variable in your dataset – more
+#    specifically, I want to see you split some data, perform a
+#    modification to the data, and then bring it back together
+ddply(house_df, .variables="Sale Price", mean)
+
+#  - Check distributions of the data
+#  - Identify if there are any outliers
+#  - Create at least 2 new variables
+
 
 # -  Create a Histogram of the HSDegree variable using the ggplot2
 #    package.
