@@ -24,6 +24,7 @@
 #  - Create at least 2 new variables
 
 USE_XLSX <- FALSE
+DEBUG    <- FALSE
 
 ## Load the ggplot2 package
 # clean package loading based on 
@@ -32,16 +33,22 @@ mypackages <- c("ggplot2", "pastecs", "plyr")
 if (USE_XLSX) {
   mypackages <- append(mypackages, "xlsx")
 } else {
-  mypackages <-append(mypackages, "readxl")
+  mypackages <- append(mypackages, "readxl")
 }
-mypackages
+
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
 if(length(not_installed)) install.packages(not_installed)
+
 # Load libraries
-library(ggplot2)
-library(pastecs)
-library(plyr)
-ifelse(USE_XLSX, library(xlsx), library(readxl))
+for (package in mypackages) {
+  library(package, character.only=TRUE)
+}
+
+##lapply(mypackages, library)
+##library(ggplot2)
+##library(pastecs)
+##library(plyr)
+##ifelse(USE_XLSX, library(xlsx), library(readxl))
 
 theme_set(theme_minimal())
 binwidth <- .5
@@ -102,7 +109,7 @@ aggregate(`Sale Price` ~ zip5, house_df, mean)
 #  - Use the plyr function on a variable in your dataset – more
 #    specifically, I want to see you split some data, perform a
 #    modification to the data, and then bring it back together
-library(plyr)
+#library(plyr)
 any(is.na(house_df$`Sale Price`))
 any(is.na(house_df$bath_full_count))
 house_df$`Sale Price`[house_df$`Sale Price` < 80000]
@@ -129,10 +136,14 @@ get_values <- function(seq) {
   rand <- c(sample(samp, nrow(house_df)))
   return(rand)
 }
+
 arv <- get_values(100000:800000)
 roi <- get_values(10000:100000)
-arv
-roi
+if (DEBUG) {
+  arv
+  roi
+}
+
 head(house_df)
 house_df$ARV <-arv
 house_df$ROI <-roi
