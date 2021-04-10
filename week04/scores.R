@@ -38,12 +38,21 @@
 #        between the two sections?
 
 ## Load the ggplot2 package
-install.packages("ggplot2")
-install.packages("pastecs")
-install.packages("data.table")
-library(ggplot2)
-library(pastecs)
-library(data.table)
+mypackages <- c("ggplot2", "pastecs", "data.table")
+not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
+if(length(not_installed)) install.packages(not_installed)
+
+# Load libraries
+for (package in mypackages) {
+  library(package, character.only=TRUE)
+}
+
+##install.packages("ggplot2")
+##install.packages("pastecs")
+##install.packages("data.table")
+##library(ggplot2)
+##library(pastecs)
+##library(data.table)
 ## library(qqplotr)
 theme_set(theme_minimal())
 binwidth <- .5
