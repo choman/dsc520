@@ -116,10 +116,16 @@ house_df$`Sale Price`[house_df$`Sale Price` < 80000]
 
 # NOTE: I need to get smarter on ddply!! :)
 ddply(house_df, .(house_df$`Sale Price`), summarize, mean=round(mean(house_df$`Sale Price`)))
+byzip <- ddply(house_df, .variables = c("zip5"), .fun = function(house_df) mean(house_df$`Sale Price`))
+byzip
+byzip <- ddply(house_df, .variables = c("zip5", "bath_full_count"), .fun = function(house_df) mean(house_df$`Sale Price`))
+byzip
 
 #  - Check distributions of the data
 p = runif(house_df$`Sale Price`)
 hist(house_df$`Sale Price`)
+
+## Based on the histogram, this data is positively skewed
 
 #  - Identify if there are any outliers
 summary(house_df)
