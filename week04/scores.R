@@ -163,7 +163,7 @@ gg + labels + legend
 #        Justify and explain your answer.
 #
 #        Answer: Based on what I see when I analyze the data, the regular
-#        section appears to do better then the sports section. Even though 
+#        section appears to do better than the sports section. Even though 
 #        10 of the students in the sports section were able to score the 
 #        highest between the sections. The mean and the median show higher
 #        scores for central tendency in the regular section.
@@ -174,7 +174,7 @@ gg + labels + legend
 #           Sports vs Regular min:    200 < 265
 #           Sports vs Regular max:    395 > 380
 #        
-#        In regards of mode, mode function#1 shows every value as a mode
+#        In regards to mode, mode function#1 shows every value as a mode
 #        for the sports section, whereas the regular section had repeated 
 #        values of 305 and 320
 #
@@ -190,8 +190,8 @@ gg + labels + legend
 #        to wikipedia[1] a central tendency is center of a probability
 #        distirbution. Based on this, I would say no to the question of every
 #        student in one section score more point then ecery student in the
-#        other section. Although in total points scored the regulat section
-#        did obtain more point
+#        other section. Although in total points scored the regular section
+#        did obtain more points
 #         
 #        [1] https://en.wikipedia.org/wiki/Central_tendency
 #
@@ -203,7 +203,7 @@ gg + labels + legend
 #        Answer: First of all, the classes are not "balanced", there are 30 
 #        more student in the regular class that could have influenced the 
 #        higher performance. An additional variable however may be time. 
-#        When was the classes taught. Arguably there is no best time to learn,
+#        When were the classes taught? Arguably there is no best time to learn,
 #        however according to some sites like babel[1], 10am-2pm and 4pm-10pm
 #        are the best times. Others like learnerfix[2] say 8am-2pm and 4pm-10pm.
 #        Others reference similar times. But in this context if the sports section
