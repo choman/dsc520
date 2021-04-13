@@ -1,27 +1,25 @@
-# Assignment: ASSIGNMENT 3B
+# Assignment: ASSIGNMENT 5.2
 # Name: Homan, Chad
-# Date: 2021-03-30
+# Date: 2021-04-13
 
 # We interact with a few datasets in this course, one you are
-# already familiar with, the 2014 American Community Survey
-# and the second is a Housing dataset, that provides real
-# estate transactions recorded from 1964 to 2016.  For this
-# exercise, you need to start practicing some data transformation
-# steps – which will carry into next week, as you learn some
-# additional methods.  For this week, using either dataset (or
-# one of your own – although I will let you know ahead of time
-# that the Housing dataset is used for a later assignment, so
-# not a bad idea for you to get more comfortable with now!),
-# perform the following data transformations:
-
-#  - Use the apply function on a variable in your dataset
-#  - Use the aggregate function on a variable in your dataset
-#  - Use the plyr function on a variable in your dataset – more
-#    specifically, I want to see you split some data, perform a
-#    modification to the data, and then bring it back together
-#  - Check distributions of the data
-#  - Identify if there are any outliers
-#  - Create at least 2 new variables
+# Using either the same dataset(s) you used in the previous
+# weeks’ exercise or a brand-new dataset of your choosing,
+# perform the following transformations (Remember, anything
+# you learn about the Housing dataset in these two weeks can
+# be used for a later exercise!)
+#
+#  - Using the dplyr package, use the 6 different operations
+#    to analyze/transform the data - GroupBy, Summarize, Mutate,
+#    Filter, Select, and Arrange – Remember this isn’t just
+#    modifying data, you are learning about your data also – so
+#    play around and start to understand your dataset in more
+#    detail
+#  - Using the purrr package – perform 2 functions on your
+#    dataset.  You could use zip_n, keep, discard, compact, etc.
+#  - Use the cbind and rbind function on your dataset
+#  - Split a string, then concatenate the results back together
+#
 
 USE_XLSX <- FALSE
 DEBUG    <- FALSE
@@ -29,7 +27,7 @@ DEBUG    <- FALSE
 ## Load the ggplot2 package
 # clean package loading based on 
 # https://statisticsglobe.com/r-install-missing-packages-automatically
-mypackages <- c("ggplot2", "pastecs", "plyr")
+mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr")
 if (USE_XLSX) {
   mypackages <- append(mypackages, "xlsx")
 } else {
@@ -40,15 +38,10 @@ not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])
 if(length(not_installed)) install.packages(not_installed)
 
 # Load libraries
+##lapply(mypackages, require, character.only=TRUE)
 for (package in mypackages) {
   library(package, character.only=TRUE)
 }
-
-##lapply(mypackages, library)
-##library(ggplot2)
-##library(pastecs)
-##library(plyr)
-##ifelse(USE_XLSX, library(xlsx), library(readxl))
 
 theme_set(theme_minimal())
 binwidth <- .5
@@ -56,15 +49,12 @@ binwidth <- .5
 ## Set the working directory to the root of your DSC 520 directory
 ## to include the week of the assignment
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE) 
-workdir <- file.path(workdir, "week04")
+workdir <- file.path(workdir, "week05")
 
 ## Set the working directory
 setwd(workdir)
 
-## Load the `data/r4ds/heights.csv` to
-acs_df <- read.csv("acs-14-1yr-s0201.csv", stringsAsFactors=TRUE)
-acs_df
-
+## Load the `housing` to data
 filename <- "week-6-housing.xlsx"
 
 if (USE_XLSX) {
