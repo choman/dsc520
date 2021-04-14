@@ -115,12 +115,16 @@ house_df %>% select("Sale Price", bath_full_count)
 # arrange
 house_df %>% arrange(!!! quo("Sale Price"))
 
+#
 #  - Using the purrr package – perform 2 functions on your
 #    dataset.  You could use zip_n, keep, discard, compact, etc.
 
+#
 #  - Use the cbind and rbind function on your dataset
 
+#
 #  - Split a string, then concatenate the results back together
+# First with the R base packages
 mystring <- "The dog ate my homework"
 mystring
 mylist <- strsplit(mystring, " ")[[1]]
@@ -129,4 +133,11 @@ class(mylist)
 mystring2 <- paste(mylist, collapse=" ", sep=" ")
 class(mystring2)
 mystring2
+identical(mystring, mystring2)
+#
+# And now using stringr
+mylist <- str_split(mystring2, " ")[[1]]
+mylist
+mystring <- paste(mylist, collapse=" ", sep=" ")
+mystring
 identical(mystring, mystring2)
