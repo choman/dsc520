@@ -121,6 +121,14 @@ house_df %>% arrange(!!! quo("Sale Price"))
 
 #
 #  - Use the cbind and rbind function on your dataset
+dimnames(house_df)
+newdf <- cbind(house_df$'Sale Price', house_df$square_feet_total_living)
+newdf
+headdf <- head(house_df)
+taildf <- tail(house_df)
+
+newdf <- rbind(headdf, taildf)
+newdf
 
 #
 #  - Split a string, then concatenate the results back together
