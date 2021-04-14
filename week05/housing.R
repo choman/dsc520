@@ -27,7 +27,7 @@ DEBUG    <- FALSE
 ## Load the ggplot2 package
 # clean package loading based on 
 # https://statisticsglobe.com/r-install-missing-packages-automatically
-mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr")
+mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 if (USE_XLSX) {
   mypackages <- append(mypackages, "xlsx")
 } else {
@@ -66,18 +66,14 @@ if (USE_XLSX) {
 }
 
 house_df
-
+house_df %>% head(4) %>% dim()
+class(house_df)
 # -  What are the elements in your data (including the categories and
 #    data types)?
-summary(acs_df)
 summary(house_df)
 
 # -  Please provide the output from the following functions: str();
 #    nrow(); ncol()
-str(acs_df)
-nrow(acs_df)
-ncol(acs_df)
-
 str(house_df)
 nrow(house_df)
 ncol(house_df)
@@ -89,53 +85,48 @@ apply(house_df, 2, is.na)
 dimnames(house_df)
 #apply(house_df$`Sale Price`, 2, is.na)
 
+#  - Using the dplyr package, use the 6 different operations
+#    to analyze/transform the data - GroupBy, Summarize, Mutate,
+#    Filter, Select, and Arrange – Remember this isn’t just
+#    modifying data, you are learning about your data also – so
+#    play around and start to understand your dataset in more
+#    detail
+data(house_df, package="ggplot2")
+# GroupBy
+house_df %>% group_by(square_feet_total_living) 
+house_df %>% group_by(square_feet_total_living) %>% summarize(mean(bath_full_count))
 
-#  - Use the aggregate function on a variable in your dataset
-aggregate(`Sale Price` ~ bath_full_count, house_df, mean)
-aggregate(`Sale Price` ~ square_feet_total_living, house_df, mean)
-aggregate(`Sale Price` ~ square_feet_total_living + bath_full_count, house_df, mean)
-aggregate(`Sale Price` ~ zip5, house_df, mean)
+# Summarize
+house_df %>% summarize(mean('Sale Price'))
 
-#  - Use the plyr function on a variable in your dataset – more
-#    specifically, I want to see you split some data, perform a
-#    modification to the data, and then bring it back together
-#library(plyr)
-any(is.na(house_df$`Sale Price`))
-any(is.na(house_df$bath_full_count))
-house_df$`Sale Price`[house_df$`Sale Price` < 80000]
-
-# NOTE: I need to get smarter on ddply!! :)
-ddply(house_df, .(house_df$`Sale Price`), summarize, mean=round(mean(house_df$`Sale Price`)))
-
-#  - Check distributions of the data
-p = runif(house_df$`Sale Price`)
-hist(house_df$`Sale Price`)
-
-#  - Identify if there are any outliers
-summary(house_df)
-summary(house_df$`Sale Price`)
-hist(house_df$`Sale Price`)
-boxplot(house_df$`Sale Price`)
-
-# Based on my histogram and boxplot I believe there 
-# are outliers in the data.
-
-#  - Create at least 2 new variables
-get_values <- function(seq) {
-  samp <- seq
-  rand <- c(sample(samp, nrow(house_df)))
-  return(rand)
-}
-
-arv <- get_values(100000:800000)
-roi <- get_values(10000:100000)
-if (DEBUG) {
-  arv
-  roi
-}
-
-head(house_df)
-house_df$ARV <-arv
-house_df$ROI <-roi
+# Mutate
 dimnames(house_df)
+house_df %>% mutate(Price_per_foot='Sale Price'/square_feet_total_living) %>% select(Price_per_foot)
 
+# filter
+house_df %>% filter(bath_full_count == 3)
+house_df %>% filter(bath_full_count %in% c(2,3))
+#house_df %>% filter("'Sale Price' < 100000")
+
+# select
+select(house_df, "Sale Price", bath_full_count)
+house_df %>% select("Sale Price", bath_full_count)
+
+# arrange
+house_df %>% arrange(!!! quo("Sale Price"))
+
+#  - Using the purrr package – perform 2 functions on your
+#    dataset.  You could use zip_n, keep, discard, compact, etc.
+
+#  - Use the cbind and rbind function on your dataset
+
+#  - Split a string, then concatenate the results back together
+mystring <- "The dog ate my homework"
+mystring
+mylist <- strsplit(mystring, " ")[[1]]
+mylist
+class(mylist)
+mystring2 <- paste(mylist, collapse=" ", sep=" ")
+class(mystring2)
+mystring2
+identical(mystring, mystring2)
