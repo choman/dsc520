@@ -118,6 +118,13 @@ house_df %>% arrange(!!! quo("Sale Price"))
 #
 #  - Using the purrr package – perform 2 functions on your
 #    dataset.  You could use zip_n, keep, discard, compact, etc.
+dimnames(house_df)[2]
+any(is.na(house_df$sale_warning))
+stuff <- house_df$sale_warning %>% discard(is.na)
+identical(house_df$sale_warning, stuff)
+
+data <- house_df %>% select_if(is.numeric) %>% map(mean)
+data
 
 #
 #  - Use the cbind and rbind function on your dataset
