@@ -21,18 +21,14 @@
 #  - Split a string, then concatenate the results back together
 #
 
-USE_XLSX <- FALSE
 DEBUG    <- FALSE
 
 ## Load the ggplot2 package
 # clean package loading based on 
 # https://statisticsglobe.com/r-install-missing-packages-automatically
 mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
-if (USE_XLSX) {
-  mypackages <- append(mypackages, "xlsx")
-} else {
-  mypackages <- append(mypackages, "readxl")
-}
+mypackages <- append(mypackages, "readxl")
+
 
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
 if(length(not_installed)) install.packages(not_installed)
@@ -57,13 +53,9 @@ setwd(workdir)
 ## Load the `housing` to data
 filename <- "week-6-housing.xlsx"
 
-if (USE_XLSX) {
-  house_df <- xlsx::read.xlsx(filename)
-} else {
-  sheet_names <- excel_sheets(filename)
-  house_df    <- readxl::read_xlsx(filename)
-  sheet_names
-}
+sheet_names <- excel_sheets(filename)
+house_df    <- readxl::read_xlsx(filename)
+sheet_names
 
 house_df
 house_df %>% head(4) %>% dim()
@@ -101,19 +93,20 @@ house_df %>% summarize(mean('Sale Price'))
 
 # Mutate
 dimnames(house_df)
-house_df %>% mutate(Price_per_foot='Sale Price'/square_feet_total_living) %>% select(Price_per_foot)
+house_df %>% mutate(Price_per_foot=`Sale Price`/square_feet_total_living)
+house_df %>% mutate(Price_per_foot=`Sale Price`/square_feet_total_living) %>% select(zip5, Price_per_foot)
 
 # filter
 house_df %>% filter(bath_full_count == 3)
 house_df %>% filter(bath_full_count %in% c(2,3))
-#house_df %>% filter("'Sale Price' < 100000")
+house_df %>% filter(`Sale Price` < 100000)
 
 # select
 select(house_df, "Sale Price", bath_full_count)
-house_df %>% select("Sale Price", bath_full_count)
+house_df %>% select(`Sale Price`, bath_full_count, bedrooms)
 
 # arrange
-house_df %>% arrange(!!! quo("Sale Price"))
+house_df %>% arrange(-`Sale Price`, bath_full_count, -bedrooms)
 
 #
 #  - Using the purrr package – perform 2 functions on your
@@ -156,3 +149,4 @@ mylist
 mystring <- paste(mylist, collapse=" ", sep=" ")
 mystring
 identical(mystring, mystring2)
+
