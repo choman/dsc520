@@ -55,9 +55,6 @@ Inline footnote ^[1]
 library(ggplot2)
 setwd("/home/choman/repos/bellevue/dsc520")
 heights_df <- read.csv("data/r4ds/heights.csv")
-
-
-
 ```
 ## NY Times COVID-19 Data
 
