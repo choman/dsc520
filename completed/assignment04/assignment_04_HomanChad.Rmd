@@ -1,0 +1,74 @@
+---
+title: "ASSIGNMENT 4"
+author: "Chad Homan"
+date: '2021-04-20'
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+bibliography: bibliography.bib
+---
+
+# Markdown Basics
+
+## Favorite Foods
+
+1. Mexican
+2. Steak
+3. Pizza
+
+## Images
+
+![An Image](plots/10-all-cases-log.png)
+
+## Add a Quote
+
+> Here's to the nights I'll never remember,
+> with the friends I'll never forget!
+
+## Add an Equation
+
+In one line: $\sum_{n=1}^{10} n^2$
+
+Or by itself:
+$$
+
+\sum_{n=1}^{10} n^2
+
+$$
+
+## Add a Footnote
+
+By itself: [^1]
+
+Inline footnote ^[1]
+
+[^1]: This is a footnote
+
+## Add Citations
+
+* R for Everyone [@doe99]
+* Discovering Statistics Using R [@doe100]
+
+# Inline Code
+```{r load-stuff}
+library(ggplot2)
+setwd("/home/choman/repos/bellevue/dsc520")
+heights_df <- read.csv("data/r4ds/heights.csv")
+
+
+
+```
+## NY Times COVID-19 Data
+
+## R4DS Height vs Earnings
+
+# Tables
+
+## Knitr Table with Kable
+
+## Pandoc Table
+
+# References
+
+<div id="refs"></div>
