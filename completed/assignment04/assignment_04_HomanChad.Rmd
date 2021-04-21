@@ -3,9 +3,9 @@ title: "ASSIGNMENT 4"
 author: "Chad Homan"
 date: '2021-04-20'
 output:
-  word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
+  word_document: default
 bibliography: bibliography.bib
 ---
 
@@ -39,16 +39,12 @@ $$
 
 ## Add a Footnote
 
-By itself: [^1]
-
-Inline footnote ^[1]
-
-[^1]: This is a footnote
+[^myfootnote]
 
 ## Add Citations
 
-* R for Everyone [@doe99]
-* Discovering Statistics Using R [@doe100]
+* R for Everyone [@lander2017]
+* Discovering Statistics Using R [@field2012]
 
 # Inline Code
 ```{r load-stuff}
