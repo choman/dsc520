@@ -3,18 +3,24 @@ title: "ASSIGNMENT 4"
 author: "Chad Homan"
 date: '2021-04-20'
 output:
-  pdf_document: default
-  html_document: default
   word_document: default
+  html_document: default
+  pdf_document: default
 bibliography: bibliography.bib
 ---
 
 # Markdown Basics
-
+```{r setwd}
+workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+workdir <- file.path(workdir, "completed/assignent04")
+workdir
+## Set the working directory
+setwd(workdir)
+```
 ## Favorite Foods
 
 1. Mexican
-2. Steak
+2. Steak 
 3. Pizza
 
 ## Images
