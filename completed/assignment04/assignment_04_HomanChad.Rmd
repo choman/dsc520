@@ -7,16 +7,22 @@ output:
   html_document: default
   pdf_document: default
 bibliography: bibliography.bib
+
+## [^1]: This is a footnote
 ---
 
-# Markdown Basics
-```{r setwd}
+```{r setup, echo=FALSE}
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
-workdir <- file.path(workdir, "completed/assignent04")
-workdir
+##workdir <- file.path(workdir, "completed/assignent04")
+
 ## Set the working directory
-setwd(workdir)
+##setwd(workdir)
+##```{r setup}
+knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/assignment04')
 ```
+
+# Markdown Basics
+
 ## Favorite Foods
 
 1. Mexican
@@ -37,15 +43,14 @@ setwd(workdir)
 In one line: $\sum_{n=1}^{10} n^2$
 
 Or by itself:
+
 $$
-
 \sum_{n=1}^{10} n^2
-
 $$
 
 ## Add a Footnote
 
-[^myfootnote]
+Footnote Example[^1]
 
 ## Add Citations
 
@@ -53,14 +58,34 @@ $$
 * Discovering Statistics Using R [@field2012]
 
 # Inline Code
-```{r load-stuff}
+```{r load-stuff, echo=FALSE}
 library(ggplot2)
-setwd("/home/choman/repos/bellevue/dsc520")
+library(dplyr)
+library(purrr)
+tmp <- getwd()
+setwd(workdir)
 heights_df <- read.csv("data/r4ds/heights.csv")
+
+covid_dir <- "data/nytimes/covid-19-data"
+covid_counties_df <- read.csv(file.path(covid_dir, "us-counties.csv")) 
+covid_us_df <- read.csv(file.path(covid_dir, "us.csv"))
+covid_us_states_df <- read.csv(file.path(covid_dir, "us-states.csv"))
+
+florida_df <- covid_us_states_df %>% filter(state == "Florida")
+ny_df <- covid_us_states_df %>% filter(state == "New York")
+california_df <- covid_us_states_df %>% filter(state == "California")
+#heights_df
+setwd(tmp)
 ```
 ## NY Times COVID-19 Data
+```{r line-plot-covid}
+# Need code
+```
 
 ## R4DS Height vs Earnings
+```{r plot-heights-vd-earnings, echo=FALSE}
+ggplot(heights_df, aes(x=height, y=earn)) + geom_point()
+```
 
 # Tables
 
