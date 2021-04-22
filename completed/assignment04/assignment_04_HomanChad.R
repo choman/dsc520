@@ -39,7 +39,8 @@ ggplot(heights_df, aes(race)) + geom_bar() + coord_flip()
 covid_df <- read.csv("data/nytimes/covid-19-data/us-states.csv")
 
 ## Parse the date column using `as.Date()``
-covid_df$date <- as.Date("Month")
+covid_df$date <- format(as.Date(covid_df$date, "%Y-%m-%d"), "%m")
+head(covid_df)
 
 ## Create three dataframes named `california_df`, `ny_df`, and `florida_df`
 ## containing the data from California, New York, and Florida
@@ -49,13 +50,13 @@ florida_df <- covid_df[ which( covid_df$state == "Florida"), ]
 
 head(florida_df)
 ## Plot the number of cases in Florida using `geom_line()`
-ggplot(data=florida_df, aes(x=cases, y=date, group=1)) + geom_line()
+ggplot(data=florida_df, aes(x=date, y=cases, group=1)) + geom_line()
 
 ## Add lines for New York and California to the plot
 ggplot(data=florida_df, aes(x=date, group=1)) +
   geom_line(aes(y = cases)) +
   geom_line(data=ny_df, aes(y = cases)) +
-  geom_line(data=florida_df, aes(y = cases))
+  geom_line(data=california_df, aes(y = cases))
 
 ## Use the colors "darkred", "darkgreen", and "steelblue" for Florida, New York, and California
 ggplot(data=florida_df, aes(x=date, group=1)) +
@@ -70,16 +71,17 @@ ggplot(data=florida_df, aes(x=date, group=1)) +
   geom_line(data=ny_df, aes(y = cases,colour="New York")) +
   geom_line(data=california_df, aes(y = cases, colour="California")) +
   scale_colour_manual("",
-                      breaks = c(___, ___, ___),
-                      values = c(___, ___, ___)) +
+                      breaks = c("Florida", "New York", "California"),
+                      values = c("darkred", "darkgreen", "steelblue")) +
   xlab(" ") + ylab("Cases")
 
 ## Scale the y axis using `scale_y_log10()`
-ggplot(data=___, aes(x=___, group=1)) +
-  geom_line(aes(y = cases, colour = "Florida")) +
-  geom_line(data=ny_df, aes(y = cases,colour="New York")) +
-  geom_line(data=california_df, aes(y = cases, colour="California")) +
-  scale_colour_manual("",
-                      breaks = c(___, ___, ___),
-                      values = c(___, ___, ___)) +
+ggplot(data=florida_df, aes(x=date, group=1)) +
+  geom_line(aes(y = cases, color = "Florida")) +
+  geom_line(data=ny_df, aes(y = cases, color="New York")) +
+  geom_line(data=california_df, aes(y = cases, color="California")) +
+  scale_color_manual("",
+                      breaks = c("Florida", "New York", "California"),
+                      values = c("darkred", "darkgreen", "steelblue")) +
   xlab(" ") + ylab("Cases") + scale_y_log10()
+
