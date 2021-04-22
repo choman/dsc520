@@ -31,7 +31,7 @@ knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/as
 
 ## Images
 
-![An Image](plots/10-all-cases-log.png)
+![An Image](plots/10-all-cases-log.png){width=25%, height=25%, align=center}
 
 ## Add a Quote
 
@@ -77,9 +77,11 @@ california_df <- covid_us_states_df %>% filter(state == "California")
 #heights_df
 setwd(tmp)
 ```
+
 ## NY Times COVID-19 Data
 ```{r line-plot-covid}
 # Need code
+head(florida_df)
 ```
 
 ## R4DS Height vs Earnings
