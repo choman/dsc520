@@ -19,15 +19,15 @@ For this assignment, you will create an R Markdown report. Use the `assignment_0
 - [X] Add one of your favorite quotes under the `## Add a Quote` section.
 - [X] Add a LaTeX formatted equation under the `## Add an Equation` section.
 - [ ] Add any footnote under the `## Add a Footnote` section.
-- [ ] Under the `## Add Citations` section, create an unordered list with `R for Everyone` and `Discovering Statistics Using R` with the proper citations.  
+- [X] Under the `## Add Citations` section, create an unordered list with `R for Everyone` and `Discovering Statistics Using R` with the proper citations.  
 
 ### Inline Code
 
 - [ ] Under the `# Inline Code` section include a [code chunk](https://rmarkdown.rstudio.com/lesson-3.html) that loads the `ggplot2` library and following dataframes from the previous exercise: 
-   - [ ] `heights_df`
-   - [ ] `california_df`
-   - [ ] `florida_df`
-   - [ ] `ny_df` 
+   - [X] `heights_df`
+   - [X] `california_df`
+   - [X] `florida_df`
+   - [X] `ny_df` 
    - [ ] Use the `include=FALSE` option
 - [ ] Under the `## NY Times COVID-19 Data` section, include code used to generate the log scale plot from the previous exercise.  
    - [ ] This is the plot that corresponds to the image `10-all-cases-log.png` from `completed/assignment04/plots`.  

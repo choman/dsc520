@@ -39,7 +39,7 @@ ggplot(heights_df, aes(race)) + geom_bar() + coord_flip()
 covid_df <- read.csv("data/nytimes/covid-19-data/us-states.csv")
 
 ## Parse the date column using `as.Date()``
-covid_df$date <- as.Date()
+covid_df$date <- as.Date("Month")
 
 ## Create three dataframes named `california_df`, `ny_df`, and `florida_df`
 ## containing the data from California, New York, and Florida
@@ -82,4 +82,4 @@ ggplot(data=___, aes(x=___, group=1)) +
   scale_colour_manual("",
                       breaks = c(___, ___, ___),
                       values = c(___, ___, ___)) +
-  xlab(" ") + ylab("Cases") + ___
+  xlab(" ") + ylab("Cases") + scale_y_log10()
