@@ -100,10 +100,14 @@ convert_bool <-function(df)
   return(df)
 }
 
-name <- c("Aragon", "Bilbo", "Frodo", "Galadriel", "Sam", "Gandalf", "Legolas", "Sauron", "Gollum")
-race <- c("Men", "Hobbit", "Hobbit", "Elf", "Hobbit", "Maia", "Elf", "Maia", "Hobbit")
-in_fellowship <- c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE)
-ring_bearer <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE)
+name <- c("Aragon", "Bilbo", "Frodo", "Galadriel", 
+          "Sam", "Gandalf", "Legolas", "Sauron", "Gollum")
+race <- c("Men", "Hobbit", "Hobbit", "Elf", "Hobbit", 
+          "Maia", "Elf", "Maia", "Hobbit")
+in_fellowship <- c(TRUE, FALSE, TRUE, FALSE, 
+                   TRUE, TRUE, TRUE, FALSE, FALSE)
+ring_bearer <- c(FALSE, TRUE, TRUE, FALSE, TRUE, 
+                 TRUE, FALSE, TRUE, TRUE)
 age <- c(88, 129, 51, 7000, 36, 2019, 2931, 7052, 589)
 
 in_fellowship <- convert_bool(in_fellowship)
@@ -113,12 +117,14 @@ characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
 col_names = c("Name", "Race", "In Fellowship?", "Is Ring Bearer?", "Age")
 ```
 ## Pandoc Table
-```{r show-table}
+```{r show-table, results='asis'}
 kable(characters_df, 
       caption="One Ring To Rule Them All",
       col.names = col_names,
       format="pandoc",
-      padding=2, table.attr = "style='pandoc_grid_table'")
+      align="llccr",
+      padding=2, 
+      table.attr = "style='pandoc_grid_table'")
 ```
 
 # References
