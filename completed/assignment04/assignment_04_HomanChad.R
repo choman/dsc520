@@ -1,6 +1,6 @@
 # Assignment: ASSIGNMENT 4
-# Name: Lastname, Firstname
-# Date: 2010-02-14
+# Name: Homan, Chad
+# Date: 2021-04-21
 
 ## Load the ggplot2 package
 library(ggplot2)
