@@ -58,7 +58,7 @@ Footnote Example[^1]
 * Discovering Statistics Using R [@field2012]
 
 # Inline Code
-```{r load-stuff, echo=FALSE}
+```{r load-stuff, include=FALSE}
 library(ggplot2)
 library(dplyr)
 library(purrr)
@@ -92,9 +92,25 @@ ggplot(heights_df, aes(x=height, y=earn)) + geom_point()
 # Tables
 
 ## Knitr Table with Kable
+```{r table-things}
+library(knitr)
+name <- c("Aragon", "Bilbo", "Frodo", "Galadriel", "Sam", "Gandalf", "Legolas", "Sauron", "Gollum")
+race <- c("Men", "Hobbit", "Hobbit", "Elf", "Hobbit", "Maia", "Elf", "Maia", "Hobbit")
+in_fellowship <- c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE)
+ring_bearer <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE)
+age <- c(88, 129, 51, 7000, 36, 2019, 2931, 7052, 589)
 
+characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
+```
 ## Pandoc Table
+```{r show-table}
+kable(characters_df, 
+      caption="One Ring To Rule Them All",
+      format="pandoc",
+      padding=2)
+```
 
 # References
 
 <div id="refs"></div>
+
