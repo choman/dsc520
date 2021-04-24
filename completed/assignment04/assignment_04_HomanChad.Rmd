@@ -3,13 +3,13 @@ title: "ASSIGNMENT 4"
 author: "Chad Homan"
 date: '2021-04-20'
 output:
-  word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
+  word_document: default
 bibliography: bibliography.bib
 ---
 
-```{r setup, echo=TRUE}
+```{r setup, echo=FALSE}
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
 ##workdir <- file.path(workdir, "completed/assignent04")
 ##workdir
@@ -52,7 +52,7 @@ $$
 
 Footnote Example[^1]
 
-test ^[this is another example]
+Inline Footnote ^[this is an example of an inline footnote]
 
 [^1]: This is a footnote example
 
@@ -149,7 +149,7 @@ kable(characters_df,
 
 ## Pandoc Table
 ```{r show-table, results='asis'}
-kable(head(characters_df, 4), 
+kable(head(filter(characters_df, nchar(name) <= 6), n=5),
       caption="One Ring To Rule Them All",
       col.names = col_names,
       format="pandoc",
