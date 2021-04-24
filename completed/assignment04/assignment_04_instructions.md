@@ -18,7 +18,7 @@ For this assignment, you will create an R Markdown report. Use the `assignment_0
 - [X] Under the `## Images` section, insert the image `10-all-cases-log.png` from `completed/assignment04/plots/` directory with the caption `All Cases (Log Plot)`
 - [X] Add one of your favorite quotes under the `## Add a Quote` section.
 - [X] Add a LaTeX formatted equation under the `## Add an Equation` section.
-- [ ] Add any footnote under the `## Add a Footnote` section.
+- [X] Add any footnote under the `## Add a Footnote` section.
 - [X] Under the `## Add Citations` section, create an unordered list with `R for Everyone` and `Discovering Statistics Using R` with the proper citations.  
 
 ### Inline Code
@@ -28,7 +28,7 @@ For this assignment, you will create an R Markdown report. Use the `assignment_0
    - [X] `california_df`
    - [X] `florida_df`
    - [X] `ny_df` 
-   - [X] Use the `include=FALSE` option
+   - [] Use the `include=FALSE` option
 - [ ] Under the `## NY Times COVID-19 Data` section, include code used to generate the log scale plot from the previous exercise.  
    - [ ] This is the plot that corresponds to the image `10-all-cases-log.png` from `completed/assignment04/plots`.  
    - [X] Use the `echo=FALSE` option to only show the plot and not the code
@@ -39,7 +39,7 @@ For this assignment, you will create an R Markdown report. Use the `assignment_0
 
 - [X] Using the `knitr` package and `kable` function, generate a table of the Lord of the Rings characters as given in the `characters_df` dataframe in the prior exercise.  
    - [X] Give the table the caption `One Ring to Rule Them All`
-- [-] Under the `## Pandoc Grid Table` recreate the following table using [Pandoc Markdown](https://pandoc.org/MANUAL.html#tables)
+- [X] Under the `## Pandoc Grid Table` recreate the following table using [Pandoc Markdown](https://pandoc.org/MANUAL.html#tables)
 
 | Name      | Race      | In Fellowship? | Is Ring Bearer? | Age    |
 |-----------|-----------|----------------|-----------------|-------:|
