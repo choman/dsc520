@@ -66,6 +66,10 @@ Inline Footnote ^[this is an example of an inline footnote]
 library(ggplot2)
 library(dplyr)
 library(purrr)
+
+# set theme
+theme_set(theme_minimal())
+
 tmp <- getwd()
 setwd(workdir)
 heights_df <- read.csv("data/r4ds/heights.csv")
@@ -99,7 +103,6 @@ ggplot(data=florida_df, aes(x=date, group=1, nrow=7, ncol=7)) +
         values = c("darkred", "darkgreen", "steelblue")) +
   xlab(" ") + ylab("Cases") + scale_y_log10()
 
-
 ```
 
 ## R4DS Height vs Earnings
@@ -114,7 +117,7 @@ ggplot(heights_df, aes(x=height, y=earn, col=sex)) +
 # Tables
 
 ## Knitr Table with Kable
-```{r show-full-table, results='asis'}
+```{r show-full-table, results='asis', echo=FALSE}
 library(knitr)
 
 convert_bool <-function(df)
@@ -148,7 +151,7 @@ kable(characters_df,
 ```
 
 ## Pandoc Table
-```{r show-table, results='asis'}
+```{r show-table, results='asis', echo=FALSE}
 kable(head(filter(characters_df, nchar(name) <= 6), n=5),
       caption="One Ring To Rule Them All",
       col.names = col_names,
