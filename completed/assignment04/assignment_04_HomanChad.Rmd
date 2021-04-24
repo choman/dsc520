@@ -73,19 +73,33 @@ heights_df <- read.csv("data/r4ds/heights.csv")
 covid_dir <- "data/nytimes/covid-19-data"
 covid_counties_df <- read.csv(file.path(covid_dir, "us-counties.csv")) 
 covid_us_df <- read.csv(file.path(covid_dir, "us.csv"))
-covid_us_states_df <- read.csv(file.path(covid_dir, "us-states.csv"))
+covid_df <- read.csv(file.path(covid_dir, "us-states.csv"))
 
-florida_df <- covid_us_states_df %>% filter(state == "Florida")
-ny_df <- covid_us_states_df %>% filter(state == "New York")
-california_df <- covid_us_states_df %>% filter(state == "California")
+covid_df$date <- as.Date(covid_df$date,"%Y-%m-%d")
+
+
+florida_df <- covid_df %>% filter(state == "Florida")
+ny_df <- covid_df %>% filter(state == "New York")
+california_df <- covid_df %>% filter(state == "California")
+
+
 #heights_df
 setwd(tmp)
 ```
 
 ## NY Times COVID-19 Data
-```{r line-plot-covid}
+```{r line-plot-covid, echo=FALSE}
 # Need code
-head(florida_df)
+ggplot(data=florida_df, aes(x=date, group=1, nrow=7, ncol=7)) +
+  geom_line(aes(y = cases, color = "Florida")) +
+  geom_line(data=ny_df, aes(y = cases, color="New York")) +
+  geom_line(data=california_df, aes(y = cases, color="California")) +
+  scale_color_manual("",
+        breaks = c("Florida", "New York", "California"),
+        values = c("darkred", "darkgreen", "steelblue")) +
+  xlab(" ") + ylab("Cases") + scale_y_log10()
+
+
 ```
 
 ## R4DS Height vs Earnings
