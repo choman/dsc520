@@ -3,16 +3,16 @@ title: "ASSIGNMENT 4"
 author: "Chad Homan"
 date: '2021-04-20'
 output:
-  pdf_document: default
-  html_document: default
   word_document: default
+  html_document: default
+  pdf_document: default
 bibliography: bibliography.bib
-## [^1]: This is a footnote
 ---
 
-```{r setup, echo=FALSE}
+```{r setup, echo=TRUE}
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
 ##workdir <- file.path(workdir, "completed/assignent04")
+##workdir
 
 ## Set the working directory
 ##setwd(workdir)
@@ -30,7 +30,8 @@ knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/as
 
 ## Images
 
-![An Image](plots/10-all-cases-log.png){width=25%, height=25%, align=center}
+![An Image](plots/10-all-cases-log.png){ height=50% width=50% }
+
 
 ## Add a Quote
 
@@ -50,6 +51,10 @@ $$
 ## Add a Footnote
 
 Footnote Example[^1]
+
+test ^[this is another example]
+
+[^1]: This is a footnote example
 
 ## Add Citations
 
@@ -85,13 +90,17 @@ head(florida_df)
 
 ## R4DS Height vs Earnings
 ```{r plot-heights-vd-earnings, echo=FALSE}
-ggplot(heights_df, aes(x=height, y=earn)) + geom_point()
+ggplot(heights_df, aes(x=height, y=earn, col=sex)) + 
+  geom_point() +   
+  xlab("Height (Inches)") + 
+  ylab("Earnings (Dollars)")
+
 ```
 
 # Tables
 
 ## Knitr Table with Kable
-```{r table-things}
+```{r show-full-table, results='asis'}
 library(knitr)
 
 convert_bool <-function(df)
@@ -115,10 +124,18 @@ ring_bearer <- convert_bool(ring_bearer)
 
 characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
 col_names = c("Name", "Race", "In Fellowship?", "Is Ring Bearer?", "Age")
+kable(characters_df, 
+      caption="One Ring To Rule Them All",
+      col.names = col_names,
+      format="pandoc",
+      align="llccr",
+      padding=2, 
+      table.attr = "style='pandoc_grid_table'")
 ```
+
 ## Pandoc Table
 ```{r show-table, results='asis'}
-kable(characters_df, 
+kable(head(characters_df, 4), 
       caption="One Ring To Rule Them All",
       col.names = col_names,
       format="pandoc",
