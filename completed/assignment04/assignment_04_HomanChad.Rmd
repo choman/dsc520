@@ -24,13 +24,13 @@ knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/as
 
 ## Favorite Foods
 
-1. Mexican
-2. Steak 
-3. Pizza
+1. Beer
+2. Mexican
+3. Steak 
 
 ## Images
 
-![An Image](plots/10-all-cases-log.png){ height=50% width=50% }
+![All Cases (Log Plot)](plots/10-all-cases-log.png){ height=50% width=50% }
 
 
 ## Add a Quote
