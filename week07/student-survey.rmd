@@ -35,11 +35,43 @@ summary(survey_df)
 
 There are four variables in the set of data
 
-```{r variables}
+```{r variables, echo=FALSE}
+library(pastecs)
+library(ggplot2)
+library(dplyr)
+library(purrr)
+
 colnames(survey_df)
-mean(survey_df$TimeReading)
-mean(survey_df$TimeTV)
-mean(survey_df$Happiness)
+
+info <- function(df)
+{
+  print(summary(df))
+  print(stat.desc(df))
+}
+
+print ("Statistic Info for: survey_df")
+info(survey_df)
+
+genderA <- survey_df[ which(survey_df$Gender == 0), ]
+genderB <- survey_df[ which(survey_df$Gender == 1), ]
+
+print ("Statistic Info for: genferA")
+info(genderA)
+
+print ("Statistic Info for: genderB")
+info(genderB)
+
+ggplot(data=survey_df, aes(x=TimeReading, y=TimeTV, group=1)) +
+  geom_line(aes(y=TimeTV, color = "Both")) + 
+  geom_line(data=genderA, aes(y=TimeTV, color = "GenderA")) +
+  geom_line(data=genderB, aes(y=TimeTV, color = "GenderB")) +
+  scale_color_manual("", 
+       breaks = c("Both", "GenderA", "GenderB"),
+       values = c("darkred", "darkgreen", "steelblue")) +
+  xlab("Time Reading") + ylab("Time TV")
+                  
+  
+            
 ```
 
 `* TimeReading
@@ -66,9 +98,13 @@ and make a prediction if the test yields a positive or negative correlation?
 
 ## Calculate the correlation coefficient and the coefficient of determination, describe what you conclude about the results.
 
-## Based on your analysis can you say that watching more TV caused students to read less? Explain.
+## Ananysis: TV vs Reading
 
-## Pick three variables and perform a partial correlation, documenting which variable you are “controlling”. Explain how this changes your interpretation and explanation of the results.
+Based on your analysis can you say that watching more TV caused students to read less? Explain.
+
+## Partial Correlation
+
+Pick three variables and perform a partial correlation, documenting which variable you are “controlling”. Explain how this changes your interpretation and explanation of the results.
 
 # Inline Code
 ```{r load-stuff, include=FALSE}
