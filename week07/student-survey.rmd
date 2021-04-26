@@ -31,7 +31,22 @@ summary(survey_df)
 
 ## Survey Data Examination
 
-Examine the Survey data variables. What measurement is being used for the 
+1. Examine the Survey data variables.
+
+There are four variables in the set of data
+
+```{r variables}
+colnames(survey_df)
+mean(survey_df$TimeReading)
+mean(survey_df$TimeTV)
+mean(survey_df$Happiness)
+```
+
+`* TimeReading
+* TimeTV
+
+
+What measurement is being used for the 
 variables? Explain what effect changing the measurement being used for the 
 variables would have on the covariance calculation. Would this be a problem?
 Explain and provide a better alternative if needed.
