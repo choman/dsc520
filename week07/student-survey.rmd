@@ -6,6 +6,7 @@ output:
   pdf_document: default
   html_document: default
   word_document: default
+bibliography: bibliography.bib
 ---
 
 ```{r setup, echo=FALSE}
@@ -25,9 +26,16 @@ data is located in this StudentSurvey.csv file.
 
 Use R to calculate the covariance of the Survey variables and provide an 
 explanation of why you would use this calculation and what the results indicate.
+
+Answer: Covariance is a statistical calculation that helps you understand how two sets of data are related to each other [@wiki2020]. In other words, it defines 
+the changes between the two variables. The covariance of the survey data is below:
+
 ```{r survey}
-summary(survey_df)
+cov(survey_df)
 ```
+I would interpret this data to mean that there is a strong correlation between 
+these variables. However, there is not a strong correlation when comparing any 
+of the variables against gender. 
 
 ## Survey Data Examination
 
@@ -36,10 +44,28 @@ summary(survey_df)
 There are four variables in the set of data
 
 ```{r variables, echo=FALSE}
-library(pastecs)
-library(ggplot2)
-library(dplyr)
-library(purrr)
+mypackages <- c("ggplot2", "pastecs", "dplyr", "purrr", 
+                "GGally", "reshape2", "scales")
+
+not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
+if(length(not_installed)) install.packages(not_installed)
+
+# Load libraries
+##lapply(mypackages, require, character.only=TRUE)
+for (package in mypackages) {
+  library(package, character.only=TRUE)
+}
+
+#install.packages("GGally")
+##library(pastecs)
+#library(ggplot2)
+#library(dplyr)
+#library(purrr)
+
+#library(pastecs)
+#library(ggplot2)
+#library(dplyr)
+#library(purrr)
 
 colnames(survey_df)
 
@@ -91,14 +117,56 @@ and make a prediction if the test yields a positive or negative correlation?
 ### Perform a correlation analysis of:
 
 #### All variables
+
+* **Pearson Method**:
+
+```{r correlation-p, echo =FALSE}
+cor(survey_df)
+pearson <- cor(survey_df)
+GGally::ggpairs(survey_df)
+
+```
+
+* Kendall Method:
+
+```{r correlation-k, echo =FALSE}
+cor(survey_df, method ="kendall")
+kendall <- cor(survey_df, method ="kendall")
+```
+
+* Spearman Method:
+
+```{r correlation0s, echo =FALSE}
+cor(survey_df, method ="spearman")
+spearman <- cor(survey_df, method ="spearman")
+```
+
+* Spearman > Peason
+```{r sp-compare, echo=FALSE}
+spearman > pearson
+```
+
+Doing both is interesting because if you have S > P, that means that you have a correlation that is monotonic but not linear [@stack2010]. Therefore I believe
+pearson is a better selection 
+
 #### A single correlation between two a pair of the variables
+
+```{r correlation2, echo =FALSE}
+cor(survey_df$TimeTV, survey_df$TimeReading)
+```
+
 #### Repeat your correlation test in step 2 but set the confidence interval at 99%
+
+```{r correlation3, echo =FALSE}
+cor.test(survey_df$TimeTV, survey_df$TimeReading, conf.level = 0.99)
+```
+
 #### Describe what the calculations in the correlation matrix suggest about the relationship between the variables. Be specific with your explanation.
 
 
 ## Calculate the correlation coefficient and the coefficient of determination, describe what you conclude about the results.
 
-## Ananysis: TV vs Reading
+## Analysis: TV vs Reading
 
 Based on your analysis can you say that watching more TV caused students to read less? Explain.
 
@@ -106,105 +174,6 @@ Based on your analysis can you say that watching more TV caused students to read
 
 Pick three variables and perform a partial correlation, documenting which variable you are “controlling”. Explain how this changes your interpretation and explanation of the results.
 
-# Inline Code
-```{r load-stuff, include=FALSE}
-library(ggplot2)
-library(dplyr)
-library(purrr)
-
-# set theme
-theme_set(theme_minimal())
-
-tmp <- getwd()
-setwd(workdir)
-heights_df <- read.csv("data/r4ds/heights.csv")
-
-covid_dir <- "data/nytimes/covid-19-data"
-covid_counties_df <- read.csv(file.path(covid_dir, "us-counties.csv")) 
-covid_us_df <- read.csv(file.path(covid_dir, "us.csv"))
-covid_df <- read.csv(file.path(covid_dir, "us-states.csv"))
-
-covid_df$date <- as.Date(covid_df$date,"%Y-%m-%d")
-
-
-florida_df <- covid_df %>% filter(state == "Florida")
-ny_df <- covid_df %>% filter(state == "New York")
-california_df <- covid_df %>% filter(state == "California")
-
-
-#heights_df
-setwd(tmp)
-```
-
-## NY Times COVID-19 Data
-```{r line-plot-covid, echo=FALSE}
-# Need code
-ggplot(data=florida_df, aes(x=date, group=1, nrow=7, ncol=7)) +
-  geom_line(aes(y = cases, color = "Florida")) +
-  geom_line(data=ny_df, aes(y = cases, color="New York")) +
-  geom_line(data=california_df, aes(y = cases, color="California")) +
-  scale_color_manual("",
-        breaks = c("Florida", "New York", "California"),
-        values = c("darkred", "darkgreen", "steelblue")) +
-  xlab(" ") + ylab("Cases") + scale_y_log10()
-
-```
-
-## R4DS Height vs Earnings
-```{r plot-heights-vd-earnings, echo=FALSE}
-ggplot(heights_df, aes(x=height, y=earn, col=sex)) + 
-  geom_point() +   
-  xlab("Height (Inches)") + 
-  ylab("Earnings (Dollars)")
-
-```
-
-# Tables
-
-## Knitr Table with Kable
-```{r show-full-table, results='asis', echo=FALSE}
-library(knitr)
-
-convert_bool <-function(df)
-{
-  df <- ifelse(df == TRUE, "Yes", "No")
-  return(df)
-}
-
-name <- c("Aragon", "Bilbo", "Frodo", "Galadriel", 
-          "Sam", "Gandalf", "Legolas", "Sauron", "Gollum")
-race <- c("Men", "Hobbit", "Hobbit", "Elf", "Hobbit", 
-          "Maia", "Elf", "Maia", "Hobbit")
-in_fellowship <- c(TRUE, FALSE, TRUE, FALSE, 
-                   TRUE, TRUE, TRUE, FALSE, FALSE)
-ring_bearer <- c(FALSE, TRUE, TRUE, FALSE, TRUE, 
-                 TRUE, FALSE, TRUE, TRUE)
-age <- c(88, 129, 51, 7000, 36, 2019, 2931, 7052, 589)
-
-in_fellowship <- convert_bool(in_fellowship)
-ring_bearer <- convert_bool(ring_bearer)
-
-characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
-col_names = c("Name", "Race", "In Fellowship?", "Is Ring Bearer?", "Age")
-kable(characters_df, 
-      caption="One Ring To Rule Them All",
-      col.names = col_names,
-      format="pandoc",
-      align="llccr",
-      padding=2, 
-      table.attr = "style='pandoc_grid_table'")
-```
-
-## Pandoc Table
-```{r show-table, results='asis', echo=FALSE}
-kable(head(filter(characters_df, nchar(name) <= 6), n=5),
-      caption="One Ring To Rule Them All",
-      col.names = col_names,
-      format="pandoc",
-      align="llccr",
-      padding=2, 
-      table.attr = "style='pandoc_grid_table'")
-```
 
 # References
 
