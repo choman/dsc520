@@ -9,43 +9,9 @@ output:
 bibliography: bibliography.bib
 ---
 
-```{r setup, echo=FALSE}
-workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
-knitr::opts_knit$set(root.dir = workdir) 
-survey_df <- read.csv("student-survey.csv")
-```
-
-# Abstract
-
-As a data science intern with newly learned knowledge in skills in statistical correlation and R programming, you will analyze the results of a survey recently given to college students. You learn that the research question being 
-investigated is: “Is there a significant relationship between the amount of time spent reading and the time spent watching television?” You are also interested 
-if there are other significant relationships that can be discovered? The survey 
-data is located in this StudentSurvey.csv file.
-
-## Covariance
-
-Use R to calculate the covariance of the Survey variables and provide an 
-explanation of why you would use this calculation and what the results indicate.
-
-Answer: Covariance is a statistical calculation that helps you understand how two sets of data are related to each other [@wiki2020]. In other words, it defines 
-the changes between the two variables. The covariance of the survey data is below:
-
-```{r survey}
-cov(survey_df)
-```
-I would interpret this data to mean that there is a strong correlation between 
-these variables. However, there is not a strong correlation when comparing any 
-of the variables against gender. 
-
-## Survey Data Examination
-
-1. Examine the Survey data variables.
-
-There are four variables in the set of data
-
-```{r variables, echo=FALSE}
+```{r setup, echo=FALSE, include=FALSE}
 mypackages <- c("ggplot2", "pastecs", "dplyr", "purrr", 
-                "GGally", "reshape2", "scales")
+                "GGally", "reshape2", "scales", "knitr")
 
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
 if(length(not_installed)) install.packages(not_installed)
@@ -56,32 +22,82 @@ for (package in mypackages) {
   library(package, character.only=TRUE)
 }
 
-#install.packages("GGally")
-##library(pastecs)
-#library(ggplot2)
-#library(dplyr)
-#library(purrr)
-
-#library(pastecs)
-#library(ggplot2)
-#library(dplyr)
-#library(purrr)
-
-colnames(survey_df)
+workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+knitr::opts_knit$set(root.dir = workdir) 
+survey_df <- read.csv("student-survey.csv")
 
 info <- function(df)
 {
+  print("**************************************************")
+  print("Summary:")
   print(summary(df))
+  print("")
+  print("stat.desc:")
   print(stat.desc(df))
+  print("**************************************************")
 }
+
+genderA <- survey_df[ which(survey_df$Gender == 0), ]
+genderB <- survey_df[ which(survey_df$Gender == 1), ]
+```
+
+# Abstract
+
+As a data science intern with newly learned knowledge in skills in statistical correlation and R programming, you will analyze the results of a survey recently given to college students. You learn that the research question being 
+investigated is: “Is there a significant relationship between the amount of time spent reading and the time spent watching television?” You are also interested 
+if there are other significant relationships that can be discovered? The survey 
+data is located in this StudentSurvey.csv file.
+
+This assignment will process the following table and attewmp to given correct
+answers. 
+
+```{r show-table, echo=FALSE}
+kable(survey_df)
+```
+
+## Calculate Covariance
+
+Use R to calculate the covariance of the Survey variables and provide an 
+explanation of why you would use this calculation and what the results indicate.
+
+*Answer*: Covariance is a statistical calculation that helps you understand how two sets of data are related to each other [@wiki2020]. In other words, it 
+defines the changes between the two variables. The covariance of the survey data
+is below:
+
+```{r covAll}
+cov(survey_df)
+```
+
+I would interpret this data to mean that there is a strong correlation between 
+these variables. However, there is not a strong correlation when comparing any 
+of the variables against gender. Also, there is a negative covariance when comparing TimeReading against TimeTV. There is also a negative covariance when comparing TimeReading against Happiness. However, there is a positive covariance 
+when comparing TimeTV against Happiness.
+
+If we process the genders:
+
+```{r covGenders}
+cov(genderA)
+cov(genderB)
+```
+
+We notice that with the genders, the covariance expirenced above holds true per
+gender. Although, genderA has a higher negative covariance than genderB when 
+comparing TimeReading against TimeTV and TimeReading aginast Happiness. Oddly, genderA also has a higher covariance than genderB when comparing TimeTV against
+Happiness.
+
+## Survey Data Examination
+
+1. Examine the Survey data variables.
+
+There are four variables in the set of data
+
+```{r variables, echo=FALSE}
+colnames(survey_df)
 
 print ("Statistic Info for: survey_df")
 info(survey_df)
 
-genderA <- survey_df[ which(survey_df$Gender == 0), ]
-genderB <- survey_df[ which(survey_df$Gender == 1), ]
-
-print ("Statistic Info for: genferA")
+print ("Statistic Info for: genderA")
 info(genderA)
 
 print ("Statistic Info for: genderB")
@@ -95,19 +111,11 @@ ggplot(data=survey_df, aes(x=TimeReading, y=TimeTV, group=1)) +
        breaks = c("Both", "GenderA", "GenderB"),
        values = c("darkred", "darkgreen", "steelblue")) +
   xlab("Time Reading") + ylab("Time TV")
-                  
-  
-            
 ```
 
-`* TimeReading
-* TimeTV
-
-
-What measurement is being used for the 
-variables? Explain what effect changing the measurement being used for the 
-variables would have on the covariance calculation. Would this be a problem?
-Explain and provide a better alternative if needed.
+What measurement is being used for the variables? Explain what effect changing 
+the measurement being used for the variables would have on the covariance calculation. Would this be a problem? Explain and provide a better alternative 
+if needed.
 
 ## Corellation
 
@@ -124,7 +132,6 @@ and make a prediction if the test yields a positive or negative correlation?
 cor(survey_df)
 pearson <- cor(survey_df)
 GGally::ggpairs(survey_df)
-
 ```
 
 * Kendall Method:
@@ -146,29 +153,79 @@ spearman <- cor(survey_df, method ="spearman")
 spearman > pearson
 ```
 
-Doing both is interesting because if you have S > P, that means that you have a correlation that is monotonic but not linear [@stack2010]. Therefore I believe
-pearson is a better selection 
+Doing both is interesting because if you have Spearman > Pearson, that means 
+that you have a correlation that is monotonic but not linear [@stack2010]. Therefore I believe pearson is a better option.
 
-#### A single correlation between two a pair of the variables
+#### Single Correlation:
+
+A single correlation between two a pair of the variables. The correlation between
+TimeTV and TimeReading is:
 
 ```{r correlation2, echo =FALSE}
 cor(survey_df$TimeTV, survey_df$TimeReading)
 ```
 
-#### Repeat your correlation test in step 2 but set the confidence interval at 99%
+The correlation between TimeTV and Happiness is:
 
 ```{r correlation3, echo =FALSE}
+cor(survey_df$TimeTV, survey_df$Happiness)
+```
+
+
+The correlation between TimeReading and Happiness is:
+
+```{r correlation4, echo =FALSE}
+cor(survey_df$TimeReading, survey_df$Happiness)
+```
+
+#### Confidence Interval
+
+
+Repeat your correlation test in step 2 but set the confidence interval at 99%
+
+```{r correlation5, echo =FALSE}
 cor.test(survey_df$TimeTV, survey_df$TimeReading, conf.level = 0.99)
 ```
 
-#### Describe what the calculations in the correlation matrix suggest about the relationship between the variables. Be specific with your explanation.
+#### Correlation Matrix
 
+Describe what the calculations in the correlation matrix suggest about the relationship between the variables. Be specific with your explanation.
 
-## Calculate the correlation coefficient and the coefficient of determination, describe what you conclude about the results.
+```{r matrix, echo= FALSE}
+cor(survey_df)
+```
+
+This show a strong negative correlation when comparing TimeReading with TimeTV, likewise a negative correlation when comparing TimeReading with Happiness. However, there is a strong positive correlation when comparing TimeTV with Happiness.
+
+## correlation coefficient
+
+Calculate the correlation coefficient and the coefficient of determination, describe what you conclude about the results.
+
+Correlation coeficient on Time Reading vs Time TV is
+```{r coef1, echo=FALSE}
+r <- cor(survey_df$TimeReading, survey_df$TimeTV)
+r
+r^2
+```
+
+The coefficient of determination is:
+```{r cod1, echo=FALSE}
+cor.lm <- lm(TimeReading ~ TimeTV, data=survey_df)
+summary(cor.lm)$r.squared
+```
+
+Personally, I am not too sure on what this means. However, according to Dan
+Shiebler[@shiebler2017]
+
+> The square of the correlation coefficient is generally equal to the coefficient of determination whenever there is no scaling or shifting of f that can improve the fit of f to the data. For this reason the differential between the square of the correlation coefficient and the coefficient of determination is a representation of how poorly scaled or improperly shifted the predictions f are with respect to y.
+
+Since the coefficient shows a strongly negative score comparing TimeReading and TimeTV. Which should mean that these data points are moving apart. And that the coefficient squared equals the coefficient of determination. I would conclude that there is nothing that can help this data fit better.
 
 ## Analysis: TV vs Reading
 
 Based on your analysis can you say that watching more TV caused students to read less? Explain.
+
+
 
 ## Partial Correlation
 
