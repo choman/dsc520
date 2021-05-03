@@ -10,8 +10,19 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}
+
+##mypre <- c("BiocManager")
+##
+##not_installed <- mypre[!(mypre %in% installed.packages()[, "Package"])]
+##if(length(not_installed)) install.packages(not_installed)
+##
+##for (package in mypre) {
+##  library(package, character.only=TRUE)
+##}
+##BiocManager::install("graph")
+
 mypackages <- c("ggplot2", "pastecs", "dplyr", "purrr", 
-                "GGally", "reshape2", "scales", "knitr")
+                "GGally", "reshape2", "scales", "knitr", "ppcor")
 
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
 if(length(not_installed)) install.packages(not_installed)
@@ -43,12 +54,15 @@ genderB <- survey_df[ which(survey_df$Gender == 1), ]
 
 # Abstract
 
-As a data science intern with newly learned knowledge in skills in statistical correlation and R programming, you will analyze the results of a survey recently given to college students. You learn that the research question being 
-investigated is: “Is there a significant relationship between the amount of time spent reading and the time spent watching television?” You are also interested 
+As a data science intern with newly learned knowledge in skills in statistical
+correlation and R programming, you will analyze the results of a survey recently
+given to college students. You learn that the research question being 
+investigated is: “Is there a significant relationship between the amount of time 
+spent reading and the time spent watching television?” You are also interested 
 if there are other significant relationships that can be discovered? The survey 
 data is located in this StudentSurvey.csv file.
 
-This assignment will process the following table and attewmp to given correct
+This assignment will process the following table and attempt to give correct
 answers. 
 
 ```{r show-table, echo=FALSE}
@@ -60,7 +74,8 @@ kable(survey_df)
 Use R to calculate the covariance of the Survey variables and provide an 
 explanation of why you would use this calculation and what the results indicate.
 
-*Answer*: Covariance is a statistical calculation that helps you understand how two sets of data are related to each other [@wiki2020]. In other words, it 
+*Answer*: Covariance is a statistical calculation that helps you understand how 
+two sets of data are related to each other [@wiki2020]. In other words, it 
 defines the changes between the two variables. The covariance of the survey data
 is below:
 
@@ -70,19 +85,22 @@ cov(survey_df)
 
 I would interpret this data to mean that there is a strong correlation between 
 these variables. However, there is not a strong correlation when comparing any 
-of the variables against gender. Also, there is a negative covariance when comparing TimeReading against TimeTV. There is also a negative covariance when comparing TimeReading against Happiness. However, there is a positive covariance 
+of the variables against gender. Also, there is a negative covariance when 
+comparing TimeReading against TimeTV. There is also a negative covariance when 
+comparing TimeReading against Happiness. However, there is a positive covariance 
 when comparing TimeTV against Happiness.
 
-If we process the genders:
+If we process just the genders:
 
 ```{r covGenders}
 cov(genderA)
 cov(genderB)
 ```
 
-We notice that with the genders, the covariance expirenced above holds true per
+We notice that with the genders, the covariance experienced above holds true per
 gender. Although, genderA has a higher negative covariance than genderB when 
-comparing TimeReading against TimeTV and TimeReading aginast Happiness. Oddly, genderA also has a higher covariance than genderB when comparing TimeTV against
+comparing TimeReading against TimeTV and TimeReading against Happiness. Oddly, 
+genderA also has a higher covariance than genderB when comparing TimeTV against
 Happiness.
 
 ## Survey Data Examination
@@ -114,13 +132,40 @@ ggplot(data=survey_df, aes(x=TimeReading, y=TimeTV, group=1)) +
 ```
 
 What measurement is being used for the variables? Explain what effect changing 
-the measurement being used for the variables would have on the covariance calculation. Would this be a problem? Explain and provide a better alternative 
+the measurement being used for the variables would have on the covariance 
+calculation. Would this be a problem? Explain and provide a better alternative 
 if needed.
+
+*Answers*: 
+
+```{r testy, echo=FALSE}
+junk <- survey_df
+
+junk$TimeTV <- junk$TimeTV / 60
+junk
+cov(survey_df)
+cov(junk)
+```
+
+* I assume TimeReading is in hours
+* I assume TimeTV is in minutes.
+* Happiness appears to be a score of 0-100 or a percent "feeling"
+* Gender is binary male vs female, however there is no indication of which is 
+  male or female
+  
+The issue is that there is no information to determine if the time indicators 
+match my assumption or not. There is no information if these times are per day
+or week or month. IN the sample above we see a drastic change in the covariance 
+if TimeTV is changed to hours, if the assumption that the original is in minutes. 
+A better alternative would be to standardize the information, hours TV and hours
+Reading or minutes TV and minutes Reading. 
 
 ## Corellation
 
 Choose the type of correlation test to perform, explain why you chose this test,
 and make a prediction if the test yields a positive or negative correlation?
+
+*Answer*: Answer is below after testing the 3 methods of calculating correlation
 
 ### Perform a correlation analysis of:
 
@@ -154,7 +199,8 @@ spearman > pearson
 ```
 
 Doing both is interesting because if you have Spearman > Pearson, that means 
-that you have a correlation that is monotonic but not linear [@stack2010]. Therefore I believe pearson is a better option.
+that you have a correlation that is monotonic but not linear [@stack2010]. 
+Therefore I believe pearson is a better option.
 
 #### Single Correlation:
 
@@ -189,17 +235,22 @@ cor.test(survey_df$TimeTV, survey_df$TimeReading, conf.level = 0.99)
 
 #### Correlation Matrix
 
-Describe what the calculations in the correlation matrix suggest about the relationship between the variables. Be specific with your explanation.
+Describe what the calculations in the correlation matrix suggest about the 
+relationship between the variables. Be specific with your explanation.
 
 ```{r matrix, echo= FALSE}
 cor(survey_df)
 ```
 
-This show a strong negative correlation when comparing TimeReading with TimeTV, likewise a negative correlation when comparing TimeReading with Happiness. However, there is a strong positive correlation when comparing TimeTV with Happiness.
+This show a strong negative correlation when comparing TimeReading with TimeTV, 
+likewise a negative correlation when comparing TimeReading with Happiness. 
+However, there is a strong positive correlation when comparing TimeTV with 
+Happiness.
 
 ## correlation coefficient
 
-Calculate the correlation coefficient and the coefficient of determination, describe what you conclude about the results.
+Calculate the correlation coefficient and the coefficient of determination, 
+describe what you conclude about the results.
 
 Correlation coeficient on Time Reading vs Time TV is
 ```{r coef1, echo=FALSE}
@@ -217,20 +268,52 @@ summary(cor.lm)$r.squared
 Personally, I am not too sure on what this means. However, according to Dan
 Shiebler[@shiebler2017]
 
-> The square of the correlation coefficient is generally equal to the coefficient of determination whenever there is no scaling or shifting of f that can improve the fit of f to the data. For this reason the differential between the square of the correlation coefficient and the coefficient of determination is a representation of how poorly scaled or improperly shifted the predictions f are with respect to y.
+> The square of the correlation coefficient is generally equal to the 
+> coefficient of determination whenever there is no scaling or shifting of f 
+> that can improve the fit of f to the data. For this reason the differential 
+> between the square of the correlation coefficient and the coefficient of 
+> determination is a representation of how poorly scaled or improperly shifted 
+> the predictions f are with respect to y.
 
-Since the coefficient shows a strongly negative score comparing TimeReading and TimeTV. Which should mean that these data points are moving apart. And that the coefficient squared equals the coefficient of determination. I would conclude that there is nothing that can help this data fit better.
+Since the coefficient shows a strongly negative score comparing TimeReading and 
+TimeTV. Which should mean that these data points are moving apart. And that the 
+coefficient squared equals the coefficient of determination. I would conclude 
+that there is nothing that can help this data fit better.
 
 ## Analysis: TV vs Reading
 
-Based on your analysis can you say that watching more TV caused students to read less? Explain.
+Based on your analysis can you say that watching more TV caused students to read 
+less? Explain.
 
+*Answer*: 
+
+Based on a corellation of -0.88 (or -88%), I interpret my analysis that more time
+watching TV one is 88% less likely to Read.
 
 
 ## Partial Correlation
 
-Pick three variables and perform a partial correlation, documenting which variable you are “controlling”. Explain how this changes your interpretation and explanation of the results.
+Pick three variables and perform a partial correlation, documenting which 
+variable you are “controlling”. Explain how this changes your interpretation and
+explanation of the results.
 
+```{r pcor}
+pcor(survey_df)
+```
+
+*Answer*:
+
+Unfortunately I could not get "ggm" loaded due to dependency issues. There were
+two library's require for "igraph" and fought this until the last minute. 
+
+Others pointed me to the ppcor libary which also has a pcor function. Using this 
+I am able to see the "estimate", "p-value" and "statistic" matricies. I am 
+assuming that Happiness and Gender are being controlled based on my understanding
+of the "help" on pcor (via the ppcor library).
+
+Based on the results, I still receive a -0.88 on the correlation of TimeTV vs 
+TimeReading. Therefore, I would not change my interpretation of the previous 
+question above "Reading vs TV"
 
 # References
 
