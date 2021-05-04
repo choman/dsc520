@@ -12,11 +12,14 @@ heights_df <- read.csv("data/r4ds/heights.csv")
 ## Load the ggplot2 library
 library(ggplot2)
 
-## Fit a linear model using the `age` variable as the predictor and `earn` as the outcome
-age_lm <-  ___
+heights_df
+## Fit a linear model using the `age` variable as the predictor and `earn` as 
+#the outcome
+age_lm <-  lm(age ~ earn, data=heights_df)
+
 
 ## View the summary of your model using `summary()`
-___
+summary(age_lm)
 
 ## Creating predictions using `predict()`
 age_predict_df <- data.frame(earn = predict(___, ___), age=___)
