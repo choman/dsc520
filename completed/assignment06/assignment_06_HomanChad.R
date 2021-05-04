@@ -39,7 +39,7 @@ residuals <- heights_df$earn - age_predict_df$earn
 ## Sum of Squares for Error
 sse <- sum(residuals^2)
 ## R Squared R^2 = SSM\SST
-r_squared <- ___
+r_squared <- ssm / sst
 
 ## Number of observations
 n <- ___
