@@ -16,7 +16,7 @@ library(pastecs)
 heights_df
 ## Fit a linear model using the `age` variable as the predictor and `earn` as 
 #the outcome
-age_lm <- lm(age ~ earn, data=heights_df)
+age_lm <- lm(earn ~ age, data=heights_df)
 
 age_lm
 
@@ -25,30 +25,22 @@ summary(age_lm)
 head(heights_df)
 
 ## Creating predictions using `predict()`
-if (0) {
-age_predict_df <- data.frame(earn = predict(age_lm, heights_df, interval="prediction"), age=heights_df$age)
-} else {
-age_predict_df <- data.frame(earn = predict(age_lm, heights_df), age=heights_df$age)
-}
+age_predict_df <- data.frame(earn = predict(age_lm, heights_df), 
+                             age=heights_df$age)
 
 head(age_predict_df)
-#age_predict_df$earn = round(age_predict_df$earn * 1000)
-#head(age_predict_df)
 
 ## Plot the predictions against the original data
 ggplot(data = heights_df, aes(y=earn, x=age)) +
   geom_point(color='blue')
 
 ggplot(data = heights_df, aes(y=earn, x=age)) +
-  geom_point(color='blue') + geom_smooth(method="lm",se=F, col='red', formual=age ~ earn)
+  geom_point(color='blue') +
+  geom_smooth(method="lm", se=F, col='red')
 
 ggplot(data = heights_df, aes(y = earn, x = age)) +
   geom_point(color='blue') +
-  geom_line(data = age_predict_df, aes(y=earn))
-
-ggplot(data = heights_df, aes(y = earn, x = age)) +
-  geom_point(color='blue') +
-  geom_line(color='red', data = age_predict_df, aes(y=age_lm, x=age))
+  geom_line(color='red', data = age_predict_df, aes(y=earn, x=age))
 
 mean_earn <- mean(heights_df$earn)
 ## Corrected Sum of Squares Total
@@ -69,6 +61,7 @@ length(as.matrix(heights_df))
 prod(dim(heights_df))
 dim(heights_df)
 stat.desc(heights_df)
+
 ## Number of observations
 n <- prod(dim(heights_df))
 ## Number of regression parameters
@@ -91,7 +84,12 @@ f_score <- msm/mse
 f_score
 
 ## Adjusted R Squared R2 = 1 - (1 - R2)(n - 1) / (n - p)
-adjusted_r_squared <- 1 = (1 - r_squared)(n - 1) / (n - p)
+1 - r_squared
+n - 1
+(1 - r_squared) * (n - 1)
+n - p
+adjusted_r_squared <- 1 - (1 - r_squared) * (n - 1) / (n - p)
+adjusted_r_squared
 
 ## Calculate the p-value from the F distribution
 p_value <- pf(f_score, dfm, dft, lower.tail=F)
