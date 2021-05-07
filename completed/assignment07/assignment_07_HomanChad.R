@@ -10,7 +10,7 @@ setwd(basedir)
 heights_df <- read.csv("data/r4ds/heights.csv")
 head(heights_df)
 # Fit a linear model
-earn_lm <-  lm(earn ~ age + height + sex + ed + age + race, data=heights_df)
+earn_lm <-  lm(earn ~ ed + race + height + age + sex, data=heights_df)
 
 # View the summary of your model
 summary(earn_lm)
