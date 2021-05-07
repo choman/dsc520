@@ -11,6 +11,7 @@ heights_df <- read.csv("data/r4ds/heights.csv")
 
 ## Load the ggplot2 library
 library(ggplot2)
+library(pastecs)
 
 heights_df
 ## Fit a linear model using the `age` variable as the predictor and `earn` as 
@@ -38,6 +39,13 @@ head(age_predict_df)
 ggplot(data = heights_df, aes(y=earn, x=age)) +
   geom_point(color='blue')
 
+ggplot(data = heights_df, aes(y=earn, x=age)) +
+  geom_point(color='blue') + geom_smooth(method="lm",se=F, col='red', formual=age ~ earn)
+
+ggplot(data = heights_df, aes(y = earn, x = age)) +
+  geom_point(color='blue') +
+  geom_line(data = age_predict_df, aes(y=earn))
+
 ggplot(data = heights_df, aes(y = earn, x = age)) +
   geom_point(color='blue') +
   geom_line(color='red', data = age_predict_df, aes(y=age_lm, x=age))
@@ -57,10 +65,12 @@ r_squared
 
 nrow(heights_df)
 length(heights_df)
+length(as.matrix(heights_df))
+prod(dim(heights_df))
 dim(heights_df)
-
+stat.desc(heights_df)
 ## Number of observations
-n <- length(heights_df)
+n <- prod(dim(heights_df))
 ## Number of regression parameters
 p <- 2
 ## Corrected Degrees of Freedom for Model (p-1)
@@ -78,6 +88,7 @@ mse <- sse / dfe
 mst <- sst / dft
 ## F Statistic F = MSM/MSE
 f_score <- msm/mse
+f_score
 
 ## Adjusted R Squared R2 = 1 - (1 - R2)(n - 1) / (n - p)
 adjusted_r_squared <- 1 = (1 - r_squared)(n - 1) / (n - p)
