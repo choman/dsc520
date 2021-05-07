@@ -91,7 +91,7 @@ binwidth <- .5
 ## Set the working directory to the root of your DSC 520 directory
 ## to include the week of the assignment
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE) 
-workdir <- file.path(workdir, "week08")
+workdir <- file.path(workdir, "week08_09")
 
 ## Set the working directory
 setwd(workdir)
