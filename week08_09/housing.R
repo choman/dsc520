@@ -5,7 +5,7 @@
 # Abstract 
 #  - Work individually on this assignment. You are encouraged to collaborate on 
 #    ideas and strategies pertinent to this assignment. Data for this assignment
-#    is focused on real estate transactions ecorded from 1964 to 2016 and can be
+#    is focused on real estate transactions recorded from 1964 to 2016 and can be
 #    found in Housing.xlsx. Using your skills in statistical correlation, 
 #    multiple regression, and R programming, you are interested in the following
 #    variables: 
@@ -18,14 +18,12 @@
 #        have any clean up that needs to happen.
 #
 #  - Complete the following:
-#      - Explain any transformations or modifications you made to the
-#        dataset
-#      - Create two variables; one that will contain the variables 
-#        Sale Price and Square Foot of Lot (same variables used from
-#        previous assignment on simple regression) and one that will
-#        contain Sale Price and several additional predictors of your
-#        choice. Explain the basis for your additional predictor
-#        selections.
+#      - Explain any transformations or modifications you made to the dataset
+#      - Create two variables; one that will contain the variables Sale Price 
+#        and Square Foot of Lot (same variables used from previous assignment on
+#        simple regression) and one that will contain Sale Price and several 
+#        additional predictors of your choice. Explain the basis for your 
+#        additional predictor selections.
 #      - Execute a summary() function on two variables defined in the 
 #        previous step to compare the model results. What are the R2
 #        and Adjusted R2 statistics? Explain what these results tell
@@ -119,6 +117,23 @@ class(house_df)
 sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`, 
                                           house_df$sq_ft_lot)
 
+mylm <- lm(`Sale Price` ~ zip5 +
+             bedrooms +
+             square_feet_total_living +
+             bath_full_count + 
+             year_built, 
+             data = house_df)
+
+summary(mylm)
+head(house_df)
+dimnames(house_df)
+sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
+                                    zip5 = house_df$zip5,
+                                    bedrooms = house_df$bedrooms,
+                                    square_feet_total_living = house_df$square_feet_total_living,
+                                    bath_full_count = house_df$bath_full_count,
+                                    year_built = house_df$year_built) 
+
 sale_price_by_lot_square_ft
 
 #      - Execute a summary() function on two variables defined in the 
@@ -128,6 +143,9 @@ sale_price_by_lot_square_ft
 #        additional predictors help explain any large variations found
 #        in Sale Price?
 summary(sale_price_by_lot_square_ft)
+summary(sale_price_predictors)
+
+
 
 #      - Considering the parameters of the multiple regression model
 #        you have created. What are the standardized betas for each
