@@ -144,7 +144,20 @@ sale_price_by_lot_square_ft
 #        in Sale Price?
 summary(sale_price_by_lot_square_ft)
 summary(sale_price_predictors)
+head(sale_price_predictors)
 
+mean_sale_price <- mean(house_df$`Sale Price`)
+## Corrected Sum of Squares Total
+sst <- sum((mean_sale_price - house_df$`Sale Price`)^2)
+## Corrected Sum of Squares for Model
+ssm <- sum((mean_sale_price - sale_price_predictors$Sale.Price)^2)
+## Residuals
+residuals <- house_df$`Sale Date` - sale_price_predictors$Sale.Price
+## Sum of Squares for Error
+sse <- sum(residuals^2)
+## R Squared R^2 = SSM\SST
+r_squared <- ssm / sst
+r_squared
 
 
 #      - Considering the parameters of the multiple regression model
