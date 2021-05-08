@@ -159,6 +159,35 @@ sse <- sum(residuals^2)
 r_squared <- ssm / sst
 r_squared
 
+## Number of observations
+n <- prod(dim(heights_df))
+## Number of regression parameters
+p <- 2
+## Corrected Degrees of Freedom for Model (p-1)
+dfm <- p -1
+## Degrees of Freedom for Error (n-p)
+dfe <- n - p
+## Corrected Degrees of Freedom Total:   DFT = n - 1
+dft <- n - 1
+
+## Mean of Squares for Model:   MSM = SSM / DFM
+msm <- ssm / dfm
+## Mean of Squares for Error:   MSE = SSE / DFE
+mse <- sse / dfe
+## Mean of Squares Total:   MST = SST / DFT
+mst <- sst / dft
+## F Statistic F = MSM/MSE
+f_score <- msm/mse
+f_score
+
+## Adjusted R Squared R2 = 1 - (1 - R2)(n - 1) / (n - p)
+1 - r_squared
+n - 1
+(1 - r_squared) * (n - 1)
+n - p
+adjusted_r_squared <- 1 - (1 - r_squared) * (n - 1) / (n - p)
+adjusted_r_squared
+
 
 #      - Considering the parameters of the multiple regression model
 #        you have created. What are the standardized betas for each
