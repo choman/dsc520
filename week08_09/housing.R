@@ -186,6 +186,7 @@ n - 1
 (1 - r_squared) * (n - 1)
 n - p
 adjusted_r_squared <- 1 - (1 - r_squared) * (n - 1) / (n - p)
+r_squared
 adjusted_r_squared
 
 
