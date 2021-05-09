@@ -1,5 +1,26 @@
 ---
+title: "Term Project"
+author: "Chad Homan"
+date: '2021-04-20'
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+bibliography: bibliography.bib
 ---
+
+```{r setup, echo=FALSE}
+workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+##workdir <- file.path(workdir, "completed/assignent04")
+##workdir
+
+## Set the working directory
+##setwd(workdir)
+##```{r setup}
+knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/assignment04')
+```
+
+# Abstract
 
 You will be working on a research paper for your final project.  This project will include identifying a topic/problem that you want to solve using data science.  While the final solution to the problem does not need to be provided via programming – you will be doing some exploratory data analysis, transformations, and summary statistics on the data via R.  You are welcome to create a model based on what you have learned in this course to solve the problem, but this is not required.  Instead, a recommendation is required for a model or method you would implement to solve the problem.  There are 3 steps to this project, with the final deliverable being a formal paper (completed in R Markdown) that outlines the problem, shows the analysis done with the data, and concludes with your recommendation for next steps.  Each step provides detailed information that you must include in each phase of the project.
 
