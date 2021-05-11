@@ -67,11 +67,16 @@
 #
 DEBUG    <- FALSE
 
+################################################################
+#
+# Start loading default operations
+#
+################################################################
 ## Load the ggplot2 package
 # clean package loading based on 
 # https://statisticsglobe.com/r-install-missing-packages-automatically
 mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
-mypackages <- append(mypackages, "readxl")
+##mypackages <- append(mypackages, "readxl")
 
 
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
@@ -105,8 +110,19 @@ house_df
 house_df %>% head(4) %>% dim()
 class(house_df)
 
+
+################################################################
+#
+# Begin Answers here!!
+#
+################################################################
+
 #      - Explain any transformations or modifications you made to the
 #        dataset
+
+#        Currently, no transformations nor modifications are made 
+#        to the dataset
+#
 
 #      - Create two variables; one that will contain the variables 
 #        Sale Price and Square Foot of Lot (same variables used from
@@ -152,8 +168,10 @@ sst <- sum((mean_sale_price - house_df$`Sale Price`)^2)
 ## Corrected Sum of Squares for Model
 ssm <- sum((mean_sale_price - sale_price_predictors$Sale.Price)^2)
 ## Residuals
-residuals <- house_df$`Sale Date` - sale_price_predictors$Sale.Price
+residuals <- house_df$`Sale Price` - sale_price_predictors$Sale.Price
 ## Sum of Squares for Error
+residuals
+residuals^2
 sse <- sum(residuals^2)
 ## R Squared R^2 = SSM\SST
 r_squared <- ssm / sst
