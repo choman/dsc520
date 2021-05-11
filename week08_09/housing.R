@@ -178,9 +178,9 @@ r_squared <- ssm / sst
 r_squared
 
 ## Number of observations
-n <- prod(dim(heights_df))
+n <- prod(dim(house_df))
 ## Number of regression parameters
-p <- 2
+p <- 8
 ## Corrected Degrees of Freedom for Model (p-1)
 dfm <- p -1
 ## Degrees of Freedom for Error (n-p)
