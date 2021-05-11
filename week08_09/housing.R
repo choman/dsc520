@@ -207,6 +207,7 @@ adjusted_r_squared <- 1 - (1 - r_squared) * (n - 1) / (n - p)
 r_squared
 adjusted_r_squared
 
+### https://analyticsindiamag.com/r-squared-vs-adjusted-r-squared/
 
 #      - Considering the parameters of the multiple regression model
 #        you have created. What are the standardized betas for each
