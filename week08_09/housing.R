@@ -228,14 +228,18 @@ r_squared > adjusted_r_squared
 #        you have created. What are the standardized betas for each
 #        parameter and what do the values indicate?
 
-## For some reason I am unable to load reghelper for the beat fuction
-## beta(mylm)
+## For some reason I am unable to load the reghelper library for the beta 
+## function ==>  beta(mylm)
 
 
 #      - Calculate the confidence intervals for the parameters in your 
 #        model and explain what the results indicate.
 
-predict(mylm, house_df, interval = "confidence")
+head(house_df)
+head(predict(mylm, house_df, interval = "confidence"))
+
+## Based on a 95% confidence level, a house with a sale price of $698000
+## could really sell between $718412 and $735386 base on my predictors
 
 #      - Assess the improvement of the new model compared to your
 #        original model (simple regression model) by testing whether
