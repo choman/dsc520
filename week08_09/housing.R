@@ -76,8 +76,11 @@ DEBUG    <- FALSE
 # clean package loading based on 
 # https://statisticsglobe.com/r-install-missing-packages-automatically
 mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
-##mypackages <- append(mypackages, "readxl")
+mypackages <- append(mypackages, c("readxl"))
+##mypackages <- append(mypackages, c("devtools", "reghelper"))
 
+
+mypackages
 
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
 if(length(not_installed)) install.packages(not_installed)
@@ -120,19 +123,21 @@ class(house_df)
 #      - Explain any transformations or modifications you made to the
 #        dataset
 
-#        Currently, no transformations nor modifications are made 
-#        to the dataset
-#
+##      Currently, no transformations nor modifications are made 
+##      to the dataset
+##
 
-#      - Create two variables; one that will contain the variables 
-#        Sale Price and Square Foot of Lot (same variables used from
-#        previous assignment on simple regression) and one that will
-#        contain Sale Price and several additional predictors of your
-#        choice. Explain the basis for your additional predictor
-#        selections.
+#     - Create two variables; one that will contain the variables 
+#       Sale Price and Square Foot of Lot (same variables used from
+#       previous assignment on simple regression) and one that will
+#       contain Sale Price and several additional predictors of your
+#       choice. Explain the basis for your additional predictor
+#       selections.
 sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`, 
                                           house_df$sq_ft_lot)
 
+## Based on my experience with REIA, these predictors are things that affect 
+## Sale Price
 mylm <- lm(`Sale Price` ~ zip5 +
              bedrooms +
              square_feet_total_living +
@@ -207,22 +212,37 @@ adjusted_r_squared <- 1 - (1 - r_squared) * (n - 1) / (n - p)
 r_squared
 adjusted_r_squared
 
-### https://analyticsindiamag.com/r-squared-vs-adjusted-r-squared/
+## According to https://analyticsindiamag.com/r-squared-vs-adjusted-r-squared, 
+## adjusted r_squared has the capability to decrease with the addition of less 
+## significant variables, thus resulting in a more reliable and accurate 
+## evaluation. Since:
+
+r_squared > adjusted_r_squared
+
+## So I would interpret this to mean I have an accurate evaluation. 
+## Currently, I cannot say if the inclusion of the additional predictors 
+## help explain any large variations found in Sale Price?
+
 
 #      - Considering the parameters of the multiple regression model
 #        you have created. What are the standardized betas for each
 #        parameter and what do the values indicate?
 
+## For some reason I am unable to load reghelper for the beat fuction
+## beta(mylm)
+
 
 #      - Calculate the confidence intervals for the parameters in your 
 #        model and explain what the results indicate.
 
+predict(mylm, house_df, interval = "confidence")
 
 #      - Assess the improvement of the new model compared to your
 #        original model (simple regression model) by testing whether
 #        this change is significant by performing an analysis of
 #        variance.
 
+predict(mylm, house_df)
 
 #      - Perform casewise diagnostics to identify outliers and/or 
 #        influential cases, storing each function's output in a
