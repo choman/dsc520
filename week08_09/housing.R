@@ -142,7 +142,8 @@ mylm <- lm(`Sale Price` ~ zip5 +
              bedrooms +
              square_feet_total_living +
              bath_full_count + 
-             year_built, 
+             year_built +
+             year_renovated,
              data = house_df)
 
 summary(mylm)
@@ -153,6 +154,8 @@ sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
                                     bedrooms = house_df$bedrooms,
                                     square_feet_total_living = house_df$square_feet_total_living,
                                     bath_full_count = house_df$bath_full_count,
+                                    year_renovated = house_df$year_renovated, 
+
                                     year_built = house_df$year_built) 
 
 sale_price_by_lot_square_ft
@@ -252,6 +255,30 @@ predict(mylm, house_df)
 #        influential cases, storing each function's output in a
 #        dataframe assigned to a unique variable name.
 
+fitted(mylm)
+
+## Outliers
+my.resid <- resid(mylm)
+my.rstandard <- rstandard(mylm)
+my.rstudent <- rstudent(mylm)
+
+## Influential Cases
+my.cooks <- cooks.distance(mylm)
+my.dfbeta <- dfbeta(mylm)
+my.dffits <- dffits(mylm)
+my.hatvalues <- hatvalues(mylm)
+my.covratio <- covratio(mylm)
+typeof(my.resid)
+
+sale2 <- data.frame(residuals = resid(mylm),
+                    rstandard = rstandard(mylm),
+                    rstudent = rstudent(mylm),
+                    cooks = cooks.distance(mylm),
+                    dfbeta = dfbeta(mylm),
+                    dffits = dffits(mylm),
+                    hatvalues = hatvalues(mylm),
+                    covratio = covratio(mylm),
+                    )
 
 #      - Calculate the standardized residuals using the appropriate
 #        command, specifying those that are +-2, storing the results 
@@ -268,7 +295,7 @@ predict(mylm, house_df)
 
 #      - Investigate further by calculating the leverage, cooks 
 #        distance, and covariance rations. Comment on all cases that 
-#        are problematics.
+#        are problematic.
 
 
 #      - Perform the necessary calculations to assess the assumption 
