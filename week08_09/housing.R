@@ -114,7 +114,7 @@ sheet_names <- excel_sheets(filename)
 house_df    <- readxl::read_xlsx(filename)
 sheet_names
 
-house_df
+#house_df[rowSums(is.na(house_df)) > 0,]
 house_df %>% head(4) %>% dim()
 class(house_df)
 
@@ -140,7 +140,7 @@ house_df %>% var() %>% cov() %>% cor()
 #       contain Sale Price and several additional predictors of your
 #       choice. Explain the basis for your additional predictor
 #       selections.
-sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`, 
+sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`,
                                           house_df$sq_ft_lot)
 
 
@@ -237,9 +237,11 @@ r_squared > adjusted_r_squared
 #        parameter and what do the values indicate?
 
 lm.beta(mylm)
-## For some reason I am unable to load the reghelper library for the beta 
-## function ==>  beta(mylm)
+summary(lm.beta(mylm))
 
+## According to Discovering Statistics with R, these outputs tell us 
+## the number of standard deviations by which the outcome will change
+## as a result of one standard deviation change in the predictor.
 
 #      - Calculate the confidence intervals for the parameters in your 
 #        model and explain what the results indicate.
@@ -332,11 +334,15 @@ durbinWatsonTest(sale_price_predictors)
 #        of no multicollinearity and state if the condition is met or 
 #        not.
 
+## Unable to compile a dependency of the car library, so no vif()
 
 #      - Visually check the assumptions related to the residuals using 
 #        the plot() and hist() functions. Summarize what each graph is 
 #        informing you of and if any anomalies are present.
 
+
+ggplot(house_df, aes(x=zip5, y=`Sale Price`)) +
+  geom_point()
 
 #      - Overall, is this regression model unbiased? If an unbiased 
 #        regression model, what does this tell us about the sample vs. 
