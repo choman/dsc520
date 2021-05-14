@@ -364,6 +364,7 @@ sale_price_predictors[sale_price_predictors$large.residuals,
                         "bath_full_count",
                         "year_built")] 
 
+## NEED INFO
 
 #      - Investigate further by calculating the leverage, cooks 
 #        distance, and covariance rations. Comment on all cases that 
@@ -372,6 +373,8 @@ sale_price_predictors[sale_price_predictors$large.residuals,
                       c("cooks.distance",
                         "leverage",
                         "covariance.ratios")]
+
+## NEED INFO
 
 #      - Perform the necessary calculations to assess the assumption 
 #        of independence and state if the condition is met or not.
@@ -409,6 +412,8 @@ myplot +
   geom_line(color='red', data = sale_price_predictors, 
             aes(x=square_feet_total_living, y=`Sale.Price`))
 
+## with the predictions plotted, I see how the cluster is swarm against 
+## those prices
 
 
 
@@ -416,4 +421,4 @@ myplot +
 #        regression model, what does this tell us about the sample vs. 
 #        the entire population model?
 
-
+## I believe this regression model is unbiased. NEED MORE
