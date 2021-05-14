@@ -66,6 +66,7 @@
 #
 #
 DEBUG    <- FALSE
+REMOVALS <- FALSE
 
 # NOTES:
 # variance -> covariance -> corrleation -> regression
@@ -83,6 +84,7 @@ DEBUG    <- FALSE
 mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
+mypackages <- append(mypackages, c("relaimpo")) #, "Boruta"))
 #mypackages <- append(mypackages, c("car"))
 
 mypackages
@@ -117,7 +119,7 @@ sheet_names
 #house_df[rowSums(is.na(house_df)) > 0,]
 house_df %>% head(4) %>% dim()
 class(house_df)
-
+str(house_df)
 # Need to work on this
 house_df %>% var() %>% cov() %>% cor()
 
@@ -130,9 +132,45 @@ house_df %>% var() %>% cov() %>% cor()
 #      - Explain any transformations or modifications you made to the
 #        dataset
 
-##      Currently, no transformations nor modifications are made 
-##      to the dataset
-##
+# removals ----
+
+if (REMOVALS) {
+## Remove columns with NA
+df1 <- as.data.frame(cbind(lapply(lapply(house_df, is.na), sum)))
+remove_cols <- rownames(subset(df1, df1$V1 != 0))
+
+## Remove the following, reasons on side
+#remove_cols <- append(remove_cols, c("Sale Date", # don't need dates
+#                                     "sale_reason", # mostly 1's
+#                                     "sale_instrument", # mostly 3's
+##                                     "sitetype", # all R1
+#                                     "lon", # not needed
+#                                     "lat", # not needed
+#                                     "prop_type", # All R's
+#                                     "addr_full", # not needed
+#                                     "postalctyn", # All REDMOND
+#                                     "present_use", # mostly 2's
+#                                     "zip5", # only 3 zips
+##                                     "current_zoning", # unknown codes
+##                                     "year_renovated" # mostly 0's
+#                        ))
+
+remove_cols
+
+house_df <- house_df[ , ! names(house_df) %in% remove_cols]
+
+names(house_df)
+
+dim(house_df)
+#"building_grade", # ?????
+#"current_zoning", # ????
+
+                 
+house_df <- house_df[ , ! names(house_df) %in% remove_cols]
+          
+}       
+names(house_df)
+house_df$building_grade
 
 #     - Create two variables; one that will contain the variables 
 #       Sale Price and Square Foot of Lot (same variables used from
@@ -140,27 +178,37 @@ house_df %>% var() %>% cov() %>% cor()
 #       contain Sale Price and several additional predictors of your
 #       choice. Explain the basis for your additional predictor
 #       selections.
+
+# 2vars ----
+
 sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`,
                                           house_df$sq_ft_lot)
 
+#lmMod <- lm(`Sale Price` ~ . , data = house_df)  # fit lm() model
 
 ## Based on my experience with REIA, these predictors are things that affect 
 ## Sale Price
-mylm <- lm(`Sale Price` ~ zip5 +
+mylm <- lm(`Sale Price` ~ square_feet_total_living,
+#             sq_ft_lot, 
              bedrooms +
-             square_feet_total_living +
-             bath_full_count + 
-             year_built +
+          #   building_grade +
+             bath_full_count +
+#             bath_half_count + 
+ #            bath_3qtr_count + 
+             year_built,
              data = house_df)
 
 summary(mylm)
 head(house_df)
 dimnames(house_df)
 sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
-                                    zip5 = house_df$zip5,
+  #                                  sq_ft_lot = house_df$sq_ft_lot,
+                                    building_grade = house_df$building_grade,
                                     bedrooms = house_df$bedrooms,
                                     square_feet_total_living = house_df$square_feet_total_living,
                                     bath_full_count = house_df$bath_full_count,
+   #                                 bath_half_count = house_df$bath_half_count,
+    #                                bath_3qtr_count = house_df$bath_3qtr_count,
                                     year_built = house_df$year_built) 
 
 sale_price_by_lot_square_ft
@@ -298,8 +346,8 @@ head(sale_price_predictors)
 #      - Calculate the standardized residuals using the appropriate
 #        command, specifying those that are +-2, storing the results 
 #        of large residuals in a variable you create.
-sale_price_predictors$large.residuals <- sale2$standardized.residuals > 2 |
-                                         sale2$standardized.residuals < -2
+sale_price_predictors$large.residuals <- sale_price_predictors$standardized.residuals > 2 |
+                                         sale_price_predictors$standardized.residuals < -2
 
 #      - Use the appropriate function to show the sum of large 
 #        residuals.
@@ -311,7 +359,6 @@ sum (sale_price_predictors$large.residuals)
 #        that evaluate as TRUE)?
 sale_price_predictors[sale_price_predictors$large.residuals, 
                       c("Sale.Price",
-                        "zip5",
                         "bedrooms",
                         "square_feet_total_living",
                         "bath_full_count",
@@ -340,14 +387,29 @@ durbinWatsonTest(sale_price_predictors)
 #        the plot() and hist() functions. Summarize what each graph is 
 #        informing you of and if any anomalies are present.
 
-#hist(house_df)
-ggplot(house_df, aes(x=square_feet_total_living, y=`Sale Price`)) +
-  geom_point(color='blue')
+ggplot(house_df, aes(`Sale Price`)) +
+  geom_histogram(fill = "blue")
 
-ggplot(house_df, aes(x=square_feet_total_living, y=`Sale Price`)) +
-  geom_point(color='blue') + 
+## With the histogram I see outliers in the Sale Price
+
+
+scaleFUN <- function(x) sprintf("%.0fk", x/10000)
+myplot <- ggplot(house_df, aes(x=square_feet_total_living, 
+                              y=`Sale Price`)) +
+          geom_point(color='blue') +
+          scale_y_continuous(name = "Sale Price ($K)",
+                             labels = scaleFUN)
+
+myplot
+
+## with the point plot I see clustering of sale prices for houses
+## under 5000 sq ft just under 150K
+
+myplot +  
   geom_line(color='red', data = sale_price_predictors, 
-            aes(y=square_feet_total_living, x=`Sale.Price`))
+            aes(x=square_feet_total_living, y=`Sale.Price`))
+
+
 
 
 #      - Overall, is this regression model unbiased? If an unbiased 
