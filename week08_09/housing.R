@@ -67,6 +67,11 @@
 #
 DEBUG    <- FALSE
 
+# NOTES:
+# variance -> covariance -> corrleation -> regression
+# 
+
+
 ################################################################
 #
 # Start loading default operations
@@ -77,8 +82,8 @@ DEBUG    <- FALSE
 # https://statisticsglobe.com/r-install-missing-packages-automatically
 mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 mypackages <- append(mypackages, c("readxl"))
-##mypackages <- append(mypackages, c("devtools", "reghelper"))
-
+mypackages <- append(mypackages, c("boot", "QuantPsyc"))
+#mypackages <- append(mypackages, c("car"))
 
 mypackages
 
@@ -113,6 +118,8 @@ house_df
 house_df %>% head(4) %>% dim()
 class(house_df)
 
+# Need to work on this
+house_df %>% var() %>% cov() %>% cor()
 
 ################################################################
 #
@@ -136,6 +143,7 @@ class(house_df)
 sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`, 
                                           house_df$sq_ft_lot)
 
+
 ## Based on my experience with REIA, these predictors are things that affect 
 ## Sale Price
 mylm <- lm(`Sale Price` ~ zip5 +
@@ -143,7 +151,6 @@ mylm <- lm(`Sale Price` ~ zip5 +
              square_feet_total_living +
              bath_full_count + 
              year_built +
-             year_renovated,
              data = house_df)
 
 summary(mylm)
@@ -154,8 +161,6 @@ sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
                                     bedrooms = house_df$bedrooms,
                                     square_feet_total_living = house_df$square_feet_total_living,
                                     bath_full_count = house_df$bath_full_count,
-                                    year_renovated = house_df$year_renovated, 
-
                                     year_built = house_df$year_built) 
 
 sale_price_by_lot_square_ft
@@ -231,6 +236,7 @@ r_squared > adjusted_r_squared
 #        you have created. What are the standardized betas for each
 #        parameter and what do the values indicate?
 
+lm.beta(mylm)
 ## For some reason I am unable to load the reghelper library for the beta 
 ## function ==>  beta(mylm)
 
@@ -240,9 +246,10 @@ r_squared > adjusted_r_squared
 
 head(house_df)
 head(predict(mylm, house_df, interval = "confidence"))
+confint(mylm)
 
 ## Based on a 95% confidence level, a house with a sale price of $698000
-## could really sell between $718412 and $735386 base on my predictors
+## could really sell between $719247 and $736218 base on my predictors
 
 #      - Assess the improvement of the new model compared to your
 #        original model (simple regression model) by testing whether
@@ -268,39 +275,58 @@ my.dfbeta <- dfbeta(mylm)
 my.dffits <- dffits(mylm)
 my.hatvalues <- hatvalues(mylm)
 my.covratio <- covratio(mylm)
-typeof(my.resid)
+is.vector(my.resid)
+typeof(c(my.resid))
+id(my.resid)
+is.vector(my.resid)
 
-sale2 <- data.frame(residuals = resid(mylm),
-                    rstandard = rstandard(mylm),
-                    rstudent = rstudent(mylm),
-                    cooks = cooks.distance(mylm),
-                    dfbeta = dfbeta(mylm),
-                    dffits = dffits(mylm),
-                    hatvalues = hatvalues(mylm),
-                    covratio = covratio(mylm),
-                    )
+head(sale_price_predictors)
+sale_price_predictors$residuals = resid(mylm)
+sale_price_predictors$standardized.residuals = rstandard(mylm)
+sale_price_predictors$studentized.residuals = rstudent(mylm)
+sale_price_predictors$cooks.distance = cooks.distance(mylm)
+sale_price_predictors$dfbeta = dfbeta(mylm)
+sale_price_predictors$dffit = dffits(mylm)
+sale_price_predictors$leverage = hatvalues(mylm)
+sale_price_predictors$covariance.ratios = covratio(mylm)
+
+
+head(sale_price_predictors)
 
 #      - Calculate the standardized residuals using the appropriate
 #        command, specifying those that are +-2, storing the results 
 #        of large residuals in a variable you create.
-
+sale_price_predictors$large.residuals <- sale2$standardized.residuals > 2 |
+                                         sale2$standardized.residuals < -2
 
 #      - Use the appropriate function to show the sum of large 
 #        residuals.
 
+sum (sale_price_predictors$large.residuals)
+
 
 #      - Which specific variables have large residuals (only cases 
 #        that evaluate as TRUE)?
+sale_price_predictors[sale_price_predictors$large.residuals, 
+                      c("Sale.Price",
+                        "zip5",
+                        "bedrooms",
+                        "square_feet_total_living",
+                        "bath_full_count",
+                        "year_built")] 
 
 
 #      - Investigate further by calculating the leverage, cooks 
 #        distance, and covariance rations. Comment on all cases that 
 #        are problematic.
-
+sale_price_predictors[sale_price_predictors$large.residuals,
+                      c("cooks.distance",
+                        "leverage",
+                        "covariance.ratios")]
 
 #      - Perform the necessary calculations to assess the assumption 
 #        of independence and state if the condition is met or not.
-
+durbinWatsonTest(sale_price_predictors)
 
 #      - Perform the necessary calculations to assess the assumption 
 #        of no multicollinearity and state if the condition is met or 
