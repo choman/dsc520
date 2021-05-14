@@ -340,9 +340,15 @@ durbinWatsonTest(sale_price_predictors)
 #        the plot() and hist() functions. Summarize what each graph is 
 #        informing you of and if any anomalies are present.
 
+#hist(house_df)
+ggplot(house_df, aes(x=square_feet_total_living, y=`Sale Price`)) +
+  geom_point(color='blue')
 
-ggplot(house_df, aes(x=zip5, y=`Sale Price`)) +
-  geom_point()
+ggplot(house_df, aes(x=square_feet_total_living, y=`Sale Price`)) +
+  geom_point(color='blue') + 
+  geom_line(color='red', data = sale_price_predictors, 
+            aes(y=square_feet_total_living, x=`Sale.Price`))
+
 
 #      - Overall, is this regression model unbiased? If an unbiased 
 #        regression model, what does this tell us about the sample vs. 
