@@ -65,8 +65,9 @@
 #        the entire population model?
 #
 #
-DEBUG    <- FALSE
-REMOVALS <- FALSE
+DEBUG            <- FALSE
+REMOVALS         <- FALSE
+HEAVY_PREDICTORS <- TRUE
 
 # NOTES:
 # variance -> covariance -> corrleation -> regression
@@ -188,28 +189,52 @@ sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`,
 
 ## Based on my experience with REIA, these predictors are things that affect 
 ## Sale Price
-mylm <- lm(`Sale Price` ~ square_feet_total_living,
-#             sq_ft_lot, 
-             bedrooms +
-          #   building_grade +
-             bath_full_count +
-#             bath_half_count + 
- #            bath_3qtr_count + 
-             year_built,
-             data = house_df)
+
+if (HEAVY_PREDICTORS) {
+  mylm <- lm(`Sale Price` ~ square_feet_total_living +
+                            sq_ft_lot +
+                            bedrooms +
+                            building_grade +
+                            bath_full_count +
+                            bath_half_count + 
+                            bath_3qtr_count + 
+                            year_built,
+                            data = house_df)
+} else {
+  mylm <- lm(`Sale Price` ~ square_feet_total_living +
+                            bedrooms +
+                            building_grade +
+                            bath_full_count +
+                            year_renovated +
+                            year_built,
+                            data = house_df)
+}
+
 
 summary(mylm)
 head(house_df)
 dimnames(house_df)
-sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
-  #                                  sq_ft_lot = house_df$sq_ft_lot,
+
+if (HEAVY_PREDICTORS) {
+  sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
+                                    building_grade = house_df$building_grade,
+                                    bedrooms = house_df$bedrooms,
+                                    sq_ft_lot = house_df$sq_ft_lot,
+                                    square_feet_total_living = house_df$square_feet_total_living,
+                                    bath_full_count = house_df$bath_full_count,
+                                    bath_half_count = house_df$bath_half_count,
+                                    bath_3qtr_count = house_df$bath_3qtr_count,
+                                    year_renovated = house_df$year_renovated,
+                                    year_built = house_df$year_built) 
+} else {
+  sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
                                     building_grade = house_df$building_grade,
                                     bedrooms = house_df$bedrooms,
                                     square_feet_total_living = house_df$square_feet_total_living,
                                     bath_full_count = house_df$bath_full_count,
-   #                                 bath_half_count = house_df$bath_half_count,
-    #                                bath_3qtr_count = house_df$bath_3qtr_count,
                                     year_built = house_df$year_built) 
+
+}
 
 sale_price_by_lot_square_ft
 
@@ -390,13 +415,16 @@ durbinWatsonTest(sale_price_predictors)
 #        the plot() and hist() functions. Summarize what each graph is 
 #        informing you of and if any anomalies are present.
 
+scaleFUN <- function(x) sprintf("%.0fk", x/10000)
+
 ggplot(house_df, aes(`Sale Price`)) +
-  geom_histogram(fill = "blue")
+  geom_histogram(fill = "blue", bins=20) +
+  scale_x_continuous(name = "Sale Price ($K)",
+                   labels = scaleFUN)
+
 
 ## With the histogram I see outliers in the Sale Price
 
-
-scaleFUN <- function(x) sprintf("%.0fk", x/10000)
 myplot <- ggplot(house_df, aes(x=square_feet_total_living, 
                               y=`Sale Price`)) +
           geom_point(color='blue') +
@@ -422,3 +450,4 @@ myplot +
 #        the entire population model?
 
 ## I believe this regression model is unbiased. NEED MORE
+
