@@ -86,7 +86,7 @@ mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
 mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
-mypackages <- append(mypackages, c("car"))
+#mypackages <- append(mypackages, c("car"))
 
 mypackages
 
