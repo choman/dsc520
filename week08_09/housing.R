@@ -354,22 +354,25 @@ head(sale_price_predictors)
 #        of large residuals in a variable you create.
 sale_price_predictors$large.residuals <- sale_price_predictors$standardized.residuals > 2 |
                                          sale_price_predictors$standardized.residuals < -2
+sale_price_predictors$large.residuals
 
 #      - Use the appropriate function to show the sum of large 
 #        residuals.
 
 sum (sale_price_predictors$large.residuals)
 
-
+nrow(sale_price_predictors)
 #      - Which specific variables have large residuals (only cases 
 #        that evaluate as TRUE)?
 sale_price_predictors[sale_price_predictors$large.residuals, 
                       c("Sale.Price",
                         "building_grade",
                         "square_feet_total_living",
-                        "bath_full_count")] 
+                        "bath_full_count")]
 
-## NEED INFO
+sum (sale_price_predictors$large.residuals) / nrow(sale_price_predictors)
+
+## This means that 2.4% of my data falls outside of the limits
 
 #      - Investigate further by calculating the leverage, cooks 
 #        distance, and covariance rations. Comment on all cases that 
@@ -379,11 +382,16 @@ sale_price_predictors[sale_price_predictors$large.residuals,
                         "leverage",
                         "covariance.ratios")]
 
-## NEED INFO
+sale_price_predictors[sale_price_predictors$cooks.distance > 1]
+
+## Since none of my 314 case have a cooks.distance > 1, none of them 
+## are having an undo infuence on the model
 
 #      - Perform the necessary calculations to assess the assumption 
 #        of independence and state if the condition is met or not.
 durbinWatsonTest(sale_price_predictors)
+
+## unable to test since I cannot load the car library
 
 #      - Perform the necessary calculations to assess the assumption 
 #        of no multicollinearity and state if the condition is met or 
