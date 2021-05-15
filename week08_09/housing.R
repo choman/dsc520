@@ -67,7 +67,7 @@
 #
 DEBUG            <- FALSE
 REMOVALS         <- FALSE
-HEAVY_PREDICTORS <- TRUE
+
 
 # NOTES:
 # variance -> covariance -> corrleation -> regression
@@ -85,7 +85,7 @@ HEAVY_PREDICTORS <- TRUE
 mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
-mypackages <- append(mypackages, c("relaimpo")) #, "Boruta"))
+mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
 #mypackages <- append(mypackages, c("car"))
 
 mypackages
@@ -132,6 +132,17 @@ house_df %>% var() %>% cov() %>% cor()
 
 #      - Explain any transformations or modifications you made to the
 #        dataset
+
+df1 <- data.frame(house_df$`Sale Price`,
+                  house_df$building_grade,
+                  house_df$square_feet_total_living,
+                  house_df$bath_full_count
+)
+
+
+head(df1)
+head(cor(df1))
+corrplot(cor(df1))
 
 # removals ----
 
@@ -187,54 +198,24 @@ sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`,
 
 #lmMod <- lm(`Sale Price` ~ . , data = house_df)  # fit lm() model
 
-## Based on my experience with REIA, these predictors are things that affect 
-## Sale Price
+## These predicters are based on good correlation with the Sale Price
+## I use the corrplot library (above) to make this justification
 
-if (HEAVY_PREDICTORS) {
-  mylm <- lm(`Sale Price` ~ square_feet_total_living +
-                            sq_ft_lot +
-                            bedrooms +
+ylm <- lm(`Sale Price` ~ square_feet_total_living +
                             building_grade +
-                            bath_full_count +
-                            bath_half_count + 
-                            bath_3qtr_count + 
-                            year_built,
+                            bath_full_count,
                             data = house_df)
-} else {
-  mylm <- lm(`Sale Price` ~ square_feet_total_living +
-                            bedrooms +
-                            building_grade +
-                            bath_full_count +
-                            year_renovated +
-                            year_built,
-                            data = house_df)
-}
 
 
 summary(mylm)
 head(house_df)
 dimnames(house_df)
 
-if (HEAVY_PREDICTORS) {
-  sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
+sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
                                     building_grade = house_df$building_grade,
-                                    bedrooms = house_df$bedrooms,
-                                    sq_ft_lot = house_df$sq_ft_lot,
                                     square_feet_total_living = house_df$square_feet_total_living,
-                                    bath_full_count = house_df$bath_full_count,
-                                    bath_half_count = house_df$bath_half_count,
-                                    bath_3qtr_count = house_df$bath_3qtr_count,
-                                    year_renovated = house_df$year_renovated,
-                                    year_built = house_df$year_built) 
-} else {
-  sale_price_predictors <- data.frame(`Sale Price` = predict(mylm, house_df),
-                                    building_grade = house_df$building_grade,
-                                    bedrooms = house_df$bedrooms,
-                                    square_feet_total_living = house_df$square_feet_total_living,
-                                    bath_full_count = house_df$bath_full_count,
-                                    year_built = house_df$year_built) 
-
-}
+                                    bath_full_count = house_df$bath_full_count
+ ) 
 
 sale_price_by_lot_square_ft
 
@@ -384,10 +365,9 @@ sum (sale_price_predictors$large.residuals)
 #        that evaluate as TRUE)?
 sale_price_predictors[sale_price_predictors$large.residuals, 
                       c("Sale.Price",
-                        "bedrooms",
+                        "building_grade",
                         "square_feet_total_living",
-                        "bath_full_count",
-                        "year_built")] 
+                        "bath_full_count")] 
 
 ## NEED INFO
 
@@ -440,8 +420,8 @@ myplot +
   geom_line(color='red', data = sale_price_predictors, 
             aes(x=square_feet_total_living, y=`Sale.Price`))
 
-## with the predictions plotted, I see how the cluster is swarm against 
-## those prices
+## with the predictions plotted, I see how the cluster is swarmed against 
+## those prices mentioned above
 
 
 
