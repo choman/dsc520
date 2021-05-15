@@ -429,5 +429,6 @@ myplot +
 #        regression model, what does this tell us about the sample vs. 
 #        the entire population model?
 
-## I believe this regression model is unbiased. NEED MORE
+## I believe this regression model is unbiased, sinc eI have a low r2 value
+## Ref: https://statisticsbyjim.com/regression/r-squared-too-high/
 
