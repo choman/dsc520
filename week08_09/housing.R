@@ -86,7 +86,7 @@ mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
 mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
-#mypackages <- append(mypackages, c("car"))
+mypackages <- append(mypackages, c("car"))
 
 mypackages
 
@@ -387,19 +387,31 @@ sale_price_predictors[sale_price_predictors$large.residuals,
 sale_price_predictors[sale_price_predictors$cooks.distance > 1]
 
 ## Since none of my 314 case have a cooks.distance > 1, none of them 
-## are having an undo infuence on the model
+## are having an influence on the model
 
 #      - Perform the necessary calculations to assess the assumption 
 #        of independence and state if the condition is met or not.
-durbinWatsonTest(sale_price_predictors)
+durbinWatsonTest(mylm)
 
-## unable to test since I cannot load the car library
+## Look like my condition is met, although I have a p-value of 0
+
 
 #      - Perform the necessary calculations to assess the assumption 
 #        of no multicollinearity and state if the condition is met or 
 #        not.
 
-## Unable to compile a dependency of the car library, so no vif()
+# Vif
+vif(mylm)
+# tolerance
+1/vif(mylm)
+# average
+mean(vif(mylm))
+
+## I believe the condition is met. According to page 293 in Discovering 
+## statistics with R. My largest vif is less than 10,  so no concern
+## The average vif is not greater than one, so no concern. I have no
+## tolerance below .1, so again no concern. and my tolerance is not below 
+## .2, so there are no issues
 
 #      - Visually check the assumptions related to the residuals using 
 #        the plot() and hist() functions. Summarize what each graph is 
