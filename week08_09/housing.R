@@ -133,18 +133,9 @@ house_df %>% var() %>% cov() %>% cor()
 #      - Explain any transformations or modifications you made to the
 #        dataset
 
-df1 <- data.frame(house_df$`Sale Price`,
-                  house_df$building_grade,
-                  house_df$square_feet_total_living,
-                  house_df$bath_full_count
-)
 
-
-head(df1)
-head(cor(df1))
-corrplot(cor(df1))
-
-# removals ----
+## Currenly my REMOVALS varible is FALSE. I am not transforming nor
+## modifying the data in anyway.
 
 if (REMOVALS) {
 ## Remove columns with NA
@@ -184,6 +175,17 @@ house_df <- house_df[ , ! names(house_df) %in% remove_cols]
 names(house_df)
 house_df$building_grade
 
+df1 <- data.frame(house_df$`Sale Price`,
+                  house_df$building_grade,
+                  house_df$square_feet_total_living,
+                  house_df$bath_full_count
+)
+
+
+head(df1)
+head(cor(df1))
+corrplot(cor(df1))
+
 #     - Create two variables; one that will contain the variables 
 #       Sale Price and Square Foot of Lot (same variables used from
 #       previous assignment on simple regression) and one that will
@@ -198,7 +200,7 @@ sale_price_by_lot_square_ft <- data.frame(house_df$`Sale Price`,
 
 #lmMod <- lm(`Sale Price` ~ . , data = house_df)  # fit lm() model
 
-## These predicters are based on good correlation with the Sale Price
+## These predictors are based on good correlation with the Sale Price
 ## I use the corrplot library (above) to make this justification
 
 ylm <- lm(`Sale Price` ~ square_feet_total_living +
