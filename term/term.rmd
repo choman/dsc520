@@ -36,16 +36,105 @@ You will be working on a research paper for your final project.  This project wi
     What types of plots and tables will help you to illustrate the ﬁndings to your research questions?
     What do you not know how to do right now that you need to learn to answer your research questions?
 
-You can use the following template for Step 1:
-
 #    Introduction
+
+> Identify a topic or a problem that you want to research.  Provide an introduction 
+> that explains the problem statement or topic you are addressing. Why would 
+> someone be interested in this?  How is it a data science problem?
+
+
+   
+According to InvestmentU[@investmentu2021], the top 5 crypto currencies are:
+
+- Bitcoin (BTC)
+- Ethereum (ETH)
+- Litecoin (LTC)
+- Bitcoin Cash (BCH)
+- Binance Coin (BNB)
+
+This study will attempt to show a correlation with the precious metals market
+Which will focus on:
+
+- Palladium
+- Platinum 
+- Gold
+- Silver
+
+Since January, though we have seen the face of crypto market change. US News[@usnews2021] shows the top 7 crypto currencies to be:
+
+- Bitcoin (BTC)
+- Bitcoin Cash (BCH)
+- Cosmos (ATOM)
+- Dogecoin (DOG)
+- Ethereum (ETH)
+- Compound (COMP)
+- Polkadot (DOT)
+
+
 #    Research questions
+
+- Is there a correlation with crypto currencies and precious metals?
+- 
+- 
+- 
+- 
+- 
+
 #    Approach
+
 #    How your approach addresses (fully or partially) the problem.
+
+
 #    Data  (Minimum of 3 Datasets - but no requirement on number of fields or rows)
+
+The data used will be:
+
+- Cryptocurrency Historical Prices https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory
+- Gold Prices (Kaggle) https://www.kaggle.com/tunguz/gold-prices
+- Gold, Silver, S&P 500 Index & Barrick history https://www.kaggle.com/thelastwhitekid/gold-sp-500-index-arimax-time-series
+
+
 #    Required Packages
 
-#    Plots and Table Needs
-#    Questions for future steps
+```{r loadpackages, echo=FALSE, include=FALSE}
+################################################################
+#
+# Start loading default operations
+#
+################################################################
+## Load the ggplot2 package
+# clean package loading based on 
+# https://statisticsglobe.com/r-install-missing-packages-automatically
+mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
+mypackages <- append(mypackages, c("readxl"))
+mypackages <- append(mypackages, c("boot", "QuantPsyc"))
+mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
+mypackages <- append(mypackages, c("car"))
+
+not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
+if(length(not_installed)) install.packages(not_installed)
+
+# Load libraries
+##lapply(mypackages, require, character.only=TRUE)
+for (package in mypackages) {
+  library(package, character.only=TRUE)
+}
+
+theme_set(theme_minimal())
+binwidth <- .5
+```
+
+There are a number of packages used to help process this data. The list of packages 
+are:
+
+```{r show-packages, echo=FALSE}
+mypackages
+```
 
 
+# Plots and Table Needs
+
+
+# Questions for future steps
+
+# References
