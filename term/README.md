@@ -1,4 +1,9 @@
+# Abstract
 
+My term project
+
+
+# Step 1
 
 You will be working on a research paper for your final project.
 This project will include identifying a topic/problem that you 
@@ -51,7 +56,6 @@ You can use the following template for Step 1:
     How your approach addresses (fully or partially) the problem.
     Data  (Minimum of 3 Datasets - but no requirement on number of fields or rows)
     Required Packages
-
     Plots and Table Needs
     Questions for future steps
 
