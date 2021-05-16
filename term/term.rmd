@@ -23,7 +23,7 @@ knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/as
 #    Introduction
 
 Movies have been around for about a century or more. As a self-proclaimed movie
-buff I am curious what currently are the most successful movies franchises? The
+buff I am curious what currently are the most successful movie franchises? The
 franchises will be evaluated as a whole and as a reboot. What do I mean by this?
 For example, the Star Trek franchise as a whole would be all 13 Star Trek movies
 ranked together. As a reboot, I would separate the 4 Picard Movies and the 3 
