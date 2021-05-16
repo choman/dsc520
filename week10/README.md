@@ -1,5 +1,8 @@
-
+# Week 10
 # Abstract
+
+This folder is for the assignments related to weeks 10
+## Assignments
 
 1. Fit a Logistic Regression Model to Thoracic Surgery Binary Dataset
 
@@ -33,5 +36,3 @@ Assignment Instructions:
   - What is the accuracy of the logistic regression classifier?
   - Keep this assignment handy, as you will be comparing your results from this
     week to next week.
-
-
