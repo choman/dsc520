@@ -1,7 +1,7 @@
 ---
-title: "Term Project"
+title: "Term Project: Step 1"
 author: "Chad Homan"
-date: '2021-04-20'
+date: '2021-05-16'
 output:
   pdf_document: default
   html_document: default
@@ -20,79 +20,90 @@ workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
 knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/assignment04')
 ```
 
-# Abstract
-
-You will be working on a research paper for your final project.  This project will include identifying a topic/problem that you want to solve using data science.  While the final solution to the problem does not need to be provided via programming – you will be doing some exploratory data analysis, transformations, and summary statistics on the data via R.  You are welcome to create a model based on what you have learned in this course to solve the problem, but this is not required.  Instead, a recommendation is required for a model or method you would implement to solve the problem.  There are 3 steps to this project, with the final deliverable being a formal paper (completed in R Markdown) that outlines the problem, shows the analysis done with the data, and concludes with your recommendation for next steps.  Each step provides detailed information that you must include in each phase of the project.
-
-    Identify a topic or a problem that you want to research.  Provide an introduction that explains the problem statement or topic you are addressing. Why would someone be interested in this?  How is it a data science problem?
-    Draft 5-10 Research questions that focus on the problem statement/topic.
-    Provide a concise explanation of how you plan to address this problem statement.
-    Discuss how your proposed approach will address (fully or partially) this problem.
-    Do some digging and find at least 3 datasets that you can use to address the issue. (There is not a required number of fields or rows for these datasets)
-        Original source where the data was obtained is cited and, if possible, hyperlinked.
-        Source data is thoroughly explained (i.e. what was the original purpose of the data, when was it collected, how many variables did the original have, explain any peculiarities of the source data such as how missing values are recorded, or how data was imputed, etc.).
-    Identify the packages that are needed for your project.
-
-    What types of plots and tables will help you to illustrate the ﬁndings to your research questions?
-    What do you not know how to do right now that you need to learn to answer your research questions?
-
 #    Introduction
 
-> Identify a topic or a problem that you want to research.  Provide an introduction 
-> that explains the problem statement or topic you are addressing. Why would 
-> someone be interested in this?  How is it a data science problem?
+Movies have been around for about a century or more. As a self-proclaimed movie
+buff I am curious what currently are the most successful movies franchises? The
+franchises will be evaluated as a whole and as a reboot. What do I mean by this?
+For example, the Star Trek franchise as a whole would be all 13 Star Trek movies
+ranked together. As a reboot, I would separate the 4 Picard Movies and the 3 
+Newer Captain Kirk Movies from the original 6 Captain Kirk Movies. So another 
+problem to solve is how many times was a franchise rebooted? And if 
+possible with and without spin-offs. 
 
+I believe many like-minded movie fans would be interested in this. Especially 
+since there are many fan-duels between Star Wars vs Star Trek, Marvel vs DC, etc.
 
-   
-According to InvestmentU[@investmentu2021], the top 5 crypto currencies are:
-
-- Bitcoin (BTC)
-- Ethereum (ETH)
-- Litecoin (LTC)
-- Bitcoin Cash (BCH)
-- Binance Coin (BNB)
-
-This study will attempt to show a correlation with the precious metals market
-Which will focus on:
-
-- Palladium
-- Platinum 
-- Gold
-- Silver
-
-Since January, though we have seen the face of crypto market change. US News[@usnews2021] shows the top 7 crypto currencies to be:
-
-- Bitcoin (BTC)
-- Bitcoin Cash (BCH)
-- Cosmos (ATOM)
-- Dogecoin (DOG)
-- Ethereum (ETH)
-- Compound (COMP)
-- Polkadot (DOT)
-
+This is a data science problem because of the sheer amount of data and calculations
+that will need to happen to solve the problem.
 
 #    Research questions
 
-- Is there a correlation with crypto currencies and precious metals?
-- 
-- 
-- 
-- 
-- 
+> Draft 5-10 Research questions that focus on the problem statement/topic.
+
+- How far back should I process data? 1960? 1970? or 1980 and above?
+- How do I treat reboots?
+- How do I identify spin-offs
+- How do I address spin-offs
+- How do I determine success of a movie? by ticket sales? by rating? by votes?
+- How do I determine a movie that changes primary actor? as a reboot or continuance?
+- Do I limit my rankings to the top 10 or 20?
+- Will I need more the my original three datasets?
+- Will I need to swap out any of my datasets?
+
+## Aditional questions
+
+- What are the most successful movie franchises? 
+- What is the total run time of the movie franchises?
+- How do the reboots affect success or not? 
+- Do movie spin-offs have good success?
+- Is the Marvel Universe stronger than the DC Universe in regards to success?
+- How does the Star Wars franchise fair against the Star Trek franchise?
+- How does the Star Trek franchises fair amongst themselves, old Kirk vs new Kirk vs Picard?
+- How do the Star Wars spin offs fair by themselves?
+- How does the Marvel franchise fair against the DC franchise (all together vs the universes)?
+- How does Friday the 13th fair against Nightmare on Elm St? Should we look at other
+  franchises like The Exorcist?
+- Aliens vs Predator? vs ??
+- James Bond vs Kingsman vs Mission Impossible?
 
 #    Approach
 
+1. Fist step is to gather the data (below) and possible other data sets not 
+   mentioned.
+2. Next is data scrubbing.
+3. Start organizing the data into categories that will help answer the above 
+   questions. 
+4. Produce graphs and charts to visualize my solutions
+
 #    How your approach addresses (fully or partially) the problem.
 
+I believe this approach will partially address the problem. There will unforeseen
+issues that will need to be addressed as I move forward with the solution.
 
-#    Data  (Minimum of 3 Datasets - but no requirement on number of fields or rows)
+# Data
 
-The data used will be:
+Initially, four datasets have been identified to help solve this problem. They 
+are:
 
-- Cryptocurrency Historical Prices https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory
-- Gold Prices (Kaggle) https://www.kaggle.com/tunguz/gold-prices
-- Gold, Silver, S&P 500 Index & Barrick history https://www.kaggle.com/thelastwhitekid/gold-sp-500-index-arimax-time-series
-
+- IMDB Movie Dataset
+  - https://www.kaggle.com/harshitshankhdhar/imdb-dataset-of-top-1000-movies-and-tv-shows
+  - IMDB Dataset of top 1000 movies and tv shows
+  - 16 Varibles
+- Popular Movies of IMDB
+  - https://www.kaggle.com/sankha1998/tmdb-top-10000-popular-movies-dataset
+  - TMDb lists some 80,000 films at time of writing, which is considerably fewer than IMDb. While not as complete as IMDb, it holds extensive information for most popular/Hollywood films.
+This is dataset of the 10,000 most popular movies across the world has been fetched through the read API.
+  - 6 Variables
+- IMDB Dataset
+  - https://www.kaggle.com/manishkumarparmar/imdb-dataset
+  - A Colection of movie information
+  - 12 Varibles
+- Rotten Tomatoes Top Movies
+  - https://www.kaggle.com/fnunezsanchez/rotten-tomatoes-top-movies
+  - Top-rated movies in different categories by critics and Rotten Tomatoes users
+  - 26 Variables
+- 
 
 #    Required Packages
 
@@ -124,17 +135,24 @@ theme_set(theme_minimal())
 binwidth <- .5
 ```
 
-There are a number of packages used to help process this data. The list of packages 
-are:
+There are a number of packages used to help process this data. The initial list 
+of packages are:
 
 ```{r show-packages, echo=FALSE}
 mypackages
 ```
 
-
 # Plots and Table Needs
 
+- histograms
+- bar chart
+- line graphs
+- corrplots
 
 # Questions for future steps
 
+I have no question at the moment for future steps.
+
 # References
+
+N/A
