@@ -62,3 +62,21 @@ filename <- "binary-classifier-data.csv"
 bd.df <- read.csv(filename)
 bd.df
 head(bd.df)
+
+# - Fit a logistic regression model to the binary-classifier-data.csv dataset
+
+bd.df$label[bd.df$label > 0]
+
+my.glm <- glm(label ~ x + y, data = bd.df, family=binomial(link="logit"))
+summary(my.glm)
+
+# - The dataset (found in binary-classifier-data.csv) contains three variables;
+#   label, x, and y. The label variable is either 0 or 1 and is the output we want
+#   to predict using the x and y variables.
+
+
+#   - What is the accuracy of the logistic regression classifier?
+
+
+#   - Keep this assignment handy, as you will be comparing your results from this
+#     week to next week.

@@ -43,7 +43,8 @@ parent.frame(2)
 ## Load the ggplot2 package
 # clean package loading based on 
 # https://statisticsglobe.com/r-install-missing-packages-automatically
-mypackages <- c("this.path", "ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
+mypackages <- c("this.path", "ggplot2", "pastecs", "plyr", "dplyr", "purrr")
+mypackages <- append(mypackages, c("stringr"))
 mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
 ##mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
@@ -88,16 +89,21 @@ summary(ts.df)
 #   Generalized Linear Models for an example. Include a summary using the 
 #   summary() function in your results.
 
-
+dimnames(ts.df)
 my.glm <- glm(Risk1Yr ~ PRE7 +
+                        PRE4 +
+                        PRE5 +
+                        PRE6 +
                         PRE8 + 
                         PRE9 + 
                         PRE10 +
                         PRE11 +
+                        PRE14 +
                         PRE17 +
                         PRE19 +
                         PRE25 +
                         PRE30 +
+                        AGE + 
                         PRE32, 
                         data=ts.df, family=binomial(link="logit"))
 
@@ -107,6 +113,10 @@ summary(my.glm)
 
 # - According to the summary, which variables had the greatest effect on the
 #   survival rate?
+
+According to the summary; PRE9, PRER14OCT14, PRE14OCT13 and PRE30 have the 
+greatest effect on the survival rate.
+
 
 
 # - To compute the accuracy of your model, use the dataset to predict the outcome
