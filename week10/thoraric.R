@@ -34,7 +34,7 @@ REMOVALS         <- FALSE
 # variance -> covariance -> corrleation -> regression
 # 
 
-
+parent.frame(2)
 ################################################################
 #
 # Start loading default operations
@@ -43,10 +43,10 @@ REMOVALS         <- FALSE
 ## Load the ggplot2 package
 # clean package loading based on 
 # https://statisticsglobe.com/r-install-missing-packages-automatically
-mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
+mypackages <- c("this.path", "ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
-mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
+##mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
 mypackages <- append(mypackages, c("car", "foreign", "farff"))
 
 mypackages
@@ -62,10 +62,14 @@ for (package in mypackages) {
 
 theme_set(theme_minimal())
 binwidth <- .5
-
+getwd
 ## Set the working directory to the root of your DSC 520 directory
 ## to include the week of the assignment
+
+workdir <- dirname(this.path(verbose=TRUE))
+setwd(workdir)
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE) 
+workdir
 workdir <- file.path(workdir, "week10")
 
 ## Set the working directory
@@ -77,4 +81,40 @@ ts.df <- farff::readARFF(filename)
 
 head(ts.df)
 summary(ts.df)
+
+# - Fit a binary logistic regression model to the data set that predicts whether
+#   or not the patient survived for one year (the Risk1Y variable) after the
+#   surgery. Use the glm() function to perform the logistic regression. See
+#   Generalized Linear Models for an example. Include a summary using the 
+#   summary() function in your results.
+
+
+my.glm <- glm(Risk1Yr ~ PRE7 +
+                        PRE8 + 
+                        PRE9 + 
+                        PRE10 +
+                        PRE11 +
+                        PRE17 +
+                        PRE19 +
+                        PRE25 +
+                        PRE30 +
+                        PRE32, 
+                        data=ts.df, family=binomial(link="logit"))
+
+
+summary(my.glm) 
+
+
+# - According to the summary, which variables had the greatest effect on the
+#   survival rate?
+
+
+# - To compute the accuracy of your model, use the dataset to predict the outcome
+#   variable. The percent of correct predictions is the accuracy of your model.
+#   What is the accuracy of your model?
+
+
+
+
+
 
