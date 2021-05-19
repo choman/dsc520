@@ -74,9 +74,15 @@ summary(my.glm)
 #   label, x, and y. The label variable is either 0 or 1 and is the output we want
 #   to predict using the x and y variables.
 
+new.df <- data.frame(label = predict(my.glm, bd.df),
+                     x = bd.df$x,
+                     y = bd.df$y)
+
+new.df
+
 
 #   - What is the accuracy of the logistic regression classifier?
-
+mean(new.df$label)
 
 #   - Keep this assignment handy, as you will be comparing your results from this
 #     week to next week.
