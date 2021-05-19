@@ -11,16 +11,23 @@ bibliography: bibliography.bib
 
 ```{r setup, echo=FALSE}
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+termdir <- file.path(workdir, "term")
+datadir <- file.path(termdir, "data")
 ##workdir <- file.path(workdir, "completed/assignent04")
 ##workdir
 
 ## Set the working directory
 ##setwd(workdir)
-##```{r setup}
-knitr::opts_knit$set(root.dir = '/home/choman/repos/bellevue/dsc520/completed/assignment04')
+###```{r setup}
+knitr::opts_knit$set(base.dir = workdir) 
+knitr::opts_knit$set(root.dir = workdir) 
+knitr::opts_knit$set(term.dir = termdir) 
+knitr::opts_knit$set(data.dir = datadir) ###'/home/choman/repos/bellevue/dsc520/completed/assignment04')
 ```
 
-#    Introduction
+# Step 1
+
+##    Introduction
 
 Movies have been around for about a century or more. As a self-proclaimed movie
 buff I am curious what currently are the most successful movie franchises? The
@@ -37,7 +44,7 @@ since there are many fan-duels between Star Wars vs Star Trek, Marvel vs DC, etc
 This is a data science problem because of the sheer amount of data and calculations
 that will need to happen to solve the problem.
 
-#    Research questions
+##    Research questions
 
 > Draft 5-10 Research questions that focus on the problem statement/topic.
 
@@ -51,7 +58,7 @@ that will need to happen to solve the problem.
 - Will I need more the my original three datasets?
 - Will I need to swap out any of my datasets?
 
-## Aditional questions
+### Aditional questions
 
 - What are the most successful movie franchises? 
 - What is the total run time of the movie franchises?
@@ -67,7 +74,7 @@ that will need to happen to solve the problem.
 - Aliens vs Predator? vs ??
 - James Bond vs Kingsman vs Mission Impossible?
 
-#    Approach
+##    Approach
 
 1. Fist step is to gather the data (below) and possible other data sets not 
    mentioned.
@@ -76,12 +83,12 @@ that will need to happen to solve the problem.
    questions. 
 4. Produce graphs and charts to visualize my solutions
 
-#    How your approach addresses (fully or partially) the problem.
+##    How your approach addresses (fully or partially) the problem.
 
 I believe this approach will partially address the problem. There will unforeseen
 issues that will need to be addressed as I move forward with the solution.
 
-# Data
+## Data
 
 Initially, four datasets have been identified to help solve this problem. They 
 are:
@@ -105,7 +112,7 @@ This is dataset of the 10,000 most popular movies across the world has been fetc
   - 26 Variables
 - 
 
-#    Required Packages
+##    Required Packages
 
 ```{r loadpackages, echo=FALSE, include=FALSE}
 ################################################################
@@ -142,16 +149,81 @@ of packages are:
 mypackages
 ```
 
-# Plots and Table Needs
+## Plots and Table Needs
 
 - histograms
 - bar chart
 - line graphs
 - corrplots
 
-# Questions for future steps
+## Questions for future steps
 
 I have no question at the moment for future steps.
+
+
+# Step 2
+
+At this point you should have framed your problem/topic, described the data, and how you plan to solve the problem.  Now you need to move on to the next step of analyzing and preparing the data.
+
+## Data Cleaning And Scrubbing
+
+- Data importing and cleaning steps are explained in the text and follow a logical process.  Outline your data preparation and cleansing steps.
+- With a clean dataset, show what the final data set looks like. However, do not print off a data frame with 200+ rows; show me the data in the most condensed form possible.
+- What do you not know how to do right now that you need to learn to import and cleanup your dataset?
+   Not sure if I know how to appropriately loop through the dataset
+
+```{r data-cleaning}
+myread.csv <-function(filename) {
+  fullpath <- file.path(knitr::opts_knit$get()$data.dir, filename)
+  tmpdf <- read.csv(fullpath)
+  return(tmpdf)
+}
+
+imdb1000 <- myread.csv("imdb_top_1000.csv")
+imdb <- myread.csv("IMDB-Movie-Data.csv")
+rotten <- myread.csv("rotten_tomatoes_top_movies.csv")
+tmdb <- myread.csv("TMDb_updated.CSV")
+summary(imdb1000)
+summary(imdb)
+summary(rotten)
+summary(tmdb)
+
+print("Start cleaning rotten tomatoes")
+dimnames(rotten)
+rotten$year
+rotten$view_the_collection
+
+print ("Identified duplicates - based on 'type'")
+rotten$title[rotten$view_the_collection == "Marvel Cinematic Universe"]
+
+
+dimnames(rotten)
+
+head(rotten$critic_score)
+head(rotten$people_score)
+head(rotten$type)
+head(rotten$total_ratings)
+head(rotten$ratings)
+head(rotten$box_office_.gross_usa)
+head(rotten$runtime)
+
+
+marvel_universe <- rotten[rotten$view_the_collection == "Marvel Cinematic Universe",]
+dc_universe <- rotten[rotten$view_the_collection == "DC Extended Universe",]
+star_wars <- rotten[rotten$view_the_collection == "Star Wars Saga",]
+xmen <- rotten[rotten$view_the_collection == "X-men",]
+potter <- rotten[rotten$view_the_collection == "Harry Potter",]
+pixar <- rotten[rotten$view_the_collection == "Pixar",]
+
+
+marvel_universe$title
+star_wars$title
+potter$title
+pixar$title
+##rotten$view_the_collection
+rotten[rotten$title == "Mission: Impossible"]
+
+```
 
 # References
 
