@@ -114,8 +114,8 @@ summary(my.glm)
 # - According to the summary, which variables had the greatest effect on the
 #   survival rate?
 
-According to the summary; PRE9, PRER14OCT14, PRE14OCT13 and PRE30 have the 
-greatest effect on the survival rate.
+## According to the summary; PRE9, PRER14OCT14, PRE14OCT13 and PRE30 have the 
+## greatest effect on the survival rate.
 
 
 
@@ -123,6 +123,26 @@ greatest effect on the survival rate.
 #   variable. The percent of correct predictions is the accuracy of your model.
 #   What is the accuracy of your model?
 
+head(ts.df)
+new.df <- data.frame(Risk1Yr = predict(my.glm, data = ts.df),
+                     DGN   = ts.df$DGN,
+                     PRE7  = ts.df$PRE7,
+                     PRE4  = ts.df$PRE4,
+                     PRE5  = ts.df$PRE5,
+                     PRE6  = ts.df$PRE6,
+                     PRE8  = ts.df$PRE8,
+                     PRE9  = ts.df$PRE9,
+                     PRE10 = ts.df$PRE10,
+                     PRE11 = ts.df$PRE11,
+                     PRE14 = ts.df$PRE14,
+                     PRE17 = ts.df$PRE17,
+                     PRE19 = ts.df$PRE19,
+                     PRE25 = ts.df$PRE25,
+                     PRE30 = ts.df$PRE30,
+                     AGE = ts.df$AGE,
+                     PRE32 = ts.df$PRE32,
+)
+                     
 
 
 
