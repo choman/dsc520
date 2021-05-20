@@ -32,7 +32,7 @@ mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
 mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
 mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
-mypackages <- append(mypackages, c("car"))
+mypackages <- append(mypackages, c("car", "caret"))
 
 mypackages
 
@@ -83,6 +83,15 @@ new.df
 
 #   - What is the accuracy of the logistic regression classifier?
 mean(new.df$label)
+
+
+test <- predict(my.glm, type="response", newdata=bd.df)
+threshold <- 0.5
+install.packages("e1071")
+
+confusionMatrix(factor(test > threshold), factor(bd.df$label == 1), positive="TRUE")
+
+## 58%
 
 #   - Keep this assignment handy, as you will be comparing your results from this
 #     week to next week.

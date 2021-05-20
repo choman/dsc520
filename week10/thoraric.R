@@ -49,6 +49,7 @@ mypackages <- append(mypackages, c("readxl"))
 mypackages <- append(mypackages, c("boot", "QuantPsyc"))
 ##mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
 mypackages <- append(mypackages, c("car", "foreign", "farff"))
+mypackages <- append(mypackages, c("caret"))
 
 mypackages
 
@@ -63,7 +64,7 @@ for (package in mypackages) {
 
 theme_set(theme_minimal())
 binwidth <- .5
-getwd
+
 ## Set the working directory to the root of your DSC 520 directory
 ## to include the week of the assignment
 
@@ -114,6 +115,7 @@ summary(my.glm)
 # - According to the summary, which variables had the greatest effect on the
 #   survival rate?
 
+
 ## According to the summary; PRE9, PRER14OCT14, PRE14OCT13 and PRE30 have the 
 ## greatest effect on the survival rate.
 
@@ -124,8 +126,15 @@ summary(my.glm)
 #   What is the accuracy of your model?
 
 head(ts.df)
+my.glm
+
+##pred <- ifelse(predict(my.glm, type="response") > 0.5, 1, 0)
+#table(pred, y)
+
+
+
+
 new.df <- data.frame(Risk1Yr = predict(my.glm, data = ts.df),
-                     DGN   = ts.df$DGN,
                      PRE7  = ts.df$PRE7,
                      PRE4  = ts.df$PRE4,
                      PRE5  = ts.df$PRE5,
@@ -142,9 +151,13 @@ new.df <- data.frame(Risk1Yr = predict(my.glm, data = ts.df),
                      AGE = ts.df$AGE,
                      PRE32 = ts.df$PRE32,
 )
-                     
 
-
-
-
+new.df <- data.frame(ts.df$Risk1Yr, ts.df$PRE9, ts.df$PRE14, ts.df$PRE17, ts.df$PRE30)
+head(new.df)
+test <- predict(my.glm, type="response", newdata=ts.df)
+threshold <- 0.5
+install.packages("e1071")
+head (test)
+head(ts.df)
+confusionMatrix(factor(test > threshold), factor(new.df$Risk1Yr == TRUE), positive="TRUE")
 
