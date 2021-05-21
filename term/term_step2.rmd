@@ -1,0 +1,155 @@
+---
+title: "Term Project: Step 1"
+author: "Chad Homan"
+date: '2021-05-16'
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+bibliography: bibliography.bib
+---
+
+```{r setup, echo=FALSE}
+workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+termdir <- file.path(workdir, "term")
+datadir <- file.path(termdir, "data")
+##workdir <- file.path(workdir, "completed/assignent04")
+##workdir
+
+## Set the working directory
+##setwd(workdir)
+###```{r setup}
+knitr::opts_knit$set(base.dir = workdir) 
+knitr::opts_knit$set(root.dir = workdir) 
+knitr::opts_knit$set(term.dir = termdir) 
+knitr::opts_knit$set(data.dir = datadir) ###'/home/choman/repos/bellevue/dsc520/completed/assignment04')
+```
+
+```{r loadpackages, echo=FALSE, include=FALSE}
+################################################################
+#
+# Start loading default operations
+#
+################################################################
+## Load the ggplot2 package
+# clean package loading based on 
+# https://statisticsglobe.com/r-install-missing-packages-automatically
+mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
+mypackages <- append(mypackages, c("readxl"))
+mypackages <- append(mypackages, c("boot", "QuantPsyc"))
+mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
+mypackages <- append(mypackages, c("car"))
+
+not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
+if(length(not_installed)) install.packages(not_installed)
+
+# Load libraries
+##lapply(mypackages, require, character.only=TRUE)
+for (package in mypackages) {
+  library(package, character.only=TRUE)
+}
+
+theme_set(theme_minimal())
+binwidth <- .5
+```
+
+
+# Step 2
+
+At this point you should have framed your problem/topic, described the data, and how you plan to solve the problem.  Now you need to move on to the next step of analyzing and preparing the data.
+
+## Data Cleaning And Scrubbing
+
+- Data importing and cleaning steps are explained in the text and follow a logical process.  Outline your data preparation and cleansing steps.
+- With a clean dataset, show what the final data set looks like. However, do not print off a data frame with 200+ rows; show me the data in the most condensed form possible.
+- What do you not know how to do right now that you need to learn to import and cleanup your dataset?
+   Not sure if I know how to appropriately loop through the dataset
+
+```{r data-cleaning}
+myread.csv <-function(filename) {
+  fullpath <- file.path(knitr::opts_knit$get()$data.dir, filename)
+  tmpdf <- read.csv(fullpath)
+  return(tmpdf)
+}
+
+#imdb1000 <- myread.csv("imdb_top_1000.csv")
+#imdb <- myread.csv("IMDB-Movie-Data.csv")
+tmdb_all <- myread.csv("tmdb_all_data.csv")
+#tmdb <- myread.csv("TMDb_updated.CSV")
+#summary(imdb1000)
+#summary(imdb)
+summary(tmdb_all)
+#summary(tmdb)
+
+print("Start cleaning tmdb all")
+
+head(tmdb_all$title)
+head(tmdb_all$belongs_to_collection)
+head(tmdb_all$release_date)
+head(tmdb_all$genres)
+head(tmdb_all$vote_average)
+head(tmdb_all$popularity)
+head(tmdb_all$runtime)
+```
+
+### Cleaning TMDB All Dataset 
+
+The tmdb all dataset has far more variables then I care about. The current list 
+of variable is:
+
+```{r dataclean1}
+dimnames(tmdb_all[2])
+```
+
+The current plan is to reduce this to a select few to facilitate finding answers
+to my questions.
+
+```{r dataclean2}
+#tmdb_all$belongs_to_collection
+
+
+nrow(tmdb_all)
+
+tmdb_reduced <- tmdb_all[, c(4, 6, 13, 17, 19, 23, 25, 26)
+
+dimnames(tmdb_reduced)
+nrow(tmdb_reduced)
+
+##rotten$year
+##rotten$view_the_collection
+
+##print ("Identified duplicates - based on 'type'")
+##rotten$title[rotten$view_the_collection == "Marvel Cinematic Universe"]
+
+
+##dimnames(rotten)
+
+##head(rotten$critic_score)
+##head(rotten$people_score)
+##head(rotten$type)
+##head(rotten$total_ratings)
+##head(rotten$ratings)
+##head(rotten$box_office_.gross_usa)
+##head(rotten$runtime)
+
+
+##marvel_universe <- rotten[rotten$view_the_collection == "Marvel Cinematic Universe",]
+##dc_universe <- rotten[rotten$view_the_collection == "DC Extended Universe",]
+##star_wars <- rotten[rotten$view_the_collection == "Star Wars Saga",]
+##xmen <- rotten[rotten$view_the_collection == "X-men",]
+##potter <- rotten[rotten$view_the_collection == "Harry Potter",]
+##pixar <- rotten[rotten$view_the_collection == "Pixar",]
+
+
+##marvel_universe$title
+##star_wars$title
+##potter$title
+##pixar$title
+##rotten$view_the_collection
+##rotten[rotten$title == "Mission: Impossible"]
+
+```
+
+# References
+
+N/A
