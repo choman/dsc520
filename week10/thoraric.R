@@ -91,7 +91,7 @@ summary(ts.df)
 #   summary() function in your results.
 
 dimnames(ts.df)
-my.glm <- glm(Risk1Yr ~ PRE7 +
+my.glm <- glm(Risk1Yr ~ DGN + PRE7 +
                         PRE4 +
                         PRE5 +
                         PRE6 +
@@ -110,6 +110,12 @@ my.glm <- glm(Risk1Yr ~ PRE7 +
 
 
 summary(my.glm) 
+head(ts.df)
+
+my.glm <- glm(formula = Risk1Yr ~ DGN + PRE14 + PRE9,
+               data = ts.df, family = 'binomial')
+
+summary(my.glm)
 
 
 # - According to the summary, which variables had the greatest effect on the
@@ -134,30 +140,15 @@ my.glm
 
 
 
-new.df <- data.frame(Risk1Yr = predict(my.glm, data = ts.df),
-                     PRE7  = ts.df$PRE7,
-                     PRE4  = ts.df$PRE4,
-                     PRE5  = ts.df$PRE5,
-                     PRE6  = ts.df$PRE6,
-                     PRE8  = ts.df$PRE8,
-                     PRE9  = ts.df$PRE9,
-                     PRE10 = ts.df$PRE10,
-                     PRE11 = ts.df$PRE11,
-                     PRE14 = ts.df$PRE14,
-                     PRE17 = ts.df$PRE17,
-                     PRE19 = ts.df$PRE19,
-                     PRE25 = ts.df$PRE25,
-                     PRE30 = ts.df$PRE30,
-                     AGE = ts.df$AGE,
-                     PRE32 = ts.df$PRE32,
-)
-
-new.df <- data.frame(ts.df$Risk1Yr, ts.df$PRE9, ts.df$PRE14, ts.df$PRE17, ts.df$PRE30)
-head(new.df)
 test <- predict(my.glm, type="response", newdata=ts.df)
 threshold <- 0.5
 install.packages("e1071")
 head (test)
 head(ts.df)
-confusionMatrix(factor(test > threshold), factor(new.df$Risk1Yr == TRUE), positive="TRUE")
 
+confmatrix = table(Actual_value=ts.df$Risk1Yr, Predicted_value = test > 0.50)
+confmatrix
+
+(confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix)
+
+## This model is 85% accurate
