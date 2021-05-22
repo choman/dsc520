@@ -14,3 +14,4 @@ it will need to be downloaded from kaggle. Currently, it is just the one dataset
 I am hoping to bring other datasets in for step 3.
 
 - [The Movie DB](https://www.kaggle.com/mathlasker/tmdballmovies)
+  - extract downloaded zip file into the data directory
