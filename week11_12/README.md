@@ -1,4 +1,4 @@
-# Week 11 and 12
+# Weeks 11 and 12
 
 # Abstract
 
