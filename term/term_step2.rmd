@@ -261,7 +261,7 @@ head(x)
       - There are a series of dictionaries within the data. I am using string 
         manipulation to get the collection, but this would be easier to parse 
         this into a dictionary. Likewise, there is genre information also stored
-        in dictionaries. Being able to parse thise would give me the capability 
+        in dictionaries. Being able to parse this would give me the capability 
         to answer more questions.
    - Current data does not collect spin-offs, for example:
       - Star Wars Rogue One or Solo
@@ -323,4 +323,4 @@ At the moment I do not plan to use any machine learning techniques
 
 # Questions for future steps.
 
-None yet
+None that I have not already discussed above
