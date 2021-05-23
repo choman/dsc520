@@ -39,11 +39,15 @@ This folder is for the assignments related to weeks 11 and 12
     this problem, you will determine which points are nearest by calculating the Euclidean
     distance between two points. As a refresher, the Euclidean distance between two points:
 
-![p1=(x1, y1)](./images/p1.png)
-and
-![p2=(x2, y2)](./images/p2.png)
-is
-![d=](./images/d1.png)
+    ![p1=(x1, y1)](./images/p1.png)
+
+    and
+
+    ![p2=(x2, y2)](./images/p2.png)
+
+    is
+
+    ![d=](./images/d1.png)
 
   - Fitting a model is when you use the input data to create a predictive model. There are
     various metrics you can use to determine how well your model fits the data. For this
