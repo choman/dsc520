@@ -1,0 +1,326 @@
+---
+title: "Term Project: Step 2"
+author: "Chad Homan"
+date: '2021-05-21'
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+bibliography: bibliography.bib
+---
+
+```{r setup, echo=FALSE}
+since   <- "1970-01-01"
+workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+termdir <- file.path(workdir, "term")
+datadir <- file.path(termdir, "data")
+##workdir <- file.path(workdir, "completed/assignent04")
+##workdir
+
+## Set the working directory
+##setwd(workdir)
+###```{r setup}
+knitr::opts_knit$set(base.dir = workdir) 
+knitr::opts_knit$set(root.dir = workdir) 
+knitr::opts_knit$set(term.dir = termdir) 
+knitr::opts_knit$set(data.dir = datadir) ###'/home/choman/repos/bellevue/dsc520/completed/assignment04')
+```
+
+```{r loadpackages, echo=FALSE, include=FALSE}
+################################################################
+#
+# Start loading default operations
+#
+################################################################
+## Load the ggplot2 package
+# clean package loading based on 
+# https://statisticsglobe.com/r-install-missing-packages-automatically
+mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
+mypackages <- append(mypackages, c("readxl"))
+mypackages <- append(mypackages, c("boot", "QuantPsyc"))
+mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
+mypackages <- append(mypackages, c("car", "hash"))
+
+not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
+if(length(not_installed)) install.packages(not_installed)
+
+# Load libraries
+##lapply(mypackages, require, character.only=TRUE)
+for (package in mypackages) {
+  library(package, character.only=TRUE)
+}
+
+theme_set(theme_minimal())
+binwidth <- .5
+```
+
+
+# Introduction
+
+At this point you should have framed your problem/topic, described the data, and how you plan to solve the problem.  Now you need to move on to the next step of analyzing and preparing the data.
+
+```{r loaddata, echo =FALSE}
+myread.csv <-function(filename) {
+  fullpath <- file.path(knitr::opts_knit$get()$data.dir, filename)
+  tmpdf <- read.csv(fullpath)
+  return(tmpdf)
+}
+
+tmdb_all <- myread.csv("tmdb_all_data.csv")
+```
+
+# How to import and clean my data
+
+- Data importing and cleaning steps are explained in the text and follow a logical process.  Outline your data preparation and cleansing steps.
+
+1. Load data 
+2. remove unnecessary columns
+3. filter criteria
+   - Movies since date (Currently 1970-01-01)
+   - vote count > 2500
+4. Gather vote counts and vote averages
+5. Build a data.frame that is by collection.
+
+
+Here is the summary of the current data.frame
+
+```{r data-cleaning, echo =FALSE}
+summary(tmdb_all)
+
+print("Start cleaning tmdb all")
+
+#head(tmdb_all$title)
+#head(tmdb_all$belongs_to_collection)
+#head(tmdb_all$release_date)
+#head(tmdb_all$genres)
+#head(tmdb_all$vote_average)
+#head(tmdb_all$popularity)
+#head(tmdb_all$runtime)
+```
+
+## Cleaning TMDB All Dataset 
+
+The tmdb all dataset has far more variables then I care about. The current list 
+of variables is:
+
+```{r dataclean1}
+names(tmdb_all)
+```
+
+The current plan is to reduce this to a select few to facilitate finding answers
+to my questions. The current number of rows is:
+
+```{r dataclean2, echo=FALSE}
+#tmdb_all$belongs_to_collection
+nrow(tmdb_all)
+```
+
+First action is to reduce data to meaningful columns
+
+```{r dataclean3}
+# 
+# belongs_to_collection == 4
+# genres == 6
+# popularity == 13
+# release_date == 17
+# revenue == 18
+# runtime == 19
+# title == 23
+# vote_average == 25
+# vote_count == 26
+tmdb_reduced <- tmdb_all[, c(4, 6, 13, 17, 18, 19, 23, 25, 26)]
+```
+
+Data is reduced to approximately nine (9) variables. But the numbers of rows is 
+still more than I need. This is where I filter by date, vote count and collection.
+
+```{r dataclean4, echo=FALSE}
+names(tmdb_reduced)
+nrow(tmdb_reduced)
+```
+
+
+```{r dataclean5, echo=FALSE}
+
+# Reduced movie list by date: since
+tmdb_reduced <- subset(tmdb_reduced, release_date >= as.Date(since))## 1000))
+# Reduced movie list by vote_count: since
+tmdb_reduced <- subset(tmdb_reduced, vote_count >= 2500)
+
+                       ##&& nchar(belongs_to_collection) > 0)
+
+# remove things not in collections
+tmdb_reduced <- tmdb_reduced %>% dplyr::filter(!(belongs_to_collection == ""))
+
+```
+
+## Cleaning results
+
+- With a clean dataset, show what the final data set looks like. However, do not print off a data frame with 200+ rows; show me the data in the most condensed form possible.
+
+My original dataset vs cleaned dataset (dim sizes):
+```{r clean_results1, echo=FALSE}
+# Results of cleaning
+dim(tmdb_all)
+dim(tmdb_reduced)
+```
+
+My original dataset vs cleaned dataset (variables):
+```{r clean_results2}
+names(tmdb_all)
+names(tmdb_reduced)
+```
+
+```{r clean_results3, echo=FALSE, include=FALSE}
+
+head(tmdb_reduced)
+head(tmdb_reduced$belongs_to_collection)
+tmdb_reduced %>% dplyr::filter(grepl("Star Wars", belongs_to_collection))
+tmdb_reduced %>% dplyr::filter(grepl("X-Men", belongs_to_collection))
+tmdb_reduced %>% dplyr::filter(grepl("Marvel", belongs_to_collection))
+
+#tmdb_reduced$belongs_to_collection[grepl("Star Wars Collection", tmdb_reduced$title)]
+
+##rotten$year
+##rotten$view_the_collection
+
+##print ("Identified duplicates - based on 'type'")
+##rotten$title[rotten$view_the_collection == "Marvel Cinematic Universe"]
+
+
+##dimnames(rotten)
+
+##head(rotten$critic_score)
+##head(rotten$people_score)
+##head(rotten$type)
+##head(rotten$total_ratings)
+##head(rotten$ratings)
+##head(rotten$box_office_.gross_usa)
+##head(rotten$runtime)
+
+
+##marvel_universe <- rotten[rotten$view_the_collection == "Marvel Cinematic Universe",]
+##dc_universe <- rotten[rotten$view_the_collection == "DC Extended Universe",]
+##star_wars <- rotten[rotten$view_the_collection == "Star Wars Saga",]
+##xmen <- rotten[rotten$view_the_collection == "X-men",]
+##potter <- rotten[rotten$view_the_collection == "Harry Potter",]
+##pixar <- rotten[rotten$view_the_collection == "Pixar",]
+
+
+##marvel_universe$title
+##star_wars$title
+##potter$title
+##pixar$title
+##rotten$view_the_collection
+##rotten[rotten$title == "Mission: Impossible"]
+
+
+collections <- tmdb_reduced$belongs_to_collection %>% unique()
+is.vector(collections)
+
+mycollections = c()
+for (i in 1:length(collections)) {
+  x <- str_trim(strsplit(strsplit(collections[i], ",")[[1]][2], ":")[[1]][2])
+  mycollections <- append(mycollections, x)
+}
+
+head(mycollections)
+
+tmdb_reduced %>% dplyr::filter(grepl(mycollections[1], belongs_to_collection))
+
+x <- data.frame()
+for (i in 1:length(mycollections)) {
+ # print(mycollections[i])
+  tmp <- tmdb_reduced %>% dplyr::filter(grepl(mycollections[i], belongs_to_collection))
+  #print(tmp)
+  votes_count.sum <- sum(tmp$vote_count)
+  votes_average.ave <- sum(tmp$vote_average) / length(tmp)
+  runtime.sum <- sum(tmp$runtime)
+  runtime.ave <- sum(tmp$runtime) / length(tmp)
+  #popularity.ave <- sum(tmp$popularity)/length(tmp)
+  #popularity.ave <- sum(tmp$popularity)
+  ##print(votes_count.sum)
+  ##print(votes_average.ave)
+  
+  rbind(x, data.frame(mycollections[i], 
+        votes_count.sum, votes_average.ave, 
+        runtime.sum, runtime.ave))
+}
+#tmdb_reduced$popularity
+head(x)
+```
+
+### Cleaning Observations
+
+- What do you not know how to do right now that you need to learn to import and 
+  cleanup your dataset?
+   - Not sure if I know how to appropriately loop through the dataset
+      - I started to figure this out, but I am having issues with rbind 
+        to create a "by collection" data.frame. But I am close.
+   - Not sure if I know how to process the "collection" dictionary/hash
+      - There are a series of dictionaries within the data. I am using string 
+        manipulation to get the collection, but this would be easier to parse 
+        this into a dictionary. Likewise, there is genre information also stored
+        in dictionaries. Being able to parse this would give me the capability 
+        to answer more questions.
+   - Current data does not collect spin-offs, for example:
+      - Star Wars Rogue One or Solo
+      - Fast and Furious Hobbs and Shaw
+   - Current data separates Marvel Universe into separate collections
+      - Suspect others as well
+   - Dataset contains multiple dictionaries, not sure how much to normalize
+   
+# What does the final data set look like?
+```{r finaldata}
+summary(tmdb_reduced)
+```
+
+# Questions for future steps.
+
+- How to process the dictionaries for further analysis and questions?
+- How to properly loop through the data building a new dataset
+- Build a data.frame in a loop
+
+
+
+# What information is not self-evident?
+
+- Popularity is not clear as it does not appear to be all numbers (need further analysis)
+- vote_count is not clear, but appears to be my strongest variable for success
+- vote_average seems very clear, but needs to be weighed against vote_count
+- revenue is not reliable as some entries have zero value
+
+
+# What are different ways you could look at this data?
+
+Currently, I plan on looking at the collection as a whole. Other ways I can look
+at the data:
+
+- Success by genre
+- Success without spin offs (although I need to include them somehow)
+- Working with "reboots
+
+# How do you plan to slice and dice the data?
+
+- Currently by collection 
+- filtering by date and vote_count
+- Column reduction
+
+
+# How could you summarize your data to answer key questions?
+
+Since I am grabbing vote_count and vote_average to weigh overall success, I am 
+also grabbing runtime and genres to potentially expand on newer questions.
+
+# What types of plots and tables will help you to illustrate the findings to your questions
+  - bar graphs
+  - scatter plots
+  - line graphs?
+
+# Do you plan on incorporating any machine learning techniques to answer your research questions? Explain.
+
+At the moment I do not plan to use any machine learning techniques
+
+# Questions for future steps.
+
+None that I have not already discussed above
