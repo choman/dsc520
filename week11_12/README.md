@@ -57,7 +57,7 @@ d=
     in a graph where the x-axis is the different values of k and the y-axis is the accuracy
     of the model.
 
-decision boundary
+![decision boundary](./images/decision_boundary.png)
 
   - Looking back at the plots of the data, do you think a linear classifier would work well
     on these datasets?
