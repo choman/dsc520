@@ -1,7 +1,8 @@
 # Week 10
 # Abstract
 
-This folder is for the assignments related to weeks 10
+This folder is for the assignments related to week 10
+
 ## Assignments
 
 1. Fit a Logistic Regression Model to Thoracic Surgery Binary Dataset
