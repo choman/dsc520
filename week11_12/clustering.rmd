@@ -1,0 +1,69 @@
+---
+title: "Assignment 11.2: #2"
+author: "Chad Homan"
+date: '2021-05-25'
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+##bibliography: bibliography.bib##
+---
+
+```{r setup, echo=FALSE, include=FALSE}
+
+mypackages <- c("ggplot2", "pastecs", "dplyr", "purrr", 
+                "GGally", "reshape2", "scales", "knitr", "ppcor")
+
+not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
+if(length(not_installed)) install.packages(not_installed)
+
+# Load libraries
+##lapply(mypackages, require, character.only=TRUE)
+for (package in mypackages) {
+  library(package, character.only=TRUE)
+}
+
+workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+knitr::opts_knit$set(root.dir = workdir) 
+##survey_df <- read.csv("student-survey.csv")
+```
+
+# Clustering
+
+These assignments are here to provide you with an introduction to the “Data 
+Science” use for these tools. This is your future. It may seem confusing and 
+weird right now but it hopefully seems far less so than earlier in the semester.
+Attempt these homework assignments. You will not be graded on your answer but on
+your approach. This should be a, “Where am I on learning this stuff” check. If 
+you can’t get it done, please explain why.
+
+
+# Questions
+
+1. Labeled data is not always available. For these types of datasets, you can use unsupervised algorithms to extract structure. The k-means clustering algorithm 
+and the k nearest neighbor algorithm both use the Euclidean distance between 
+points to group data points. The difference is the k-means clustering algorithm 
+does not use labeled data.
+
+1. In this problem, you will use the k-means clustering algorithm to look for 
+patterns in an unlabeled dataset. The dataset for this problem is found at data/clustering-data.csv.
+    - Plot the dataset using a scatter plot.
+
+    - Fit the dataset using the k-means algorithm from k=2 to k=12. Create a 
+      scatter plot of the resultant clusters for each value of k.
+
+    - As k-means is an unsupervised algorithm, you cannot compute the accuracy 
+      as there are no correct values to compare the output to. Instead, you will
+      use the average distance from the center of each cluster as a measure of 
+      how well the model fits the data. To calculate this metric, simply compute
+      the distance of each data point to the center of the cluster it is assigned
+      to and take the average value of all of those distances.
+      
+1. Calculate this average distance from the center of each cluster for each value
+of k and plot it as a line chart where k is the x-axis and the average distance 
+is the y-axis.
+
+1. One way of determining the “right” number of clusters is to look at the graph
+of k versus average distance and finding the “elbow point”. Looking at the graph
+you generated in the previous example, what is the elbow point for this dataset?
+
