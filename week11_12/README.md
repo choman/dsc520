@@ -68,6 +68,7 @@ This folder is for the assignments related to weeks 11 and 12
 
   - How does the accuracy of your logistic regression classifier from last week compare?  Why
     is the accuracy different between these two methods?
+
 2. Clustering
 
 - These assignments are here to provide you with an introduction to the “Data Science” use for
@@ -86,8 +87,10 @@ This folder is for the assignments related to weeks 11 and 12
 - In this problem, you will use the k-means clustering algorithm to look for patterns in an
   unlabeled dataset. The dataset for this problem is found at data/clustering-data.csv.
     - Plot the dataset using a scatter plot.
+
     - Fit the dataset using the k-means algorithm from k=2 to k=12. Create a scatter plot of
       the resultant clusters for each value of k.
+
     - As k-means is an unsupervised algorithm, you cannot compute the accuracy as there are no
       correct values to compare the output to. Instead, you will use the average distance from
       the center of each cluster as a measure of how well the model fits the data. To calculate
@@ -96,6 +99,7 @@ This folder is for the assignments related to weeks 11 and 12
 
   - Calculate this average distance from the center of each cluster for each value of k and plot
     it as a line chart where k is the x-axis and the average distance is the y-axis.
+
   - One way of determining the “right” number of clusters is to look at the graph of k versus
     average distance and finding the “elbow point”. Looking at the graph you generated in the
     previous example, what is the elbow point for this dataset?
