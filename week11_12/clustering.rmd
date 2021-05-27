@@ -12,7 +12,7 @@ output:
 ```{r setup, echo=FALSE, include=FALSE}
 
 mypackages <- c("ggplot2", "pastecs", "dplyr", "purrr", 
-                "GGally", "reshape2", "scales", "knitr", "ppcor")
+                "GGally", "reshape2", "scales", "knitr", "ppcor", "useful")
 
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
 if(length(not_installed)) install.packages(not_installed)
@@ -49,22 +49,34 @@ does not use labeled data.
 patterns in an unlabeled dataset. The dataset for this problem is found at data/clustering-data.csv.
 
 ```{r load_data, echo=FALSE}
-cluster_df <- read.csv("data/clustering-data.csv")
-dim(cluster_df)
-head(cluster_df)
-summary(cluster_df)
-tail(cluster_df)
+cluster.df <- read.csv("data/clustering-data.csv")
+dim(cluster.df)
+head(cluster.df)
+summary(cluster.df)
+tail(cluster.df)
 ```
 
     - Plot the dataset using a scatter plot.
 ```{r scatterplot, echo=FALSE}
-ggplot(cluster_df, aes(x=x, y=y)) +
+ggplot(cluster.df, aes(x=x, y=y)) +
   geom_point()
 
+plot(cluster.df)
 ```
 
     - Fit the dataset using the k-means algorithm from k=2 to k=12. Create a 
       scatter plot of the resultant clusters for each value of k.
+```{r kmeans, echo=FALSE}
+# Need a loop?
+##for (i in 2:12) {
+  ##cluster.kmeans <-kmeans(x = cluster.df, centers=i)
+  #cluster.k2
+  ##plot(cluster.kmeans, data = cluster.df)
+##}
+cluster.best <- FitKMeans(cluster.df, max.clusters = 12, nstart = 2)
+cluster.best
+PlotHartigan(cluster.best)
+```
 
     - As k-means is an unsupervised algorithm, you cannot compute the accuracy 
       as there are no correct values to compare the output to. Instead, you will
