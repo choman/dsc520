@@ -68,11 +68,11 @@ plot(cluster.df)
       scatter plot of the resultant clusters for each value of k.
 ```{r kmeans, echo=FALSE}
 # Need a loop?
-##for (i in 2:12) {
-  ##cluster.kmeans <-kmeans(x = cluster.df, centers=i)
-  #cluster.k2
-  ##plot(cluster.kmeans, data = cluster.df)
-##}
+for (i in 2:12) {
+  cluster.kmeans <-kmeans(x = cluster.df, centers=i)
+  ##cluster.kmeans
+  plot(cluster.kmeans, data = cluster.df)
+}
 cluster.best <- FitKMeans(cluster.df, max.clusters = 12, nstart = 2)
 cluster.best
 PlotHartigan(cluster.best)
