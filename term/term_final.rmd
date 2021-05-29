@@ -1,7 +1,7 @@
 ---
 title: "Term Project: Step 2"
 author: "Chad Homan"
-date: '2021-05-21'
+date: '2021-06-02'
 output:
   pdf_document: default
   html_document: default
@@ -57,7 +57,35 @@ binwidth <- .5
 
 # Introduction
 
-At this point you should have framed your problem/topic, described the data, and how you plan to solve the problem.  Now you need to move on to the next step of analyzing and preparing the data.
+Movies are a part of most peoples lives and many of us are into sequels and 
+universes, sagas etc. We far too often know that a given movie set all kinds of 
+box office records. In fact, as of this report, Avatar[@wikiHighest] is the 
+current highest grossing film world wide at $2,847,246,203. One can arguably say 
+that as a result, Avatar is the best movie of all time. Although I would disagree
+with that statement. And with inflation, the same wikipedia page claims Gone With
+The Wind is the best movie at $3,739,000,000 beating Avatar by $453,000,000 which
+came in at $3,286,000,000 (remember this is with inflation). Again I would disagree
+with this statement too, but I have never seen Gone With The Wind. But just because
+a movie grosses big at the box office does not necessarily mean it is the best 
+movie.
+
+However, if today's world with streaming services and subscription accounts to 
+online services like Amazon and Netflix. It is becoming more difficult to say 
+which is the best top-rated, let alone the best overall "collection" of movies. 
+
+Web sites like the Internet Movie Database (IMDB) and The Movie Database (TMDB) 
+track movies by popularity which arguably may be a better way to track the best 
+movie of all time. In fact IMDB's the ultimate list says that The Godfather[@imdb100] is the best movie of all time, although it is a bit dated. And TMDB ranks Cruella
+as the best movie.
+
+But what about collections. According to wikipedia, the Marvel Cinematic Universe
+is the highest grossing franchise[@wikiCollections] at $8,525.3 million with 
+Avengers: Endgame being the top single movie of that collection at $857.9 million.
+Ironically the Avengers franchise is the 4th highest franchise at $2,619.1 million
+with, you guessed it, Avengers: Endgame being it's single most successful movie.
+As a film going geek, I would agree with this. But again, this is based on gross
+income and not popularity. For example, the most popular Netflix movie is We Can
+Be Heroes[@netlix30], 
 
 ```{r loaddata, echo =FALSE}
 myread.csv <-function(filename) {
@@ -270,57 +298,22 @@ head(x)
       - Suspect others as well
    - Dataset contains multiple dictionaries, not sure how much to normalize
    
-# What does the final data set look like?
-```{r finaldata}
-summary(tmdb_reduced)
-```
-
-# Questions for future steps.
-
-- How to process the dictionaries for further analysis and questions?
-- How to properly loop through the data building a new dataset
-- Build a data.frame in a loop
+# Introduction
 
 
+# The problem statement you addressed
 
-# What information is not self-evident?
-
-- Popularity is not clear as it does not appear to be all numbers (need further analysis)
-- vote_count is not clear, but appears to be my strongest variable for success
-- vote_average seems very clear, but needs to be weighed against vote_count
-- revenue is not reliable as some entries have zero value
+Accoring 
 
 
-# What are different ways you could look at this data?
+# How you addressed this problem statement
 
-Currently, I plan on looking at the collection as a whole. Other ways I can look
-at the data:
+# Analysis
 
-- Success by genre
-- Success without spin offs (although I need to include them somehow)
-- Working with "reboots
+# Implications
 
-# How do you plan to slice and dice the data?
+# Limitations
 
-- Currently by collection 
-- filtering by date and vote_count
-- Column reduction
+# Concluding Remarks
 
-
-# How could you summarize your data to answer key questions?
-
-Since I am grabbing vote_count and vote_average to weigh overall success, I am 
-also grabbing runtime and genres to potentially expand on newer questions.
-
-# What types of plots and tables will help you to illustrate the findings to your questions
-  - bar graphs
-  - scatter plots
-  - line graphs?
-
-# Do you plan on incorporating any machine learning techniques to answer your research questions? Explain.
-
-At the moment I do not plan to use any machine learning techniques
-
-# Questions for future steps.
-
-None that I have not already discussed above
+# References
