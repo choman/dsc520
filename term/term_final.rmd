@@ -275,8 +275,7 @@ franchises by popularity, not gross as not all movies produce gross income.
 
 # How you addressed this problem statement
 
-Using the movie database from [https://www.kaggle.com/mathlasker/tmdballmovies](https://www.kaggle.com/mathlasker/tmdballmovies). This database contains over 640,000 movies. I filtered the data down
-by:
+Using the movie database from [https://www.kaggle.com/mathlasker/tmdballmovies](https://www.kaggle.com/mathlasker/tmdballmovies). This database currently contains `r prettyNum(nrow(tmdb_all), big.mark=",", scientific=FALSE)` movies. Movies are filtered down by:
 
 - movies since `r since`
 - vote counts above `r vote_count_min`
