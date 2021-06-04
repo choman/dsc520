@@ -10,7 +10,8 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, echo=FALSE}
-since   <- "1970-01-01"
+since          <- "1960-01-01"
+vote_count_min <- 2500
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
 termdir <- file.path(workdir, "term")
 datadir <- file.path(termdir, "data")
@@ -151,7 +152,7 @@ nrow(tmdb_reduced)
 # Reduced movie list by date: since
 tmdb_reduced <- subset(tmdb_reduced, release_date >= as.Date(since))## 1000))
 # Reduced movie list by vote_count: since
-tmdb_reduced <- subset(tmdb_reduced, vote_count >= 2500)
+tmdb_reduced <- subset(tmdb_reduced, vote_count >= vote_count_min)
 
                        ##&& nchar(belongs_to_collection) > 0)
 
@@ -275,8 +276,11 @@ franchises by popularity, not gross as not all movies produce gross income.
 # How you addressed this problem statement
 
 Using the movie database from [https://www.kaggle.com/mathlasker/tmdballmovies](https://www.kaggle.com/mathlasker/tmdballmovies). This database contains over 640,000 movies. I filtered the data down
-to post-1970,  vote counts above 2500 and by collections. This skews my results 
-a bit because the 007 (James Bond) movies started in the 60's.
+by:
+
+- movies since `r since`
+- vote counts above `r vote_count_min`
+- by collections
 
 Once I trimmed the database, I was able to build a database of just collection 
 information that allows me to display the information in way that is meaningful 
@@ -366,7 +370,7 @@ universe (e.g. Marvel). Below is the top ten by vote movies:
 head(top10_rt, n=10)
 ```
 
-#### Top 10 Movie Collections (by runtime average)
+### Top 10 Movie Collections (runtime average)
 
 The analysis of the data shows that the `r topmovie_ave_count` movie 
 `r topmovie_ave` with a total runtime of `r topmovie_rt_min` minutes 
