@@ -225,12 +225,11 @@ for (i in 1:length(collections)) {
 }
 
 head(mycollections)
-
 tmdb_reduced %>% dplyr::filter(grepl(mycollections[1], belongs_to_collection))
 ```
 
 ```{r build-somthing, echo=FALSE, include=FALSE}
-
+print("BUILD SOMETHING")
 head(tmdb_reduced)
 length(mycollections)
 head(mycollections)
@@ -244,8 +243,10 @@ x <- data.frame()
 for (i in mycollections) {
  # print(mycollections[i])
   tmp <- tmdb_reduced %>% dplyr::filter(grepl(i, belongs_to_collection))
+  print("HEY YOU!!!!")
   print(tmp)
   #print(tmp)
+  films <- nrow(tmp)
   votes_count.sum <- sum(tmp$vote_count)
   votes_average.ave <- sum(tmp$vote_average) / length(tmp)
   runtime.sum <- sum(tmp$runtime)
@@ -257,12 +258,12 @@ for (i in mycollections) {
   
   x <- rbind(x, data.frame(i, 
                 votes_count.sum, votes_average.ave, 
-                runtime.sum, runtime.ave))
+                runtime.sum, runtime.ave, films))
 }
 #tmdb_reduced$popularity
 colnames(x) <- c("collection", 
                  "vote_count_sum", "vote_count_ave", 
-                 "runtime_sum", "runtime_ave")
+                 "runtime_sum", "runtime_ave", "count")
 
 ```
 
@@ -282,22 +283,106 @@ information that allows me to display the information in way that is meaningful
 to me, a top ten list.
 
 # Analysis
-Top 10 Movies by vote
 ```{r top10, echo =FALSE}
-x <- x[order(x$vote_count_sum, decreasing=TRUE), ]
-head(x, n=10)
+# Gather top10 information
+top10_vote  <- x[order(x$vote_count_sum, decreasing=TRUE), ]
+top10_rt    <- x[order(x$runtime_sum, decreasing=TRUE), ]
+top10_rtave <- x[order(x$runtime_ave, decreasing=TRUE), ]
+
+# Gather top 2 information for report, seems like a function is needed
+topmovie_vote        <- top10_vote$collection[1]
+topmovie_vote_min    <- top10_vote$runtime_sum[1]
+topmovie_vote_ave    <- round(top10_vote$runtime_ave[1])
+topmovie_vote_count  <- top10_vote$count[1]
+#
+secondplace_vote     <- top10_vote$collection[2]
+secondplace_vote_min <- top10_vote$runtime_sum[2]
+secondplace_vote_ave <- round(top10_vote$runtime_ave[2])
+secondplace_vote_count <- top10_vote$count[2]
+
+beat_vote            <- top10_vote$vote_count_sum[1] - top10_vote$vote_count_sum[2]
+
+# runtime
+topmovie_rt           <- top10_rt$collection[1]
+topmovie_rt_min       <- top10_rt$runtime_sum[1]
+topmovie_rt_ave       <- top10_rt$runtime_ave[1]
+topmovie_rt_count     <- top10_rt$count[1]
+#
+secondplace_rt        <- top10_rt$collection[2]
+secondplace_rt_min    <- top10_rt$runtime_sum[2]
+secondplace_rt_ave    <- top10_rt$runtime_ave[2]
+secondplace_rt_count  <- top10_rt$count[2]
+
+beat_rt_min           <- topmovie_rt_min - secondplace_rt_min
+
+# runtime avergae
+topmovie_ave        <- top10_rtave$collection[1]
+topmovie_ave_min    <- top10_rtave$runtime_sum[1]
+topmovie_ave_ave    <- top10_rtave$runtime_ave[1]
+topmovie_ave_count  <- top10_rtave$count[1]
+#
+secondplace_ave        <- top10_rtave$collection[2]
+secondplace_ave_min    <- top10_rtave$runtime_sum[2]
+secondplace_ave_ave    <- top10_rtave$runtime_ave[2]
+secondplace_ave_count  <- top10_rtave$count[2]
+beat_ave_min           <- topmovie_ave_ave - secondplace_ave_ave
 ```
 
-Top 10 Movies by total collection runtime
+### Top 10 Movie Collections (by vote)
+
+The analysis of the data shows that the `r topmovie_vote_count` movie 
+`r topmovie_vote` with a total runtime of `r topmovie_vote_min` minutes 
+(`r round(topmovie_vote_min / 60, digits=1)` hours), with an average of 
+`r topmovie_vote_ave` minutes (`r round(topmovie_vote_ave / 60, digits=1)` hours)
+per film. Beat the `r secondplace_vote_count` movie `r secondplace_vote` with a 
+total collection runtime of `r secondplace_vote_min` minutes 
+(`r round(secondplace_vote_min / 60, digits=1)` hours), with  an average of 
+`r secondplace_vote_ave` minutes (`r round(secondplace_vote_ave / 60, digits=1)`
+hours) per film by `r beat_vote` vote(s). 
+
+*NOTE*: This however is straight movie collections and not total collections by 
+universe (e.g. Marvel). Below is the top ten by vote movies:
+
+```{r top10display, echo =FALSE}
+head(top10_vote, n=10)
+```
+
+### Top 10 Movies Collections (by total runtime)
+
+The analysis of the data shows that the `r topmovie_rt_count` movie 
+`r topmovie_rt` with a total runtime of `r topmovie_rt_min` minutes 
+(`r round(topmovie_rt_min / 60, digits=1)` hours), with an average of 
+`r round(topmovie_rt_ave, digits=2)` minutes (`r round(topmovie_rt_ave / 60, digits=1)` hours) per film. Beat the `r secondplace_rt_count` movie `r secondplace_rt` with 
+a total collection runtime of `r secondplace_rt_min` minutes 
+(`r round(secondplace_rt_min / 60, digits=1)` hours), with  an average of 
+`r round(secondplace_rt_ave, digits=2)` minutes 
+(`r round(secondplace_rt_ave / 60,digits=1)` hours) per film by `r beat_rt_min`
+minute(s). 
+
+*NOTE*: This however is straight movie collections and not total collections by 
+universe (e.g. Marvel). Below is the top ten by vote movies:
+
 ```{r runtime_sum, echo=FALSE}
-x <- x[order(x$runtime_sum, decreasing=TRUE), ]
-head(x, n=10)
+head(top10_rt, n=10)
 ```
 
-Top 10 collections largest movie runtime ave
+#### Top 10 Movie Collections (by runtime average)
+
+The analysis of the data shows that the `r topmovie_ave_count` movie 
+`r topmovie_ave` with a total runtime of `r topmovie_rt_min` minutes 
+(`r round(topmovie_ave_min / 60, digits=1)` hours), with an average of 
+`r round(topmovie_ave_ave, digits=2)` minutes (`r round(topmovie_ave_ave / 60, digits=1)` hours) per film. Beat the `r secondplace_ave_count` movie `r secondplace_ave` with 
+a total collection runtime of `r secondplace_ave_min` minutes 
+(`r round(secondplace_ave_min / 60, digits=1)` hours), with  an average of 
+`r round(secondplace_ave_ave, digits=2)` minutes 
+(`r round(secondplace_ave_ave / 60,digits=1)` hours) per film by `r beat_ave_min`
+minute(s). 
+
+*NOTE*: This however is straight movie collections and not total collections by 
+universe (e.g. Marvel). Below is the top ten by vote movies:
+
 ```{r runtime_ave, echo =FALSE}
-x <- x[order(x$runtime_ave, decreasing=TRUE), ]
-head(x, n=10)
+head(top10_rtave, n=10)
 ```
 
 # Implications
@@ -312,10 +397,11 @@ head(x, n=10)
 - Personally I feel the one database is excellent, however there could be 
   additional columns
 - Perhaps additional databases would be needed to see how the data skews.
+- Adding gross incomes could help correlate the vote counts and averages
+
 
 # Concluding Remarks
 
-- Adding gross incomes could help correlate the vote counts and averages
 
 
 
