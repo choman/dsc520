@@ -285,7 +285,7 @@ Once I trimmed the database, I was able to build a database of just collection
 information that allows me to display the information in a way that is meaningful 
 to me, a top ten list.
 
-# Analysis
+# Analysis / Implications
 ```{r top10, echo =FALSE}
 # Gather top10 information
 top10_vote  <- x[order(x$vote_count_sum, decreasing=TRUE), ]
@@ -331,6 +331,16 @@ secondplace_ave_count  <- top10_rtave$count[2]
 beat_ave_min           <- topmovie_ave_ave - secondplace_ave_ave
 ```
 
+I was able to perform 3 different types of analysis on the data:
+
+- Top 10 Movie Collection (by vote)
+- Top 10 Movie Collection (by total runtime)
+- Top 10 Movie Collection (by ruintime average)
+
+Unfortunately I could not properly address some collections such as total 
+universe collections (e.g. Marvel). The database need to be munged more and I 
+lost time to do that. 
+
 ### Top 10 Movie Collections (by vote)
 
 The analysis of the data shows that the `r topmovie_vote_count` movie 
@@ -354,6 +364,11 @@ knitr::kable(head(top10_vote, n=10),
                          "Films"),
              row.names=FALSE,
              caption = "Top 10 Movies (By Vote)")
+
+##x = head(top10_vote, n=5)
+##ggplot(x, aes(x=collection, y=count)) + 
+##  geom_bar(width=.5)
+
 ```
 
 ### Top 10 Movies Collections (by total runtime)
@@ -386,8 +401,7 @@ knitr::kable(head(top10_rt, n=10),
 The analysis of the data shows that the `r topmovie_ave_count` movie 
 `r topmovie_ave` with a total runtime of `r topmovie_rt_min` minutes 
 (`r round(topmovie_ave_min / 60, digits=1)` hours), with an average of 
-`r round(topmovie_ave_ave, digits=2)` minutes (`r round(topmovie_ave_ave / 60, digits=1)` hours) per film beats the `r secondplace_ave_count` movie `r secondplace_ave` with 
-a total collection runtime of `r secondplace_ave_min` minutes 
+`r round(topmovie_ave_ave, digits=2)` minutes (`r round(topmovie_ave_ave / 60, digits=1)` hours) per film beats the `r secondplace_ave_count` movie `r secondplace_ave` with a total collection runtime of `r secondplace_ave_min` minutes 
 (`r round(secondplace_ave_min / 60, digits=1)` hours), with  an average of 
 `r round(secondplace_ave_ave, digits=2)` minutes 
 (`r round(secondplace_ave_ave / 60,digits=1)` hours) per film by 
@@ -406,13 +420,6 @@ knitr::kable(head(top10_rtave, n=10),
              caption="Top 10 Movies (Total Runtime Ave)")
 ```
 
-# Implications
-
-There seems to be come broken data in the csv file that was noticed after 
-changing to the search parameter date of `r since`. Since the collections
-are not all inclusive, it also makes determining the most popular/best movie 
-collection not accurate.
-
 # Limitations
 
 - I do not feel I am addressing vote_count and vote_average correctly to 
@@ -422,15 +429,26 @@ collection not accurate.
   additional columns
 - Perhaps additional databases would be needed to see how the data skews.
 - Adding gross incomes could help correlate the vote counts and averages
-
+- There seems to be come broken data in the csv file that was noticed after 
+  changing to the search parameter date of `r since`. 
+- Since the collections are not all inclusive, it also makes determining 
+  the most popular/best movie collection not accurate.
 
 # Concluding Remarks
 
-I feel that possibly bar charts may help explain the data better. However, the 
-knitr::ktables() look good. 
+I forgot all about ktables(), I felt they produced a cleaner top ten chart. So I
+am very happy with that. I also finally figured out how to embed R objects into
+the text. This allows for easier generation of the PDF if the database is updated.
 
-I finally figured out how to do embedded R objects, which I believe help make
-this RMarkdown file more dynamic when generating the PDF.
+I feel that possibly bar charts may help explain the data better. Unfortunately,
+I could not get them to compile. So I excluded them from my final product.
 
+I think moving forward, more munging of the data is required to produce total 
+collection and proper spinoff analysis. Also, the vote average needs to be 
+understood better to produce a better ranking system. Adding additional databases
+should help to improve the results by producing a more generic average ranking
+system. Finally, Adding gross income and inflation adjusted income should help 
+produce additional information. From this, additional graphs such as pie charts 
+would help explain the story.
 
 # References
