@@ -59,30 +59,30 @@ binwidth <- .5
 # Introduction
 
 Movies are a part of most peoples lives and many of us are into sequels and 
-universes, sagas etc. We far too often know that a given movie set all kinds of 
+universes, sagas etc. We often know that a given movie sets all kinds of 
 box office records. In fact, as of this report, Avatar[@wikiHighest] is the 
 current highest grossing film world wide at $2,847,246,203. One can arguably say 
 that as a result, Avatar is the best movie of all time. Although I would disagree
-with that statement. And with inflation, the same wikipedia page claims Gone With
-The Wind is the best movie at $3,739,000,000 beating Avatar by $453,000,000 which
-came in at $3,286,000,000 (remember this is with inflation). Again I would disagree
-with this statement too, but I have never seen Gone With The Wind. But just because
-a movie grosses big at the box office does not necessarily mean it is the best 
+with that statement. When accounting for inflation, the same wikipedia page claims
+Gone With The Wind is the best movie at $3,739,000,000 beating Avatar by 
+$453,000,000 which came in at $3,286,000,000 (remember this is with inflation). 
+Again I would disagree with this statement too, but I have never seen Gone With 
+The Wind. Just because a movie grosses big at the box office does not 
+necessarily mean it is the best movie.
+
+However, in today's world with streaming services and subscription accounts, such
+as Amazon and Netflix, it is becoming more difficult to say which is the best
+top-rated, let alone the best overall "collection" of movies. Web sites 
+like the Internet Movie Database (IMDB) and The Movie Database (TMDB) track movies
+by popularity which arguably may be a better way to track the best movie of all 
+time. In fact IMDB's the ultimate list says that The Godfather[@imdb100] is the best 
+movie of all time, although it is a bit dated. TMDB ranks Cruella as the best
 movie.
 
-However, if today's world with streaming services and subscription accounts to 
-online services like Amazon and Netflix. It is becoming more difficult to say 
-which is the best top-rated, let alone the best overall "collection" of movies. 
-
-Web sites like the Internet Movie Database (IMDB) and The Movie Database (TMDB) 
-track movies by popularity which arguably may be a better way to track the best 
-movie of all time. In fact IMDB's the ultimate list says that The Godfather[@imdb100] is the best movie of all time, although it is a bit dated. And TMDB ranks Cruella
-as the best movie.
-
-But what about collections. According to wikipedia, the Marvel Cinematic Universe
+But what about collections? According to wikipedia, the Marvel Cinematic Universe
 is the highest grossing franchise[@wikiCollections] at $8,525.3 million with 
 Avengers: Endgame being the top single movie of that collection at $857.9 million.
-Ironically the Avengers franchise is the 4th highest franchise at $2,619.1 million
+Ironically, the Avengers franchise is the 4th highest franchise at $2,619.1 million
 with, you guessed it, Avengers: Endgame being it's single most successful movie.
 As a film going geek, I would agree with this. But again, this is based on gross
 income and not popularity. For example, the most popular Netflix movie is We Can
@@ -282,7 +282,7 @@ Using the movie database from [https://www.kaggle.com/mathlasker/tmdballmovies](
 - by collections
 
 Once I trimmed the database, I was able to build a database of just collection 
-information that allows me to display the information in way that is meaningful 
+information that allows me to display the information in a way that is meaningful 
 to me, a top ten list.
 
 # Analysis
@@ -337,7 +337,7 @@ The analysis of the data shows that the `r topmovie_vote_count` movie
 `r topmovie_vote` with a total runtime of `r topmovie_vote_min` minutes 
 (`r round(topmovie_vote_min / 60, digits=1)` hours), with an average of 
 `r topmovie_vote_ave` minutes (`r round(topmovie_vote_ave / 60, digits=1)` hours)
-per film. Beat the `r secondplace_vote_count` movie `r secondplace_vote` with a 
+per film beats the `r secondplace_vote_count` movie `r secondplace_vote` with a 
 total collection runtime of `r secondplace_vote_min` minutes 
 (`r round(secondplace_vote_min / 60, digits=1)` hours), with  an average of 
 `r secondplace_vote_ave` minutes (`r round(secondplace_vote_ave / 60, digits=1)`
@@ -347,7 +347,12 @@ hours) per film by `r beat_vote` vote(s).
 universe (e.g. Marvel). Below is the top ten by vote movies:
 
 ```{r top10display, echo =FALSE}
-head(top10_vote, n=10)
+knitr::kable(head(top10_vote, n=10),
+             col.names=c("Collection", 
+                         "Vote Count", "Vote Ave", 
+                         "Runtime Sum", "Runtime Ave", 
+                         "Films"),
+             row.names=FALSE)
 ```
 
 ### Top 10 Movies Collections (by total runtime)
@@ -355,7 +360,7 @@ head(top10_vote, n=10)
 The analysis of the data shows that the `r topmovie_rt_count` movie 
 `r topmovie_rt` with a total runtime of `r topmovie_rt_min` minutes 
 (`r round(topmovie_rt_min / 60, digits=1)` hours), with an average of 
-`r round(topmovie_rt_ave, digits=2)` minutes (`r round(topmovie_rt_ave / 60, digits=1)` hours) per film. Beat the `r secondplace_rt_count` movie `r secondplace_rt` with 
+`r round(topmovie_rt_ave, digits=2)` minutes (`r round(topmovie_rt_ave / 60, digits=1)` hours) per film beat the `r secondplace_rt_count` movie `r secondplace_rt` with 
 a total collection runtime of `r secondplace_rt_min` minutes 
 (`r round(secondplace_rt_min / 60, digits=1)` hours), with  an average of 
 `r round(secondplace_rt_ave, digits=2)` minutes 
@@ -363,10 +368,15 @@ a total collection runtime of `r secondplace_rt_min` minutes
 minute(s). 
 
 *NOTE*: This however is straight movie collections and not total collections by 
-universe (e.g. Marvel). Below is the top ten by vote movies:
+universe (e.g. Marvel). Below is the top ten by runtime total:
 
 ```{r runtime_sum, echo=FALSE}
-head(top10_rt, n=10)
+knitr::kable(head(top10_rt, n=10),
+             col.names=c("Collection", 
+                         "Vote Count", "Vote Ave", 
+                         "Runtime Sum", "Runtime Ave", 
+                         "Films"),
+             row.names=FALSE)
 ```
 
 ### Top 10 Movie Collections (runtime average)
@@ -374,23 +384,31 @@ head(top10_rt, n=10)
 The analysis of the data shows that the `r topmovie_ave_count` movie 
 `r topmovie_ave` with a total runtime of `r topmovie_rt_min` minutes 
 (`r round(topmovie_ave_min / 60, digits=1)` hours), with an average of 
-`r round(topmovie_ave_ave, digits=2)` minutes (`r round(topmovie_ave_ave / 60, digits=1)` hours) per film. Beat the `r secondplace_ave_count` movie `r secondplace_ave` with 
+`r round(topmovie_ave_ave, digits=2)` minutes (`r round(topmovie_ave_ave / 60, digits=1)` hours) per film beat the `r secondplace_ave_count` movie `r secondplace_ave` with 
 a total collection runtime of `r secondplace_ave_min` minutes 
 (`r round(secondplace_ave_min / 60, digits=1)` hours), with  an average of 
 `r round(secondplace_ave_ave, digits=2)` minutes 
-(`r round(secondplace_ave_ave / 60,digits=1)` hours) per film by `r beat_ave_min`
-minute(s). 
+(`r round(secondplace_ave_ave / 60,digits=1)` hours) per film by 
+`r round(beat_ave_min, digits=2)` minute(s). 
 
 *NOTE*: This however is straight movie collections and not total collections by 
-universe (e.g. Marvel). Below is the top ten by vote movies:
+universe (e.g. Marvel). Below is the top ten by runtime ave:
 
 ```{r runtime_ave, echo =FALSE}
-head(top10_rtave, n=10)
+knitr::kable(head(top10_rtave, n=10),
+             col.names=c("Collection", 
+                         "Vote Count", "Vote Ave", 
+                         "Runtime Sum", "Runtime Ave", 
+                         "Films"),
+             row.names=FALSE)
 ```
 
 # Implications
 
-
+There seems to be come broken data in the csv file that was noticed after 
+changing to the search parameter date of `r` since`. Since the collections
+are not all inclusive, it also makes determining the most popular/best movie 
+collection not accurate.
 
 # Limitations
 
@@ -405,7 +423,11 @@ head(top10_rtave, n=10)
 
 # Concluding Remarks
 
+I feel that possibly bar charts may help explain the data better. However, the 
+knitr::ktables() look good. 
 
+I finally figured out how to do embedded R objects, which I believe help make
+this RMarkdown file more dynamic when generating the PDF.
 
 
 # References
