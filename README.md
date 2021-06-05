@@ -24,4 +24,5 @@ Thanks to github markdown, these links are technically broken.
 - [Week 07](week07)
 - [Week 08_09](week08_09)
 - [Week 10](week10)
+- [Week 11_12](week11_12)
 - [Term Project](term)
