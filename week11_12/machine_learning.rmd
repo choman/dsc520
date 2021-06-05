@@ -51,7 +51,6 @@ filename <- "trinary-classifier-data.csv"
 td.df <- read.csv(filename)
 td.df
 head(td.df)
-
 ```
 
 # Introduction to Machine Learning
@@ -70,14 +69,25 @@ you can’t get it done, please explain why.
    uses features extracted from the emails to learn which emails fall into which
    category.
    
-```{r regression1, echo=FALSE}
+```{r regression1, echo=TRUE}
 # - Fit a logistic regression model to the binary-classifier-data.csv dataset
 
 ## bd.df$label[bd.df$label > 0]
 
+head(bd.df)
+summary(bd.df)
 my.glm <- glm(label ~ x + y, data = bd.df, family=binomial(link="logit"))
 summary(my.glm)
+```
 
+```{r regression2, echo=TRUE}
+head(td.df)
+summary(td.df)
+##my.glm <- glm(label ~ x + y, data = td.df, family=binomial(link="logit"))
+##summary(my.glm2)
+```
+
+```{r predict1, echo=TRUE}
 # - The dataset (found in binary-classifier-data.csv) contains three variables;
 #   label, x, and y. The label variable is either 0 or 1 and is the output we want
 #   to predict using the x and y variables.
