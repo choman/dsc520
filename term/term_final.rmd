@@ -409,7 +409,7 @@ knitr::kable(head(top10_rtave, n=10),
 # Implications
 
 There seems to be come broken data in the csv file that was noticed after 
-changing to the search parameter date of `r` since`. Since the collections
+changing to the search parameter date of `r since`. Since the collections
 are not all inclusive, it also makes determining the most popular/best movie 
 collection not accurate.
 
