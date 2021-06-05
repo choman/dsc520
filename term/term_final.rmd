@@ -422,9 +422,8 @@ knitr::kable(head(top10_rtave, n=10),
 
 # Limitations
 
-- I do not feel I am addressing vote_count and vote_average correctly to 
-  display the best movie franchise overall
-- I am definitely not handling spinoffs correctly
+- I am not sure how to interpret the vote average
+- Spinoffs are not handled correctly
 - Personally I feel the one database is excellent, however there could be 
   additional columns
 - Perhaps additional databases would be needed to see how the data skews.
