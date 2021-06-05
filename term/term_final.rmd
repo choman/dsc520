@@ -344,7 +344,7 @@ total collection runtime of `r secondplace_vote_min` minutes
 hours) per film by `r beat_vote` vote(s). 
 
 *NOTE*: This however is straight movie collections and not total collections by 
-universe (e.g. Marvel). Below is the top ten by vote movies:
+universe (e.g. Marvel).
 
 ```{r top10display, echo =FALSE}
 knitr::kable(head(top10_vote, n=10),
@@ -352,7 +352,8 @@ knitr::kable(head(top10_vote, n=10),
                          "Vote Count", "Vote Ave", 
                          "Runtime Sum", "Runtime Ave", 
                          "Films"),
-             row.names=FALSE)
+             row.names=FALSE,
+             caption = "Top 10 Movies (By Vote)")
 ```
 
 ### Top 10 Movies Collections (by total runtime)
@@ -360,7 +361,7 @@ knitr::kable(head(top10_vote, n=10),
 The analysis of the data shows that the `r topmovie_rt_count` movie 
 `r topmovie_rt` with a total runtime of `r topmovie_rt_min` minutes 
 (`r round(topmovie_rt_min / 60, digits=1)` hours), with an average of 
-`r round(topmovie_rt_ave, digits=2)` minutes (`r round(topmovie_rt_ave / 60, digits=1)` hours) per film beat the `r secondplace_rt_count` movie `r secondplace_rt` with 
+`r round(topmovie_rt_ave, digits=2)` minutes (`r round(topmovie_rt_ave / 60, digits=1)` hours) per film beats the `r secondplace_rt_count` movie `r secondplace_rt` with 
 a total collection runtime of `r secondplace_rt_min` minutes 
 (`r round(secondplace_rt_min / 60, digits=1)` hours), with  an average of 
 `r round(secondplace_rt_ave, digits=2)` minutes 
@@ -368,7 +369,7 @@ a total collection runtime of `r secondplace_rt_min` minutes
 minute(s). 
 
 *NOTE*: This however is straight movie collections and not total collections by 
-universe (e.g. Marvel). Below is the top ten by runtime total:
+universe (e.g. Marvel).
 
 ```{r runtime_sum, echo=FALSE}
 knitr::kable(head(top10_rt, n=10),
@@ -376,7 +377,8 @@ knitr::kable(head(top10_rt, n=10),
                          "Vote Count", "Vote Ave", 
                          "Runtime Sum", "Runtime Ave", 
                          "Films"),
-             row.names=FALSE)
+             row.names=FALSE,
+             caption = "Top 10 Movies (Total Runtime)")
 ```
 
 ### Top 10 Movie Collections (runtime average)
@@ -384,7 +386,7 @@ knitr::kable(head(top10_rt, n=10),
 The analysis of the data shows that the `r topmovie_ave_count` movie 
 `r topmovie_ave` with a total runtime of `r topmovie_rt_min` minutes 
 (`r round(topmovie_ave_min / 60, digits=1)` hours), with an average of 
-`r round(topmovie_ave_ave, digits=2)` minutes (`r round(topmovie_ave_ave / 60, digits=1)` hours) per film beat the `r secondplace_ave_count` movie `r secondplace_ave` with 
+`r round(topmovie_ave_ave, digits=2)` minutes (`r round(topmovie_ave_ave / 60, digits=1)` hours) per film beats the `r secondplace_ave_count` movie `r secondplace_ave` with 
 a total collection runtime of `r secondplace_ave_min` minutes 
 (`r round(secondplace_ave_min / 60, digits=1)` hours), with  an average of 
 `r round(secondplace_ave_ave, digits=2)` minutes 
@@ -392,7 +394,7 @@ a total collection runtime of `r secondplace_ave_min` minutes
 `r round(beat_ave_min, digits=2)` minute(s). 
 
 *NOTE*: This however is straight movie collections and not total collections by 
-universe (e.g. Marvel). Below is the top ten by runtime ave:
+universe (e.g. Marvel).
 
 ```{r runtime_ave, echo =FALSE}
 knitr::kable(head(top10_rtave, n=10),
@@ -400,7 +402,8 @@ knitr::kable(head(top10_rtave, n=10),
                          "Vote Count", "Vote Ave", 
                          "Runtime Sum", "Runtime Ave", 
                          "Films"),
-             row.names=FALSE)
+             row.names=FALSE,
+             caption="Top 10 Movies (Total Runtime Ave)")
 ```
 
 # Implications
