@@ -10,9 +10,13 @@ output:
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}
+mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
+mypackages <- append(mypackages, c("readxl"))
+mypackages <- append(mypackages, c("boot", "QuantPsyc"))
+mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
+mypackages <- append(mypackages, c("car", "caret"))
 
-mypackages <- c("ggplot2", "pastecs", "dplyr", "purrr", 
-                "GGally", "reshape2", "scales", "knitr", "ppcor")
+mypackages
 
 not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
 if(length(not_installed)) install.packages(not_installed)
@@ -23,9 +27,31 @@ for (package in mypackages) {
   library(package, character.only=TRUE)
 }
 
+theme_set(theme_minimal())
+binwidth <- .5
+
 workdir <- system("git rev-parse --show-toplevel", intern=TRUE)
+workdir <- file.path(workdir, "week11_12")
+
 knitr::opts_knit$set(root.dir = workdir) 
-##survey_df <- read.csv("student-survey.csv")
+
+
+## Set the working directory
+setwd(workdir)
+
+## Load the `housing` to data
+filename <- "binary-classifier-data.csv"
+
+bd.df <- read.csv(filename)
+bd.df
+head(bd.df)
+
+filename <- "trinary-classifier-data.csv"
+
+td.df <- read.csv(filename)
+td.df
+head(td.df)
+
 ```
 
 # Introduction to Machine Learning
@@ -43,6 +69,25 @@ you can’t get it done, please explain why.
    spam (i.e.junk emails) or ham (i.e. good emails). The classification algorithm
    uses features extracted from the emails to learn which emails fall into which
    category.
+   
+```{r regression1, echo=FALSE}
+# - Fit a logistic regression model to the binary-classifier-data.csv dataset
+
+## bd.df$label[bd.df$label > 0]
+
+my.glm <- glm(label ~ x + y, data = bd.df, family=binomial(link="logit"))
+summary(my.glm)
+
+# - The dataset (found in binary-classifier-data.csv) contains three variables;
+#   label, x, and y. The label variable is either 0 or 1 and is the output we want
+#   to predict using the x and y variables.
+
+new.df <- data.frame(label = predict(my.glm, bd.df),
+                     x = bd.df$x,
+                     y = bd.df$y)
+
+summary(new.df)
+```
 
 2. In this problem, you will use the nearest neighbors algorithm to fit a model 
 on two simplified datasets. The first dataset (found in binary-classifier-data.csv)
@@ -94,87 +139,13 @@ will encode categorical variables into numeric values.
 
 ################################################################################################################################################
 
-# Assignment: Week 10
-# Name: Homan, Chad
-# Date: 2021-05-16
-#
-# Abstract: Fit a Logistic Regression Model
-# - Fit a logistic regression model to the binary-classifier-data.csv dataset
-# - The dataset (found in binary-classifier-data.csv) contains three variables;
-#   label, x, and y. The label variable is either 0 or 1 and is the output we want
-#   to predict using the x and y variables.
-#   - What is the accuracy of the logistic regression classifier?
-#   - Keep this assignment handy, as you will be comparing your results from this
-#     week to next week.
-# 
-DEBUG            <- FALSE
-REMOVALS         <- FALSE
-
 
 # NOTES:
 # variance -> covariance -> corrleation -> regression
 # 
 
 
-################################################################
-#
-# Start loading default operations
-#
-################################################################
-## Load the ggplot2 package
-# clean package loading based on 
-# https://statisticsglobe.com/r-install-missing-packages-automatically
-mypackages <- c("ggplot2", "pastecs", "plyr", "dplyr", "purrr", "stringr")
-mypackages <- append(mypackages, c("readxl"))
-mypackages <- append(mypackages, c("boot", "QuantPsyc"))
-mypackages <- append(mypackages, c("relaimpo", "corrplot")) #, "Boruta"))
-mypackages <- append(mypackages, c("car", "caret"))
 
-mypackages
-
-not_installed <- mypackages[!(mypackages %in% installed.packages()[, "Package"])]
-if(length(not_installed)) install.packages(not_installed)
-
-# Load libraries
-##lapply(mypackages, require, character.only=TRUE)
-for (package in mypackages) {
-  library(package, character.only=TRUE)
-}
-
-theme_set(theme_minimal())
-binwidth <- .5
-
-## Set the working directory to the root of your DSC 520 directory
-## to include the week of the assignment
-workdir <- system("git rev-parse --show-toplevel", intern=TRUE) 
-workdir <- file.path(workdir, "week10")
-
-## Set the working directory
-setwd(workdir)
-
-## Load the `housing` to data
-filename <- "binary-classifier-data.csv"
-
-bd.df <- read.csv(filename)
-bd.df
-head(bd.df)
-
-# - Fit a logistic regression model to the binary-classifier-data.csv dataset
-
-bd.df$label[bd.df$label > 0]
-
-my.glm <- glm(label ~ x + y, data = bd.df, family=binomial(link="logit"))
-summary(my.glm)
-
-# - The dataset (found in binary-classifier-data.csv) contains three variables;
-#   label, x, and y. The label variable is either 0 or 1 and is the output we want
-#   to predict using the x and y variables.
-
-new.df <- data.frame(label = predict(my.glm, bd.df),
-                     x = bd.df$x,
-                     y = bd.df$y)
-
-new.df
 
 
 #   - What is the accuracy of the logistic regression classifier?

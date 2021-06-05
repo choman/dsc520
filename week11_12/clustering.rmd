@@ -74,16 +74,32 @@ plot(cluster.df)
 
     - Fit the dataset using the k-means algorithm from k=2 to k=12. Create a 
       scatter plot of the resultant clusters for each value of k.
-```{r kmeans, echo=FALSE}
+
+```{r kmeans, echo=TRUE}
+
+kmean_withinss <- function(k) {
+    cluster <- kmeans(cluster.df, k)
+    return (cluster$tot.withinss)
+}
+
+cluster.kmeans <-kmeans(cluster.df, 5)
+cluster.kmeans$centers
+  
+max_k <- 12
+wss <- sapply(2:max_k, kmean_withinss)
+plot(wss)
+elbow <-data.frame(2:max_k, wss)
+
+
 # Need a loop?
 for (i in 2:12) {
-  cluster.kmeans <-kmeans(x = cluster.df, centers=i)
-  ##cluster.kmeans
-  plot(cluster.kmeans, data = cluster.df)
+  cluster.kmeans <-kmeans(cluster.df, i)
+  cluster.kmeans$centers
+##  ggplot(cluster.kmeans, aes(x=x, y=y)) +
+##    geom_point()
+    ##cluster.kmeans
+  #plot(cluster.kmeans, data = cluster.df)
 }
-cluster.best <- FitKMeans(cluster.df, max.clusters = 12, nstart = 2)
-cluster.best
-PlotHartigan(cluster.best)
 ```
 
     - As k-means is an unsupervised algorithm, you cannot compute the accuracy 
@@ -97,7 +113,20 @@ PlotHartigan(cluster.best)
 of k and plot it as a line chart where k is the x-axis and the average distance 
 is the y-axis.
 
-1. One way of determining the “right” number of clusters is to look at the graph
+```{r kdistance, echo=FALSE}
+cluster.best <- FitKMeans(cluster.df, max.clusters = 12, nstart = 2)
+cluster.best
+PlotHartigan(cluster.best)
+```
+
+2. One way of determining the “right” number of clusters is to look at the graph
 of k versus average distance and finding the “elbow point”. Looking at the graph
 you generated in the previous example, what is the elbow point for this dataset?
+
+```{r elbox, echo=FALSE}
+ggplot(elbow, aes(x = X2.max_k, y = wss)) +
+    geom_point() +
+    geom_line() +
+    scale_x_continuous(breaks = seq(1, 20, by = 1))
+```
 
